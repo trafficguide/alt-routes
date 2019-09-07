@@ -3,6 +3,36 @@
     <head>
         <title>港鐵替代路線 Alternative Routes</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="database_AllLines.js"></script>
+        <script>
+            function conductSearch()
+            {
+                var rawDB = database_GetAllAndRaw();
+                var rawDB = [{lineName:"72A", lineType:"九巴", lineFrom:"大埔工業邨", lineTo:"大圍站", lineStops:["erl_tpm", "erl_uni", "erl_st", "mos_stw"], notes: "Need to tap Octopus more."}];
+                var output = "";
+
+                // Print results table
+                var tableHTML = "<table><tr><th style='width: 70%'>路線</th><th style='width: 30%'>備註</th></tr>";
+                for (var i = 0; i < rawDB.length; i++)
+                {
+                    var object = rawDB[i];
+                    //output += JSON.stringify(rawDB[i]);
+                    output += object["lineName"];
+                    output += " ";
+                    output += object["lineType"];
+                    output += " ";
+                    output += object["lineFrom"];
+                    output += " ";
+                    output += object["lineTo"];
+                    output += " {";
+                    output += object["lineStops"];
+                    output += "} \"";
+                    output += object["notes"];
+                    output += "\"<br><br>";
+                }
+                document.getElementById("test").innerHTML = tableHTML;
+            }
+        </script>
         <style>
             *
             {
@@ -53,11 +83,17 @@
         </p>
         <p>
             <!-- Buttons -->
-            <button type="button">查找</button>
+            <button type="button" onclick="conductSearch()">查找</button>
             <button type="button">互換</button>
         </p>
         <!-- Result printout -->
         <h2>查找結果</h2>
+        <div id="test">
+
+        </div>
+        <div id="demo">
+
+        </div>
         <div id="results">
             <table>
                 <tr>
