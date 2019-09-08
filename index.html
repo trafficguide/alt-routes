@@ -1,37 +1,267 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>港鐵替代路線 Alternative Routes</title>
+        <title>港鐵替代路線 Replace MTR</title>
+        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="database_AllLines.js"></script>
         <script>
+            var cachedDB = null;
+            var totalLines = 0;
+            var displayedLines = 0;
+            var displayedCombos = -1;
+
+            function cacheDatabase()
+            {
+                cachedDB = database_GetAllAndRaw();
+            }
+
+            function getCachedDatabase()
+            {
+                if (cachedDB == null)
+                {
+                    cacheDatabase();
+                }
+
+                return cachedDB;
+            }
+
+            function swapFromAndTo()
+            {
+                var tempLine = document.getElementById("fromLine").selectedIndex;
+                var tempStation = document.getElementById("fromStation").selectedIndex;
+                document.getElementById("fromLine").selectedIndex = document.getElementById("toLine").selectedIndex;
+                document.getElementById("fromStation").selectedIndex = document.getElementById("toStation").selectedIndex;
+                document.getElementById("toLine").selectedIndex = tempLine;
+                document.getElementById("toStation").selectedIndex = tempStation;
+            }
+
+            function entry_ToString(entry)
+            {
+                var string = "";
+                //output += JSON.stringify(rawDB[i]);
+                string += entry["lineName"];
+                string += " (";
+                string += entry["lineType"];
+                string += ") ";
+                string += entry["lineFrom"];
+                if (entry["isCircular"])
+                {
+                    string += " ⮌ ";
+                }
+                else
+                {
+                    string += " ⭢ ";
+                }
+                //tableHTML += " →⮌⭢ &#2192; ";
+                string += entry["lineTo"];
+
+                return string;
+            }
+
+            /**
+             * Returns a list of lines (or line-combos) that matches the search criteria.
+             */
+            function obtainResults(from, to)
+            {
+                if (from === to)
+                {
+                    // Same location, no need to obtain results.
+                    return [];
+                }
+
+                var database = getCachedDatabase();
+
+                // Results
+                var results = [];
+                var tempResults = [];
+                // Level 0: direct lines
+                for (var i = 0; i < database.length; i++)
+                {
+                    var j;
+                    var listOfStations = database[i]["lineStops"];
+                    for (j = 0; (j < listOfStations.length) && (listOfStations[j] != from); j++)
+                    {
+                        
+                    }
+                    if (j == listOfStations.length)
+                    {
+                        // Line does not involve fromStation.
+                        // Rejected.
+                        continue;
+                    }
+                    // We are not setting initial action to j++ because that will cause out-of-bounds
+                    // if we stopped at the end of the line.
+                    for (j = j; j < listOfStations.length && listOfStations[j] != to; j++)
+                    {
+
+                    }
+                    if (j == listOfStations.length)
+                    {
+                        // Line does not involve toStation, or toStation does not appear after fromStation.
+                        // Rejected.
+                        continue;
+                    }
+                    tempResults.push(database[i]);
+                }
+                // Optionally sort them a bit
+                // Push the sorted list back to the results list
+                displayedLines = tempResults.length;
+                results = tempResults;
+
+                // Additional feature:
+                // Level 1: one-transfer combos
+                for (var i = 0; i < database.length; i++)
+                {
+                    var tempStations = new Object();
+                    var firstLine = database[i];
+                    for (var j = 0; j < firstLine["lineStops"].length; j++)
+                    {
+                        if (typeof tempStations[firstLine["lineStops"][j]] == "undefined")
+                        {
+                            tempStations[firstLine["lineStops"][j]] = 0;
+                        }
+                        tempStations[firstLine["lineStops"][j]]++;
+                    }
+                    console.log(tempStations.length);
+                    if (tempStations[from] == 0)
+                    {
+                        alert(firstLine["lineName"] + " does not contain beginning.");
+                        // From line does not contain beginning station.
+                        // Rejected.
+                        continue;
+                    }
+                    for (var j = 0; j < database.length; j++)
+                    {
+                        // Loop for 2nd line
+                        if (j == i)
+                        {
+                            continue;
+                        }
+
+                        var secondLine = database[j];
+                        var tempStations2 = tempStations;
+
+                        for (var k = 0; k < secondLine["lineStops"].length; k++)
+                        {
+                            if (typeof tempStations2[secondLine["lineStops"][k]] == "undefined")
+                            {
+                                tempStations2[secondLine["lineStops"][k]] = 0;
+                            }
+                            tempStations2[secondLine["lineStops"][k]]++;
+                        }
+                        if (tempStations2[to] == 0)
+                        {
+                            // To line does not contain to station.
+                            // Rejected.
+                            continue;
+                        }
+                        console.log("begin")
+                        for (var key in tempStations2)
+                        {
+                            console.log("TempStation key:" + key + "; count: " + tempStations2[key]);
+                            if (tempStations2[key] == 2)
+                            {
+                                console.log("Combo found: " + firstLine["lineName"] + " -> " + secondLine["lineName"]);
+                                //alert("Combo found: " + firstLine["lineName"] + " -> " + secondLine["lineName"]);
+                                break;
+                            }
+                        }
+                        console.log("end")
+                    }
+                }
+
+                // Optionally sort them a bit
+                return results;
+            }
+
+            function printResults(results)
+            {
+                // Print results table
+                var tableHTML = "<table><tr><th style='width: 62.5%; min-width:250px'>路線</th><th style='width: 37.5%; min-width:150px'>備註</th></tr>";
+                //alert("Hey! Printing from print results.");
+
+                for (var i = 0; i < results.length; i++)
+                {
+                    tableHTML += "<tr><td>";
+                    var entry = results[i];
+                    tableHTML += entry_ToString(entry);
+                    tableHTML += "</td><td>";
+                    if (entry["isCircular"])
+                    {
+                        tableHTML += "循環線";
+                        if (entry["notes"])
+                        {
+                            tableHTML += "；";
+                        }
+                    }
+                    if (entry["notes"])
+                    {
+                        tableHTML += entry["notes"];
+                    }
+                    tableHTML += "</td></tr>"
+                }
+
+                tableHTML += "</table>";
+
+                // Finally printing it
+                document.getElementById("results").innerHTML = tableHTML;
+            }
+
             function conductSearch()
             {
-                var rawDB = database_GetAllAndRaw();
-                var rawDB = [{lineName:"72A", lineType:"九巴", lineFrom:"大埔工業邨", lineTo:"大圍站", lineStops:["erl_tpm", "erl_uni", "erl_st", "mos_stw"], notes: "Need to tap Octopus more."}];
-                var output = "";
+                var from = document.getElementById("fromLine").value + "_" + document.getElementById("fromStation").value;
+                var to = document.getElementById("toLine").value + "_" + document.getElementById("toStation").value;
+                printResults(obtainResults(from, to));
 
-                // Print results table
-                var tableHTML = "<table><tr><th style='width: 70%'>路線</th><th style='width: 30%'>備註</th></tr>";
-                for (var i = 0; i < rawDB.length; i++)
-                {
-                    var object = rawDB[i];
-                    //output += JSON.stringify(rawDB[i]);
-                    output += object["lineName"];
-                    output += " ";
-                    output += object["lineType"];
-                    output += " ";
-                    output += object["lineFrom"];
-                    output += " ";
-                    output += object["lineTo"];
-                    output += " {";
-                    output += object["lineStops"];
-                    output += "} \"";
-                    output += object["notes"];
-                    output += "\"<br><br>";
-                }
-                document.getElementById("test").innerHTML = tableHTML;
+                // Determine readble strings
+                var readableFromLine = document.getElementById("fromLine").options[document.getElementById("fromLine").selectedIndex].text;
+                var readableFromStation = document.getElementById("fromStation").options[document.getElementById("fromStation").selectedIndex].text;
+                var readableToLine = document.getElementById("toLine").options[document.getElementById("toLine").selectedIndex].text;
+                var readableToStation = document.getElementById("toStation").options[document.getElementById("toStation").selectedIndex].text;
+
+                // Display search criteria
+                var criteriaString = "現正檢視由 ";
+                criteriaString += readableFromLine;
+                criteriaString += " ";
+                criteriaString += readableFromStation;
+                criteriaString += " 往 ";
+                criteriaString += readableToLine;
+                criteriaString += " ";
+                criteriaString += readableToStation;
+                criteriaString += " 的路線。"
+                document.getElementById("search_criteria").innerHTML = criteriaString;
+
+                // Display count of Lv0 lines
+                var lv0Count = "有 ";
+                lv0Count += displayedLines;
+                lv0Count += " 條直達路線。";
+                document.getElementById("search_lv0").innerHTML = lv0Count;
+
+                // Display count of Lv1 lines
+                var lv1Count = "有 ";
+                lv1Count += displayedCombos;
+                lv1Count += " 組一次轉車組合。";
+                document.getElementById("search_lv1").innerHTML = lv1Count;
+
+                return;
             }
+
+            document.addEventListener("DOMContentLoaded", function()
+            {
+                // Finally count and print how many entries are there.
+                var count;
+                for (count = 0; count < cachedDB.length; count++)
+                {
+
+                }
+                var string = "資料庫共存有 ";
+                string += count;
+                string += " 項路線資料。";
+                document.getElementById("db_stats_count").innerHTML = string;
+            });
+
+            cacheDatabase();
         </script>
         <style>
             *
@@ -66,45 +296,48 @@
         <h2>查找目標</h2>
         <p>
             起點
-            <select>
-                <option value="eastrail">東鐵線</option>
+            <select id="fromLine">
+                <option value="erl">東鐵線</option>
             </select>
-            <select>
-                <option value="asdf">大學</option>
+            <select id="fromStation">
+                <option value="st">沙田</option>
+                <option value="cuhk">大學</option>
+                <option value="tpm">大埔墟</option>
             </select>
         </p>
         <p>
             終點
-            <select>
-                <option value="eastrail">東鐵線</option> 
+            <select id="toLine">
+                <option value="erl">東鐵線</option> 
             </select>
-            <select>
-                <option value="asdf">沙田</option>
+            <select id="toStation">
+                <option value="st">沙田</option>
+                <option value="cuhk">大學</option>
+                <option value="tpm">大埔墟</option>
             </select>
         </p>
         <p>
             <!-- Buttons -->
             <button type="button" onclick="conductSearch()">查找</button>
-            <button type="button">互換</button>
+            <button type="button" onclick="swapFromAndTo()">互換</button>
         </p>
         <!-- Result printout -->
         <h2>查找結果</h2>
+        <div id="db_stats_count">資料庫共存有項路線資料。</div>
+        <div id="search_criteria"></div>
+        <div id="search_lv0"></div>
+        <div id="search_lv1"></div>
         <div id="test" style="overflow-x:auto;">
 
         </div>
         <div id="demo">
 
         </div>
-        <div id="results">
+        <div id="results" style="overflow-x:auto;">
             <table>
                 <tr>
-                    <th>路線</th>
-                </tr>
-                <tr>
-                    <td>72A (九巴) 大埔工業邨 往 大圍站</td>
-                </tr>
-                <tr>
-                    <td>28K (九巴) 大埔墟站 往 沙田市中心 (循環線)</td>
+                    <th style='width: 62.5%; min-width:250px'>路線</th>
+                    <th style='width: 37.5%; min-width:150px'>備註</th>
                 </tr>
             </table>
         </div>
