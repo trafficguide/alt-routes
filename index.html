@@ -36,11 +36,16 @@
             function swapFromAndTo()
             {
                 var tempLine = document.getElementById("fromLine").selectedIndex;
-                var tempStation = document.getElementById("fromStation").selectedIndex;
+                var fromStation = document.getElementById("fromStation").selectedIndex;
+                var toStation = document.getElementById("toStation").selectedIndex;
                 document.getElementById("fromLine").selectedIndex = document.getElementById("toLine").selectedIndex;
-                document.getElementById("fromStation").selectedIndex = document.getElementById("toStation").selectedIndex;
                 document.getElementById("toLine").selectedIndex = tempLine;
-                document.getElementById("toStation").selectedIndex = tempStation;
+                // Force update of the station dropdown first before we apply the values
+                // Otherwise, since the changed event is never fired, strange items will be chosen.
+                event_HandleStationDropdownChange(document.getElementById("fromLine"), document.getElementById("fromStation"));
+                event_HandleStationDropdownChange(document.getElementById("toLine"), document.getElementById("toStation"));
+                document.getElementById("fromStation").selectedIndex = toStation;
+                document.getElementById("toStation").selectedIndex = fromStation;
             }
 
             function event_LineChanged()
