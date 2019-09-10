@@ -49,7 +49,6 @@ function database_GetAllAndRaw()
     database.push({lineName:"307", lineType:"九巴", lineFrom:"大埔中心", lineTo:"中環渡輪碼頭", lineStops:["erl_tpm", "erl_adm", "ill_cen", "ill_sw", "tcl_hk"]});
     database.push({lineName:"307", lineType:"九巴", lineFrom:"中環渡輪碼頭", lineTo:"大埔中心", lineStops:["tcl_hk", "ill_sw", "ill_cen", "erl_adm", "erl_tpm"]});
     
-
     database.push({lineName:"65K", lineType:"綠巴", lineFrom:"火炭", lineTo:"廣源", lineStops:["erl_ft", "mos_cto"]});
     database.push({lineName:"65K", lineType:"綠巴", lineFrom:"廣源", lineTo:"火炭", lineStops:["mos_cto", "erl_ft"]});
 
