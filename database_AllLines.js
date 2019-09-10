@@ -33,6 +33,11 @@ function database_GetAllAndRaw()
     database.push({lineName:"80M", lineType:"九巴", lineFrom:"穗禾苑", lineTo:"九龍塘站", lineStops:["erl_st", "erl_klt"]});
     database.push({lineName:"80M", lineType:"九巴", lineFrom:"九龍塘站", lineTo:"穗禾苑", lineStops:["erl_klt", "erl_st"]});
 
+    /*
+    database.push({lineName:"182", lineType:"九巴", lineFrom:"愉翠苑", lineTo:"中環港澳碼頭", lineStops:["mos_cto", "mos_stw", "mos_ckt", "mos_twa", "erl_klt", "erl_hh", "erl_adm"]});
+    database.push({lineName:"182", lineType:"九巴", lineFrom:"中環港澳碼頭", lineTo:"愉翠苑", lineStops:["erl_adm", "erl_hh", "erl_klt", "mos_twa", "mos_ckt", "mos_stw", "mos_cto"]});
+
+    */
     database.push({lineName:"270A", lineType:"九巴", lineFrom:"上水", lineTo:"尖東麼地道", lineStops:["erl_ss", "erl_fl", "erl_klt", "tmle_etst"]});
     database.push({lineName:"270A", lineType:"九巴", lineFrom:"尖東麼地道", lineTo:"上水", lineStops:["tmle_etst", "erl_klt", "erl_fl", "erl_ss"]});
     database.push({lineName:"273D", lineType:"九巴", lineFrom:"上水", lineTo:"粉嶺華明", lineStops:["erl_ss", "erl_fl", "erl_ss"], isCircular:true});
@@ -40,6 +45,10 @@ function database_GetAllAndRaw()
     database.push({lineName:"281M", lineType:"九巴", lineFrom:"新田圍", lineTo:"九龍塘站", lineStops:["mos_ckt", "mos_twa", "mos_hk", "erl_klt"]});
     database.push({lineName:"281M", lineType:"九巴", lineFrom:"九龍塘站", lineTo:"新田圍", lineStops:["erl_klt", "mos_hk", "mos_twa", "mos_ckt"]});
     database.push({lineName:"289K", lineType:"九巴", lineFrom:"大學站", lineTo:"富安花園", lineStops:["erl_cuhk", "mos_tsh", "erl_cuhk"], isCircular:true});
+
+    database.push({lineName:"307", lineType:"九巴", lineFrom:"大埔中心", lineTo:"中環渡輪碼頭", lineStops:["erl_tpm", "erl_adm", "ill_cen", "ill_sw", "tcl_hk"]});
+    database.push({lineName:"307", lineType:"九巴", lineFrom:"中環渡輪碼頭", lineTo:"大埔中心", lineStops:["tcl_hk", "ill_sw", "ill_cen", "erl_adm", "erl_tpm"]});
+    
 
     database.push({lineName:"65K", lineType:"綠巴", lineFrom:"火炭", lineTo:"廣源", lineStops:["erl_ft", "mos_cto"]});
     database.push({lineName:"65K", lineType:"綠巴", lineFrom:"廣源", lineTo:"火炭", lineStops:["mos_cto", "erl_ft"]});

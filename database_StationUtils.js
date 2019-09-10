@@ -1,4 +1,16 @@
 /**
+ * Checks whether a given station is a "regular station".
+ * Internal stations are used internally to e.g. calibrate certain path costs.
+ * Special stations are used to designate e.g. interchange stops and major terminals not close to any MTR stations.
+ * @param {*} fullID The ID of the station.
+ */
+function stationIsRegular(fullID)
+{
+    var lineID = (fullID.split("_"))[0];
+    return lineID != "int" && lineID != "spec";
+}
+
+/**
  * Checks whether a given station ID is an interchange station, and standardizes it into a unified station ID.
  * @param {*} fullID The ID of the station.
  */

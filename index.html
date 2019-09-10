@@ -328,6 +328,7 @@
                     }
                 }
 
+                /*
                 // Filtration effort:
                 // Only those line combos with total cost less than the average of all combos will be counted as "valid combos".
                 // This is to combat non-sensical "go back and go forth" situations that may arise from simple observation.
@@ -357,6 +358,45 @@
                         totalCost += currentEdge[2];
                     }
                     if (totalCost >= averageTotalCost)
+                    {
+                        // Removes at index
+                        results.splice(i, 1);
+                    }
+                }
+                */
+
+                // Filtration effort:
+                // Only the fastest path (i.e., path with the least cost) will be displayed.
+                // This should be most effective.
+                var minCostSeen = Infinity;
+                for (var i = 0; i < results.length; i++)
+                {
+                    var currentLineGuide = results[i];
+                    var currentCost = 0;
+                    for (var j = 0; j < currentLineGuide.length; j++)
+                    {
+                        var currentEdge = currentLineGuide[j];
+                        // Adding in the cost.
+                        currentCost += currentEdge[2];
+                    }
+                    if (currentCost < minCostSeen)
+                    {
+                        minCostSeen = currentCost;
+                    }
+                }
+                // We have now found the minimum cost.
+                // Filter out unoptimal solutions.
+                for (var i = results.length - 1; i >= 0; i--)
+                {
+                    var currentLineGuide = results[i];
+                    var totalCost = 0;
+                    for (var j = 0; j < currentLineGuide.length; j++)
+                    {
+                        var currentEdge = currentLineGuide[j];
+                        // Adding in the cost.
+                        totalCost += currentEdge[2];
+                    }
+                    if (totalCost > minCostSeen)
                     {
                         // Removes at index
                         results.splice(i, 1);
@@ -579,7 +619,12 @@
     <body>
         <!-- Headers -->
         <h1>港鐵替代路線查找器</h1>
-        為港鐵跣底嗰陣買定個保險。
+        <p>
+            為港鐵跣底嗰陣買定個保險。
+        </p>
+        <p>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeeID8c0JpELbUfUQMyG1d7OLSJ_v5IBQzu00nYJwcDw-y2Ew/viewform">意見反映</a>
+        </p>
         <!-- Selections -->
         <h2>查找目標</h2>
         <p>
