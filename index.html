@@ -5,6 +5,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="database_AllLines.js"></script>
+        <script src="database_StationUtils.js"></script>
+        <script src="database_ShortID.js"></script>
         <script>
             var cachedDB = null;
             var totalLines = 0;
@@ -26,14 +28,75 @@
                 return cachedDB;
             }
 
+            function clearResultTable()
+            {
+                document.getElementById("results").innerHTML = "<table><tr><th style='width: 40%; min-width:280px'>路線</th><th style='width: 40%; min-width:280px'>(功能未開通)</th><th style='width: 20%; min-width:140px'>備註</th></tr></table>";
+            }
+
             function swapFromAndTo()
             {
                 var tempLine = document.getElementById("fromLine").selectedIndex;
-                var tempStation = document.getElementById("fromStation").selectedIndex;
+                var fromStation = document.getElementById("fromStation").selectedIndex;
+                var toStation = document.getElementById("toStation").selectedIndex;
                 document.getElementById("fromLine").selectedIndex = document.getElementById("toLine").selectedIndex;
-                document.getElementById("fromStation").selectedIndex = document.getElementById("toStation").selectedIndex;
                 document.getElementById("toLine").selectedIndex = tempLine;
-                document.getElementById("toStation").selectedIndex = tempStation;
+                // Force update of the station dropdown first before we apply the values
+                // Otherwise, since the changed event is never fired, strange items will be chosen.
+                event_HandleStationDropdownChange(document.getElementById("fromLine"), document.getElementById("fromStation"));
+                event_HandleStationDropdownChange(document.getElementById("toLine"), document.getElementById("toStation"));
+                document.getElementById("fromStation").selectedIndex = toStation;
+                document.getElementById("toStation").selectedIndex = fromStation;
+            }
+
+            function event_LineChanged()
+            {
+                var stationsDropdownObj;
+                if (this.id == "fromLine")
+                {
+                    stationsDropdownObj = document.getElementById("fromStation");
+                }
+                else
+                {
+                    stationsDropdownObj = document.getElementById("toStation");
+                }
+                event_HandleStationDropdownChange(this, stationsDropdownObj);
+            }
+
+            function event_HandleStationDropdownChange(lineDropdown, stationDropdown)
+            {
+                var optionList = "<option value='0'>---</option>";
+                var selectedLine = lineDropdown[lineDropdown.selectedIndex].value;
+                if (selectedLine == "erl")
+                {
+                    optionList += "<option value='adm'>金鐘</option>";
+                    optionList += "<option value='exh'>會展</option>";
+                    optionList += "<option value='hh'>紅磡</option>";
+                    optionList += "<option value='mke'>旺角東</option>";
+                    optionList += "<option value='klt'>九龍塘</option>";
+                    optionList += "<option value='twa'>大圍</option>";
+                    optionList += "<option value='st'>沙田</option>";
+                    optionList += "<option value='ft'>火炭</option>";
+                    optionList += "<option value='cuhk'>大學</option>";
+                    optionList += "<option value='tpm'>大埔墟</option>";
+                    optionList += "<option value='two'>太和</option>";
+                    optionList += "<option value='fl'>粉嶺</option>";
+                    optionList += "<option value='ss'>上水</option>";
+                }
+                else if (selectedLine == "tmle")
+                {
+                    optionList += "<option value='wks'>烏溪沙</option>";
+                    optionList += "<option value='mos'>馬鞍山</option>";
+                    optionList += "<option value='ho'>恆安</option>";
+                    optionList += "<option value='tsh'>大水坑</option>";
+                    optionList += "<option value='sm'>石門</option>";
+                    optionList += "<option value='cto'>第一城</option>";
+                    optionList += "<option value='stw'>沙田圍</option>";
+                    optionList += "<option value='ckt'>車公廟</option>";
+                    optionList += "<option value='twa'>大圍</option>";
+                    optionList += "<option value='hk'>顯徑</option>";
+                }
+                stationDropdown.selectedIndex = 0;
+                stationDropdown.innerHTML = optionList;
             }
 
             function entry_ToString(entry)
@@ -61,6 +124,9 @@
 
             /**
              * Returns a list of lines (or line-combos) that matches the search criteria.
+             * 
+             * Note that the return value is an array of linkers:
+             * [[[line, transfer, cost], [line, null, cost]], [[line, null, cost]], ...]
              */
             function obtainResults(from, to)
             {
@@ -74,15 +140,17 @@
 
                 // Results
                 var results = [];
-                var tempResults = [];
                 // Level 0: direct lines
                 for (var i = 0; i < database.length; i++)
                 {
                     var j;
                     var listOfStations = database[i]["lineStops"];
-                    for (j = 0; (j < listOfStations.length) && (listOfStations[j] != from); j++)
+                    for (j = 0; j < listOfStations.length; j++)
                     {
-                        
+                        if (getUnifiedStationID(listOfStations[j]) == from)
+                        {
+                            break;
+                        }
                     }
                     if (j == listOfStations.length)
                     {
@@ -92,9 +160,12 @@
                     }
                     // We are not setting initial action to j++ because that will cause out-of-bounds
                     // if we stopped at the end of the line.
-                    for (j = j; j < listOfStations.length && listOfStations[j] != to; j++)
+                    for (j = j; j < listOfStations.length; j++)
                     {
-
+                        if (getUnifiedStationID(listOfStations[j]) == to)
+                        {
+                            break;
+                        }
                     }
                     if (j == listOfStations.length)
                     {
@@ -102,74 +173,238 @@
                         // Rejected.
                         continue;
                     }
-                    tempResults.push(database[i]);
+
+                    // Refer to function documentation for explaining the linker system.
+                    var linker = [];
+                    linker.push(database[i], null);
+                    var lineguide = [];
+                    lineguide.push(linker);
+                    results.push(lineguide);
                 }
                 // Optionally sort them a bit
                 // Push the sorted list back to the results list
-                displayedLines = tempResults.length;
-                results = tempResults;
+                displayedLines = results.length;
+                if (displayedLines > 0)
+                {
+                    // Direct lines available. No need to consider n-transfer combos
+                    return results;
+                }
 
                 // Additional feature:
                 // Level 1: one-transfer combos
+
+                // Find lines that contains either From or To
+                var lineCandidates = [];
                 for (var i = 0; i < database.length; i++)
                 {
-                    var tempStations = new Object();
-                    var firstLine = database[i];
-                    for (var j = 0; j < firstLine["lineStops"].length; j++)
+                    // foreach line:
+                    var line = database[i];
+                    var stops = line["lineStops"];
+                    for (var j = 0; j < stops.length; j++)
                     {
-                        if (typeof tempStations[firstLine["lineStops"][j]] == "undefined")
+                        // if line contains From or To as one of its stations
+                        var currentStop = getUnifiedStationID(stops[j]);
+                        if (currentStop == from || currentStop == to)
                         {
-                            tempStations[firstLine["lineStops"][j]] = 0;
+                            // Add it to the list of lines
+                            lineCandidates.push(line);
+                            // No need to check further for this line.
+                            break;
                         }
-                        tempStations[firstLine["lineStops"][j]]++;
                     }
-                    console.log(tempStations.length);
-                    if (tempStations[from] == 0)
+                }
+
+                // We now have a list of lines that contains either the From or the To (or both)
+                // Directly check line combos
+                var candidatesCount = lineCandidates.length;
+                for (var i = 0; i < candidatesCount; i++)
+                {
+                    for (var j = 0; j < candidatesCount; j++)
                     {
-                        alert(firstLine["lineName"] + " does not contain beginning.");
-                        // From line does not contain beginning station.
-                        // Rejected.
-                        continue;
-                    }
-                    for (var j = 0; j < database.length; j++)
-                    {
-                        // Loop for 2nd line
                         if (j == i)
                         {
                             continue;
                         }
 
-                        var secondLine = database[j];
-                        var tempStations2 = tempStations;
+                        var L1 = lineCandidates[i];
+                        var L2 = lineCandidates[j];
+                        var L1_stops = L1["lineStops"];
+                        var L2_stops = L2["lineStops"];
+                        var index_L1_FROM = 0;
+                        var index_L2_TO = 0;
 
-                        for (var k = 0; k < secondLine["lineStops"].length; k++)
+                        // Locate both FROM and TO in L1 and L2 respectively
+                        while (index_L1_FROM < L1_stops.length)
                         {
-                            if (typeof tempStations2[secondLine["lineStops"][k]] == "undefined")
+                            if (getUnifiedStationID(L1_stops[index_L1_FROM]) == from)
                             {
-                                tempStations2[secondLine["lineStops"][k]] = 0;
+                                break;
                             }
-                            tempStations2[secondLine["lineStops"][k]]++;
+                            index_L1_FROM++;
                         }
-                        if (tempStations2[to] == 0)
+                        if (index_L1_FROM == L1_stops.length)
                         {
-                            // To line does not contain to station.
-                            // Rejected.
+                            // FROM is not found in L1; next!
                             continue;
                         }
-                        console.log("begin")
-                        for (var key in tempStations2)
+                        while (index_L2_TO < L2_stops.length)
                         {
-                            console.log("TempStation key:" + key + "; count: " + tempStations2[key]);
-                            if (tempStations2[key] == 2)
+                            if (getUnifiedStationID(L2_stops[index_L2_TO]) == to)
                             {
-                                console.log("Combo found: " + firstLine["lineName"] + " -> " + secondLine["lineName"]);
-                                //alert("Combo found: " + firstLine["lineName"] + " -> " + secondLine["lineName"]);
+                                break;
+                            }
+                            index_L2_TO++;
+                        }
+                        if (index_L2_TO == L2_stops.length)
+                        {
+                            // TO is not found in L2; next!
+                            continue;
+                        }
+
+                        // We now know where the FROM and TO is at in L1 and L2 respectively.
+                        // Now determine if L1 and L2 intersect each other.
+                        // Also determine location of intersection in L1 and L2
+                        // This is done by counting the number of occurences of stations
+
+                        //console.log("L1F, L2T: " + index_L1_FROM + ", " + index_L2_TO)
+                        var intersectionChecker = new Object();
+                        var index_L1_INTER = -1;
+                        var index_L2_INTER = -1;
+                        for (var k = index_L1_FROM; k < L1_stops.length; k++)
+                        {
+                            // The associative array is definitely empty, no need to check further.
+                            intersectionChecker[getUnifiedStationID(L1_stops[k])] = 1;
+                        }
+                        for (var k = index_L2_TO; k >= 0; k--)
+                        {
+                            if (typeof intersectionChecker[getUnifiedStationID(L2_stops[k])] != "undefined")
+                            {
+                                // Intersection found!
+                                index_L2_INTER = k;
                                 break;
                             }
                         }
-                        console.log("end")
+                        if (index_L2_INTER == -1)
+                        {
+                            // Intersection does not exist, check next pair
+                            continue;
+                        }
+                        if (index_L2_INTER == index_L2_TO)
+                        {
+                            // Intersection is at TO; had better take L1 to arrive at TO.
+                            // This pair is meaningless.
+                            // Check next pair
+                            continue;
+                        }
+                        var intersectionID = L2_stops[index_L2_INTER];
+                        // For the sake of completeness, also find intersection position in L1
+                        for (var k = index_L1_FROM; k < L1_stops.length; k++)
+                        {
+                            if (getUnifiedStationID(L1_stops[k]) == intersectionID)
+                            {
+                                index_L1_INTER = k;
+                                break;
+                            }
+                        }
+                        if (index_L1_INTER == index_L1_FROM)
+                        {
+                            // Intersection is at FROM; had better take L2 to depart from FROM.
+                            // This pair is meaningless.
+                            // Check nexy pair
+                            continue;
+                        }
+
+                        // We have found intersection.
+                        // Refer to function documentation for explanation on the linker system.
+                        var linker = [];
+                        linker.push(L1, intersectionID, index_L1_INTER - index_L1_FROM);
+                        var lineguide = [];
+                        lineguide.push(linker);
+                        linker = [];
+                        linker.push(L2, null, index_L2_TO - index_L2_INTER);
+                        lineguide.push(linker);
+                        results.push(lineguide);
+                        console.log("Considering Combo " + L1["lineName"] + " -> " + L2["lineName"] + "; cost = " + (index_L1_INTER - index_L1_FROM + index_L2_TO - index_L2_INTER))
                     }
                 }
+
+                /*
+                // Filtration effort:
+                // Only those line combos with total cost less than the average of all combos will be counted as "valid combos".
+                // This is to combat non-sensical "go back and go forth" situations that may arise from simple observation.
+                var averageTotalCost = 0;
+                for (var i = 0; i < results.length; i++)
+                {
+                    var currentLineGuide = results[i];
+                    for (var j = 0; j < currentLineGuide.length; j++)
+                    {
+                        var currentEdge = currentLineGuide[j];
+                        // Adding in the cost.
+                        averageTotalCost += currentEdge[2];
+                    }
+                }
+                averageTotalCost /= results.length;
+                console.log("Average cost is: " + averageTotalCost);
+                // We now have the average cost ready.
+                // We may now remove unoptimal solutions using this value.
+                for (var i = results.length - 1; i >= 0; i--)
+                {
+                    var currentLineGuide = results[i];
+                    var totalCost = 0;
+                    for (var j = 0; j < currentLineGuide.length; j++)
+                    {
+                        var currentEdge = currentLineGuide[j];
+                        // Adding in the cost.
+                        totalCost += currentEdge[2];
+                    }
+                    if (totalCost >= averageTotalCost)
+                    {
+                        // Removes at index
+                        results.splice(i, 1);
+                    }
+                }
+                */
+
+                // Filtration effort:
+                // Only the fastest path (i.e., path with the least cost) will be displayed.
+                // This should be most effective.
+                var minCostSeen = Infinity;
+                for (var i = 0; i < results.length; i++)
+                {
+                    var currentLineGuide = results[i];
+                    var currentCost = 0;
+                    for (var j = 0; j < currentLineGuide.length; j++)
+                    {
+                        var currentEdge = currentLineGuide[j];
+                        // Adding in the cost.
+                        currentCost += currentEdge[2];
+                    }
+                    if (currentCost < minCostSeen)
+                    {
+                        minCostSeen = currentCost;
+                    }
+                }
+                // We have now found the minimum cost.
+                // Filter out unoptimal solutions.
+                for (var i = results.length - 1; i >= 0; i--)
+                {
+                    var currentLineGuide = results[i];
+                    var totalCost = 0;
+                    for (var j = 0; j < currentLineGuide.length; j++)
+                    {
+                        var currentEdge = currentLineGuide[j];
+                        // Adding in the cost.
+                        totalCost += currentEdge[2];
+                    }
+                    if (totalCost > minCostSeen)
+                    {
+                        // Removes at index
+                        results.splice(i, 1);
+                    }
+                }
+
+                // Update stats
+                displayedCombos = results.length;
 
                 // Optionally sort them a bit
                 return results;
@@ -178,27 +413,81 @@
             function printResults(results)
             {
                 // Print results table
-                var tableHTML = "<table><tr><th style='width: 62.5%; min-width:250px'>路線</th><th style='width: 37.5%; min-width:150px'>備註</th></tr>";
+                var tableHTML = "<table><tr><th style='width: 40%; min-width:280px'>路線</th><th style='width: 40%; min-width:280px'>(功能未開通)</th><th style='width: 20%; min-width:140px'>備註</th></tr>";
                 //alert("Hey! Printing from print results.");
 
+                // Alert: results will look something like this:
+                // [[[line, transfer], [line, null]], [[line, null]], ...]
+                // results = [line guides], line guides = [linkers]
+
+                // foreach lineguide in this results
                 for (var i = 0; i < results.length; i++)
                 {
                     tableHTML += "<tr><td>";
-                    var entry = results[i];
-                    tableHTML += entry_ToString(entry);
-                    tableHTML += "</td><td>";
-                    if (entry["isCircular"])
+                    var currentLineGuide = results[i];
+                    // Very important: check if the result is a single line or a line combo
+                    var isDirectLine = (currentLineGuide.length == 1);
+                    // foreach linker inside this lineguide
+                    // Print line introduction
+                    for (var j = 0; j < currentLineGuide.length; j++)
                     {
-                        tableHTML += "循環線";
-                        if (entry["notes"])
+                        var currentLinker = currentLineGuide[j];
+                        
+                        var entry = currentLinker[0];
+                        tableHTML += entry_ToString(entry);
+                        if (currentLinker[1] != null)
                         {
-                            tableHTML += "；";
+                            // Display transit info
+                            tableHTML += "<br>於 ";
+                            tableHTML += getCommonName(getUnifiedStationID(currentLinker[1]));
+                            tableHTML += " 轉乘<br>";
                         }
                     }
-                    if (entry["notes"])
+                    tableHTML += "</td><td>";
+                    // Transfer refund
+                    // Feature not unlocked
+                    tableHTML += "</td><td>";
+                    // foreach linker inside this lineguide
+                    // Print line notes
+                    for (var j = 0; j < currentLineGuide.length; j++)
                     {
-                        tableHTML += entry["notes"];
+                        var currentLinker = currentLineGuide[j];
+                        var entry = currentLinker[0];
+
+                        if (!isDirectLine)
+                        {
+                            // Specify line info for line combos
+                            tableHTML += entry["lineName"];
+                            tableHTML += " (";
+                            tableHTML += entry["lineType"];
+                            tableHTML += ")："
+                        }
+                        if (entry["isCircular"])
+                        {
+                            tableHTML += "循環線";
+                            if (entry["notes"])
+                            {
+                                tableHTML += "；";
+                            }
+                        }
+                        if (entry["notes"])
+                        {
+                            tableHTML += entry["notes"];
+                        }
+                        else
+                        {
+                            if (!isDirectLine && !entry["isCircular"])
+                            {
+                                tableHTML += "無";
+                            }
+                        }
+                        if (currentLinker[1] != null)
+                        {
+                            // Some entries remain
+                            tableHTML += "<br>";
+                        }
                     }
+                    
                     tableHTML += "</td></tr>"
                 }
 
@@ -212,6 +501,30 @@
             {
                 var from = document.getElementById("fromLine").value + "_" + document.getElementById("fromStation").value;
                 var to = document.getElementById("toLine").value + "_" + document.getElementById("toStation").value;
+
+                // Check validity.
+                if (from.includes("0") || to.includes("0"))
+                {
+                    // Incomplete selection! Cannot compute.
+                    document.getElementById("search_criteria").innerHTML = "查找參數不完整。查找無效。";
+                    document.getElementById("search_lv0").innerHTML = "";
+                    document.getElementById("search_lv1").innerHTML = "";
+                    return;
+                }
+
+                // Check same station.
+                from = getUnifiedStationID(from);
+                to = getUnifiedStationID(to);
+                if (from == to)
+                {
+                    // Same location! Search not necessary.
+                    document.getElementById("search_criteria").innerHTML = "起訖兩點相同，無須展示任何資料。";
+                    document.getElementById("search_lv0").innerHTML = "";
+                    document.getElementById("search_lv1").innerHTML = "";
+
+                    return;
+                }
+
                 printResults(obtainResults(from, to));
 
                 // Determine readble strings
@@ -233,16 +546,25 @@
                 document.getElementById("search_criteria").innerHTML = criteriaString;
 
                 // Display count of Lv0 lines
-                var lv0Count = "有 ";
-                lv0Count += displayedLines;
-                lv0Count += " 條直達路線。";
-                document.getElementById("search_lv0").innerHTML = lv0Count;
-
-                // Display count of Lv1 lines
-                var lv1Count = "有 ";
-                lv1Count += displayedCombos;
-                lv1Count += " 組一次轉車組合。";
-                document.getElementById("search_lv1").innerHTML = lv1Count;
+                if (displayedLines > 0)
+                {
+                    // Direct lines are available
+                    var lv0Count = "有 ";
+                    lv0Count += displayedLines;
+                    lv0Count += " 條直達路線。";
+                    document.getElementById("search_lv0").innerHTML = lv0Count;
+                    document.getElementById("search_lv1").innerHTML = "無須展示任何轉車組合。";
+                }
+                else
+                {
+                    // No direct lines available.
+                    document.getElementById("search_lv0").innerHTML = "沒有任何直達路線。";
+                    // Display count of Lv1 lines
+                    var lv1Count = "有 ";
+                    lv1Count += displayedCombos;
+                    lv1Count += " 組一次轉車組合。";
+                    document.getElementById("search_lv1").innerHTML = lv1Count;
+                }
 
                 return;
             }
@@ -259,6 +581,13 @@
                 string += count;
                 string += " 項路線資料。";
                 document.getElementById("db_stats_count").innerHTML = string;
+
+                // Set up line change detector
+                document.getElementById("fromLine").addEventListener("change", event_LineChanged);
+                document.getElementById("toLine").addEventListener("change", event_LineChanged);
+
+                // Initialize table
+                clearResultTable();
             });
 
             cacheDatabase();
@@ -291,29 +620,34 @@
     <body>
         <!-- Headers -->
         <h1>港鐵替代路線查找器</h1>
-        為港鐵跣底嗰陣買定個保險。
+        <p>
+            為港鐵跣底嗰陣買定個保險。
+        </p>
+        <p>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeeID8c0JpELbUfUQMyG1d7OLSJ_v5IBQzu00nYJwcDw-y2Ew/viewform">意見反映</a>
+        </p>
         <!-- Selections -->
         <h2>查找目標</h2>
         <p>
             起點
             <select id="fromLine">
+                <option value="0">---</option>
                 <option value="erl">東鐵線</option>
+                <option value="tmle">屯馬線 (東)</option>
             </select>
             <select id="fromStation">
-                <option value="st">沙田</option>
-                <option value="cuhk">大學</option>
-                <option value="tpm">大埔墟</option>
+                <option value="0">---</option>
             </select>
         </p>
         <p>
             終點
             <select id="toLine">
-                <option value="erl">東鐵線</option> 
+                <option value="0">---</option>
+                <option value="erl">東鐵線</option>
+                <option value="tmle">屯馬線 (東)</option>
             </select>
             <select id="toStation">
-                <option value="st">沙田</option>
-                <option value="cuhk">大學</option>
-                <option value="tpm">大埔墟</option>
+                <option value="0">---</option>
             </select>
         </p>
         <p>
@@ -334,12 +668,7 @@
 
         </div>
         <div id="results" style="overflow-x:auto;">
-            <table>
-                <tr>
-                    <th style='width: 62.5%; min-width:250px'>路線</th>
-                    <th style='width: 37.5%; min-width:150px'>備註</th>
-                </tr>
-            </table>
+
         </div>
     </body>
 </html>
