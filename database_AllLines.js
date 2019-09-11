@@ -8,8 +8,21 @@ function database_GetAllAndRaw()
 {
     var database = [];
 
-    database.push({lineName:"72", lineType:"九巴", lineFrom:"長沙灣", lineTo:"大埔太和", lineStops:["erl_st", "erl_cuhk", "erl_tpm", "erl_tw"], notes: "大埔區有轉乘優惠"});
-    database.push({lineName:"72", lineType:"九巴", lineFrom:"大埔太和", lineTo:"長沙灣", lineStops:["erl_tw", "erl_tpm", "erl_cuhk", "erl_st"], notes: "大埔區有轉乘優惠"});
+    // Walking is by far the best way of handing it.
+    database.push({lineName:"", lineType:"步行", lineFrom:"沙田市中心", lineTo:"秦石", lineStops:["erl_st", "mos_ckt"], isWalking: true});
+    database.push({lineName:"", lineType:"步行", lineFrom:"秦石", lineTo:"沙田市中心", lineStops:["mos_ckt", "erl_st"], isWalking: true});
+    database.push({lineName:"", lineType:"步行", lineFrom:"沙田市中心", lineTo:"沙田圍", lineStops:["erl_st", "mos_stw"], isWalking: true});
+    database.push({lineName:"", lineType:"步行", lineFrom:"沙田圍", lineTo:"沙田市中心", lineStops:["mos_stw", "erl_st"], isWalking: true});
+
+    // Then list the bus lines in ascending order.
+    // tests only for now
+    /*
+    database.push({lineName:"47X", lineType:"kmb", lineFrom:"cs", lineTo:"kse", lineStops:["mos_ckt", "test_smt_westbound"], notes: "test only"});
+    database.push({lineName:"49X", lineType:"kmb", lineFrom:"ky", lineTo:"typ", lineStops:["test_smt_westbound", "tcl_ty"], notes: "test only"});
+    */
+
+    database.push({lineName:"72", lineType:"九巴", lineFrom:"長沙灣", lineTo:"大埔太和", lineStops:["erl_st", "erl_cuhk", "erl_tpm", "erl_two"], notes: "大埔區有轉乘優惠"});
+    database.push({lineName:"72", lineType:"九巴", lineFrom:"大埔太和", lineTo:"長沙灣", lineStops:["erl_two", "erl_tpm", "erl_cuhk", "erl_st"], notes: "大埔區有轉乘優惠"});
     database.push({lineName:"72A", lineType:"九巴", lineFrom:"大圍站", lineTo:"大埔工業邨", lineStops:["mos_twa", "mos_stw", "erl_st", "erl_cuhk", "erl_tpm"], notes: "設有雙程分段收費"});
     database.push({lineName:"72A", lineType:"九巴", lineFrom:"大埔工業邨", lineTo:"大圍站", lineStops:["erl_tpm", "erl_cuhk", "erl_st", "mos_stw", "mos_twa"], notes: "設有雙程分段收費"});
     database.push({lineName:"73A", lineType:"九巴", lineFrom:"粉嶺華明", lineTo:"愉翠苑", lineStops:["erl_fl", "erl_two", "erl_tpm", "erl_cuhk", "erl_ft", "mos_cto"]});
@@ -17,6 +30,8 @@ function database_GetAllAndRaw()
     database.push({lineName:"74A", lineType:"九巴", lineFrom:"大埔太和", lineTo:"啟業", lineStops:["erl_two", "erl_tpm", "erl_cuhk", "mos_stw", "mos_ckt"]});
     database.push({lineName:"74A", lineType:"九巴", lineFrom:"啟業", lineTo:"大埔太和", lineStops:["mos_ckt", "mos_stw", "erl_cuhk", "erl_tpm", "erl_two"]});
 
+    database.push({lineName:"81", lineType:"九巴", lineFrom:"禾輋", lineTo:"西九龍站", lineStops:["erl_st", "erl_mke", "hsr_wkl"]});
+    database.push({lineName:"81", lineType:"九巴", lineFrom:"西九龍站", lineTo:"禾輋", lineStops:["hsr_wkl", "erl_mke", "erl_st"]});
     database.push({lineName:"87D", lineType:"九巴", lineFrom:"錦英苑", lineTo:"紅磡", lineStops:["mos_mos", "mos_ho", "mos_tsh", "erl_klt", "erl_mke", "tmle_etst", "erl_hh"]});
     database.push({lineName:"87D", lineType:"九巴", lineFrom:"紅磡", lineTo:"錦英苑", lineStops:["erl_hh", "tmle_etst", "erl_mke", "erl_klt", "mos_tsh", "mos_ho", "mos_mos"]});
     database.push({lineName:"87K/87S", lineType:"九巴", lineFrom:"大學站", lineTo:"錦英苑", lineStops:["erl_cuhk", "mos_mos", "erl_cuhk"], isCircular: true});
@@ -44,6 +59,8 @@ function database_GetAllAndRaw()
 
     database.push({lineName:"281M", lineType:"九巴", lineFrom:"新田圍", lineTo:"九龍塘站", lineStops:["mos_ckt", "mos_twa", "mos_hk", "erl_klt"]});
     database.push({lineName:"281M", lineType:"九巴", lineFrom:"九龍塘站", lineTo:"新田圍", lineStops:["erl_klt", "mos_hk", "mos_twa", "mos_ckt"]});
+    database.push({lineName:"282", lineType:"九巴", lineFrom:"沙田市中心", lineTo:"新田圍", lineStops:["erl_st", "mos_ckt", "erl_st"], isCircular:true});
+    database.push({lineName:"288", lineType:"九巴", lineFrom:"水泉澳", lineTo:"沙田市中心", lineStops:["mos_stw", "erl_st", "mos_stw"], isCircular:true});
     database.push({lineName:"289K", lineType:"九巴", lineFrom:"大學站", lineTo:"富安花園", lineStops:["erl_cuhk", "mos_tsh", "erl_cuhk"], isCircular:true});
 
     database.push({lineName:"307", lineType:"九巴", lineFrom:"大埔中心", lineTo:"中環渡輪碼頭", lineStops:["erl_tpm", "erl_adm", "ill_cen", "ill_sw", "tcl_hk"]});

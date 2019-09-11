@@ -2,11 +2,13 @@
 <html>
     <head>
         <title>港鐵替代路線 Replace MTR</title>
-        <meta charset="UTF-8">
+        <meta charset="UTF-16">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="database_AllLines.js"></script>
         <script src="database_StationUtils.js"></script>
         <script src="database_ShortID.js"></script>
+        <script src="line_utilities.js"></script>
+        <script src="interchange_manager.js"></script>
         <script>
             var cachedDB = null;
             var totalLines = 0;
@@ -26,6 +28,11 @@
                 }
 
                 return cachedDB;
+            }
+
+            function getVersionString()
+            {
+                return "Version: 11 September, 2019";
             }
 
             function clearResultTable()
@@ -99,29 +106,6 @@
                 stationDropdown.innerHTML = optionList;
             }
 
-            function entry_ToString(entry)
-            {
-                var string = "";
-                //output += JSON.stringify(rawDB[i]);
-                string += entry["lineName"];
-                string += " (";
-                string += entry["lineType"];
-                string += ") ";
-                string += entry["lineFrom"];
-                if (entry["isCircular"])
-                {
-                    string += " ⮌ ";
-                }
-                else
-                {
-                    string += " ⭢ ";
-                }
-                //tableHTML += " →⮌⭢ &#2192; ";
-                string += entry["lineTo"];
-
-                return string;
-            }
-
             /**
              * Returns a list of lines (or line-combos) that matches the search criteria.
              * 
@@ -130,6 +114,7 @@
              */
             function obtainResults(from, to)
             {
+                //console.log("Obtained " + from + " " + to)
                 if (from === to)
                 {
                     // Same location, no need to obtain results.
@@ -212,6 +197,12 @@
                             break;
                         }
                     }
+                }
+
+                console.log("Line combo candidates are ");
+                for (var i = 0; i < lineCandidates.length; i++)
+                {
+                    console.log(lineCandidates[i]["lineName"]);
                 }
 
                 // We now have a list of lines that contains either the From or the To (or both)
@@ -297,14 +288,23 @@
                             continue;
                         }
                         var intersectionID = L2_stops[index_L2_INTER];
+                        //console.log("Intersection (unified) should be " + getUnifiedStationID(intersectionID))
                         // For the sake of completeness, also find intersection position in L1
                         for (var k = index_L1_FROM; k < L1_stops.length; k++)
                         {
-                            if (getUnifiedStationID(L1_stops[k]) == intersectionID)
+                            //console.log("Checking k = " + k + ", stop (unified) = " + getUnifiedStationID(L1_stops[k]))
+                            //console.log("Double-equal check will return: " + (getUnifiedStationID(L1_stops[k]) == intersectionID))
+                            //console.log("Triple-equal check will return: " + (getUnifiedStationID(L1_stops[k]) === intersectionID))
+                            if (getUnifiedStationID(L1_stops[k]) == getUnifiedStationID(intersectionID))
                             {
                                 index_L1_INTER = k;
                                 break;
                             }
+                        }
+                        if (index_L1_INTER == -1)
+                        {
+                            // This should normally be impossible!
+                            console.log("The immpossible has happened. L1 INTER is -1.")
                         }
                         if (index_L1_INTER == index_L1_FROM)
                         {
@@ -317,14 +317,30 @@
                         // We have found intersection.
                         // Refer to function documentation for explanation on the linker system.
                         var linker = [];
-                        linker.push(L1, intersectionID, index_L1_INTER - index_L1_FROM);
+                        var costL1 = index_L1_INTER - index_L1_FROM;
+                        if (L1["isWalking"])
+                        {
+                            costL1 *= 2;
+                        }
+                        linker.push(L1, intersectionID, costL1);
                         var lineguide = [];
                         lineguide.push(linker);
                         linker = [];
-                        linker.push(L2, null, index_L2_TO - index_L2_INTER);
+                        var costL2 = index_L2_TO - index_L2_INTER;
+                        if (L2["isWalking"])
+                        {
+                            costL2 *= 2;
+                        }
+                        linker.push(L2, null, costL2);
                         lineguide.push(linker);
                         results.push(lineguide);
-                        console.log("Considering Combo " + L1["lineName"] + " -> " + L2["lineName"] + "; cost = " + (index_L1_INTER - index_L1_FROM + index_L2_TO - index_L2_INTER))
+                        /*
+                        console.log("------BEGIN------")
+                        console.log("Considering Combo " + L1["lineName"] + " -> " + L2["lineName"] + "; cost = " + (costL1 + costL2))
+                        console.log("Cost breakdown: L1 ->  " + costL1 + "; L2 -> " + costL2)
+                        console.log("Sanity: L1 From " + index_L1_FROM + ", Intersection " + index_L1_INTER);
+                        console.log("------END------")
+                        */
                     }
                 }
 
@@ -434,18 +450,54 @@
                         var currentLinker = currentLineGuide[j];
                         
                         var entry = currentLinker[0];
-                        tableHTML += entry_ToString(entry);
+                        tableHTML += lineObject_ToString(entry);
                         if (currentLinker[1] != null)
                         {
                             // Display transit info
                             tableHTML += "<br>於 ";
                             tableHTML += getCommonName(getUnifiedStationID(currentLinker[1]));
-                            tableHTML += " 轉乘<br>";
+                            tableHTML += " 附近轉乘<br>";
                         }
                     }
                     tableHTML += "</td><td>";
                     // Transfer refund
                     // Feature not unlocked
+                    // begin test
+                    var interchangeObjects = [];
+                    // 1. find interchange stations
+                    for (var j = 0; j < currentLineGuide.length; j++)
+                    {
+                        var currentLinker = currentLineGuide[j];
+                        // Check if current line-edge contains a pointer to the next line
+                        if (currentLinker[1] != null)
+                        {
+                            // Pointer exists, interchange implied.
+                            // Check if the interchange is a "preferred interchange"
+                            var inter = currentLineGuide[j][1];
+                            var L1 = currentLineGuide[j][0];
+                            var L2 = currentLineGuide[j+1][0];
+                            
+                            var interInfo = getInterchangeInfoForLinePair(inter, L1, L2);
+                            if (interInfo != null)
+                            {
+                                interchangeObjects.push(interInfo);
+                            }
+                        }
+                    }
+                    if (interchangeObjects.length > 0)
+                    {
+                        tableHTML += "有轉乘優惠：<br>";
+                        for (var i = 0; i < interchangeObjects.length; i++)
+                        {
+                            tableHTML += interchangeInfo_ToString(interInfo);
+                            if (interchangeObjects.length - i - 1 > 0)
+                            {
+                                // Entries remain.
+                                tableHTML += "<br>";
+                            }
+                        }
+                    }
+                    // end test
                     tableHTML += "</td><td>";
                     // foreach linker inside this lineguide
                     // Print line notes
@@ -509,6 +561,7 @@
                     document.getElementById("search_criteria").innerHTML = "查找參數不完整。查找無效。";
                     document.getElementById("search_lv0").innerHTML = "";
                     document.getElementById("search_lv1").innerHTML = "";
+                    clearResultTable();
                     return;
                 }
 
@@ -521,9 +574,18 @@
                     document.getElementById("search_criteria").innerHTML = "起訖兩點相同，無須展示任何資料。";
                     document.getElementById("search_lv0").innerHTML = "";
                     document.getElementById("search_lv1").innerHTML = "";
-
+                    clearResultTable();
                     return;
                 }
+
+                /*
+                // begin test
+                from = "mos_ckt";
+                to = "tcl_ty";
+                from = getUnifiedStationID(from);
+                to = getUnifiedStationID(to);
+                // end test
+                */
 
                 printResults(obtainResults(from, to));
 
@@ -585,6 +647,7 @@
                 // Set up line change detector
                 document.getElementById("fromLine").addEventListener("change", event_LineChanged);
                 document.getElementById("toLine").addEventListener("change", event_LineChanged);
+                document.getElementById("versionInfo").innerHTML = getVersionString();
 
                 // Initialize table
                 clearResultTable();
@@ -624,6 +687,7 @@
             為港鐵跣底嗰陣買定個保險。
         </p>
         <p>
+            <div id="versionInfo"></div>
             <a href="https://docs.google.com/forms/d/e/1FAIpQLSeeID8c0JpELbUfUQMyG1d7OLSJ_v5IBQzu00nYJwcDw-y2Ew/viewform">意見反映</a>
         </p>
         <!-- Selections -->

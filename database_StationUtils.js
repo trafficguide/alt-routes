@@ -30,6 +30,12 @@ function getUnifiedStationID(fullID)
     {
         lineID = "erl";
     }
+    // 旺角收歸
+    if ((lineID == "erl" && stationID == "mke") || (lineID == "twl" && stationID == "mk"))
+    {
+        lineID = "erl";
+        stationID = "mk";
+    }
 
     var result = "";
     result += lineID;
