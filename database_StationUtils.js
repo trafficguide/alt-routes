@@ -42,6 +42,13 @@ function getUnifiedStationID(fullID)
     result += "_";
     result += stationID;
 
+    // Append the remaining tags, if they exist
+    for (var i = 2; i < res.length; i++)
+    {
+        result += "_";
+        result += res[i];
+    }
+
     //console.log("Converting " + fullID + " -> " + result);
     return result;
 }
