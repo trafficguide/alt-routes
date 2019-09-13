@@ -53,7 +53,7 @@
                 event_HandleStationDropdownChange(document.getElementById("fromLine"), document.getElementById("fromStation"));
                 event_HandleStationDropdownChange(document.getElementById("toLine"), document.getElementById("toStation"));
                 document.getElementById("fromStation").selectedIndex = toStation;
-                document.getElementById("toStation").selectedIndex = fromStation;
+                document.getElementById("toStation").selectedIndex = fromStation;s
             }
 
             function event_LineChanged()
@@ -275,7 +275,6 @@
                 {
                     for (var j = 0; j < candidatesCount; j++)
                     {
-                        //console.log("i j " + i + " " + j)
                         if (j == i)
                         {
                             //console.log("Self to self. Skipping.")
@@ -396,6 +395,41 @@
                                 index_L1_INTER = k;
                                 break;
                             }
+                            index_L2_TO++;
+                        }
+                        if (index_L2_TO == L2_stops.length)
+                        {
+                            // TO is not found in L2; next!
+                            continue;
+                        }
+
+                        // We now know where the FROM and TO is at in L1 and L2 respectively.
+                        // Now determine if L1 and L2 intersect each other.
+                        // Also determine location of intersection in L1 and L2
+                        // This is done by counting the number of occurences of stations
+
+                        //console.log("L1F, L2T: " + index_L1_FROM + ", " + index_L2_TO)
+                        var intersectionChecker = new Object();
+                        var index_L1_INTER = -1;
+                        var index_L2_INTER = -1;
+                        for (var k = index_L1_FROM; k < L1_stops.length; k++)
+                        {
+                            // The associative array is definitely empty, no need to check further.
+                            intersectionChecker[getUnifiedStationID(L1_stops[k])] = 1;
+                        }
+                        for (var k = index_L2_TO; k >= 0; k--)
+                        {
+                            if (typeof intersectionChecker[getUnifiedStationID(L2_stops[k])] != "undefined")
+                            {
+                                // Intersection found!
+                                index_L2_INTER = k;
+                                break;
+                            }
+                        }
+                        if (index_L2_INTER == -1)
+                        {
+                            // Intersection does not exist, check next pair
+                            continue;
                         }
                         if (index_L1_INTER == -1)
                         {
@@ -583,7 +617,7 @@
                     //console.log("result length = " + results.length)
                     //console.log("begin printing row " + i)
                     tableHTML += "<tr><td>";
-                    
+
                     var currentLineGuide = results[i];
                     // Very important: check if the result is a single line or a line combo
                     var isDirectLine = (currentLineGuide.length == 1);
@@ -688,6 +722,7 @@
                             tableHTML += "<br>";
                         }
                     }
+                    
                     tableHTML += "</td></tr>"
                     //console.log("row complete")
                 }
