@@ -5,7 +5,13 @@ function initializeMapping()
     commonNameMapping = new Object();
 
     // 東鐵線
-    commonNameMapping[getUnifiedStationID("erl_st")] = "沙田站/市中心";
+    commonNameMapping[getUnifiedStationID("erl_adm")] = "金鐘/政總";
+    commonNameMapping[getUnifiedStationID("erl_exh")] = "會展/灣仔北";
+    commonNameMapping[getUnifiedStationID("erl_hh")] = "紅磡/紅隧轉車站";
+    commonNameMapping[getUnifiedStationID("erl_mke")] = "太子/旺角";
+    commonNameMapping[getUnifiedStationID("erl_klt")] = "九龍塘/又一城";
+    commonNameMapping[getUnifiedStationID("erl_twa")] = "大圍/新翠";
+    commonNameMapping[getUnifiedStationID("erl_st")] = "沙田站/市中心/大會堂";
     commonNameMapping[getUnifiedStationID("erl_ft")] = "火炭/山尾街";
     commonNameMapping[getUnifiedStationID("erl_cuhk")] = "馬料水/中文大學";
     commonNameMapping[getUnifiedStationID("erl_tpm")] = "大埔墟/廣福";
@@ -23,6 +29,13 @@ function initializeMapping()
     commonNameMapping[getUnifiedStationID("tmle_stw")] = "沙田圍/沙角";
     commonNameMapping[getUnifiedStationID("tmle_ckt")] = "秦石/車公廟";
     commonNameMapping[getUnifiedStationID("tmle_twa")] = "大圍/新翠";
+
+    // Temporary
+    commonNameMapping["ill_wc"] = "灣仔";
+
+    // Special interchange stations
+    commonNameMapping["x_lekyuenestate_south"] = "瀝源";
+    commonNameMapping["x_wantaukoklane_east"] = "運頭角里";
 }
 
 /**
