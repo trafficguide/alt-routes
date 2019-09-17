@@ -36,6 +36,7 @@ function displayDetailedStats() {
     stats += lineType_WALK.getValue() + "：" + WALK_HK18_ALL.length + "\n";
     stats += lineType_KMB.getValue() + "：" + KMB_PURE_HK18_ALL.length + "\n";
     stats += lineType_GMB_NT.getValue() + "：" + GMB_HK18_ALL.length + "\n";
+    stats += lineType_HARBOUR.getValue() + "：" + CHT_HK18_ALL.length + "\n";
     stats += "\n註：每一項資料代表一方向的、由起至訖的行車；循環線只計為一項。";
     alert(stats);
 }

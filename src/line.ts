@@ -72,6 +72,10 @@ class Line
         {
             return "http://www.16seats.net/chi/gmb/gn_" + this.name.toLowerCase() + ".html";
         }
+        if (this.type == lineType_HARBOUR)
+        {
+            return "https://hkbus.fandom.com/wiki/過海隧巴" + this.name + "線";
+        }
 
         return this.url;
     }
@@ -100,6 +104,10 @@ class Line
         if (this.isGreenMinibus())
         {
             shortID += "<font color='green'>" + this.type.getValue() + "</font>";
+        }
+        else if (this.type == lineType_HARBOUR)
+        {
+            shortID += "<font color='purple'>" + this.type.getValue() + "</font>";
         }
         else
         {

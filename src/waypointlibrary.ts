@@ -209,15 +209,21 @@ const KwongFukRoad = new Waypoint("kwongfukroad", "廣福路").markAttributes("x
 const KwongFukEstate = new Waypoint("kwongfukestate", "廣福邨").markAttributes("s").addNeighbor(MTR_erl_taipomarket);
 const LeiMukShueEstate = new Waypoint("leimukshue", "梨木樹邨/石圍角");
 const NinaTowers = new Waypoint("nina", "如心廣場").addNeighbor(MTR_tml_tsuenwanwest);
-const ChungOnStreet = new Waypoint("chungonstreet", "").addNeighbor(MTR_twl_tsuenwan);
-const ShingMunTunnel_Interchange = new Waypoint("smtInterchange", "").markAttributes("x");
-const ShingMunTunnel = new Waypoint("smtActual", "").markAttributes("i");
-const ShatinTownCenter = new Waypoint("stcenter", "").addNeighbor(MTR_erl_shatin);
-const ShatinTownHall = new Waypoint("sttownhall", "").addNeighbor(MTR_erl_shatin).addNeighbor(ShatinTownCenter);
-const FoTanTsuen = new Waypoint("fotanvillage", "").addNeighbor(MTR_erl_fotan);
-const ChevalierGarden = new Waypoint("chevalier", "").addNeighbor(MTR_mos_taishuihang);
-const KamYingCourt = new Waypoint("kamyingcourt", "").addNeighbor(LeeOnEstate);
-const ToloHighway_TaiPo = new Waypoint("tlh_taipo", "").markAttributes("i");
+const ChungOnStreet = new Waypoint("chungonstreet", "眾安街").addNeighbor(MTR_twl_tsuenwan);
+const ShingMunTunnel_Interchange = new Waypoint("smtInterchange", "城隧轉車站").markAttributes("x");
+const ShingMunTunnel = new Waypoint("smtActual", "城門隧道").markAttributes("i");
+const ShatinTownCenter = new Waypoint("stcenter", "沙田市中心").addNeighbor(MTR_erl_shatin);
+const ShatinTownHall = new Waypoint("sttownhall", "沙田大會堂").addNeighbor(MTR_erl_shatin).addNeighbor(ShatinTownCenter);
+const FoTanTsuen = new Waypoint("fotanvillage", "火炭村").addNeighbor(MTR_erl_fotan);
+const ChevalierGarden = new Waypoint("chevalier", "富安花園").addNeighbor(MTR_mos_taishuihang);
+const KamYingCourt = new Waypoint("kamyingcourt", "錦英苑").addNeighbor(LeeOnEstate);
+const ToloHighway_TaiPo = new Waypoint("tlh_taipo", "吐露港公路 (大埔)").markAttributes("i");
+const FanlingHighway_Interchange = new Waypoint("flh_interchange", "粉嶺公路轉車站").markAttributes("i");
+const EastHarbourTunnel = new Waypoint("eht", "東區海底隧道").markAttributes("i");
+const EastHarbourTunnel_Interchange = new Waypoint("eht_interchange", "東隧轉車站").markAttributes("x");
+const OldTatesTunnel = new Waypoint("ott", "大老山隧道").markAttributes("i");
+const OldTatesTunnel_Interchange = new Waypoint("ott_interchange", "大老山轉車站").markAttributes("x");
+const KowloonHospital = new Waypoint("klhospital", "九龍醫院");
 
 function obtainAllMTRWaypoints(): Array<Waypoint>
 {

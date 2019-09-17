@@ -15,4 +15,5 @@ var lineType_KMB = new LineType("kmb", "九巴");
 var lineType_GMB_HKI = new LineType("gmb", "綠巴");
 var lineType_GMB_KL = new LineType("gmb", "綠巴");
 var lineType_GMB_NT = new LineType("gmb", "綠巴");
+var lineType_HARBOUR = new LineType("cht", "過海");
 var lineType_WALK = new LineType("walk", "步行");
