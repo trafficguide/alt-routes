@@ -9,6 +9,7 @@ class Waypoint
      * Basically, while some waypoints are distinct, they are close enouogh that you can consider them as the same waypoint.
      */
     neighbours: Array<Waypoint> = [];
+    traverseCost: number = 1;
     flagInterchange: boolean = false;
     flagSpecial: boolean = false;
     flagInternal: boolean = false;
@@ -51,34 +52,61 @@ class Waypoint
     }
 
     /**
-     * The mark is persistent. You cannot unmark the Waypoint.
+     * Marks the waypoint according to these rules:
+     * 
+     * x: interchange-only station
+     * 
+     * s: special station with interchanges
+     * 
+     * i: internal station
+     * 
      * @param flag 
      */
-    markAttributes(flag: string): void
+    markAttributes(flag: string): Waypoint
     {
-        if (flag.indexOf("x"))
+        if (flag.indexOf("x") != -1)
         {
             this.flagInterchange = true;
         }
-        if (flag.indexOf("s"))
+        if (flag.indexOf("s") != -1)
         {
             this.flagSpecial = true;
         }
-        if (flag.indexOf("i"))
+        if (flag.indexOf("i") != -1)
         {
             this.flagInternal = true;
         }
+
+        return this;
     }
 
-    addNeighbor(other: Waypoint): void
+    isNeighborOf(other: Waypoint): boolean
     {
-        if (this.neighbours.indexOf(other) == -1)
+        return this.neighbours.indexOf(other) != -1;
+    }
+
+    addNeighbor(other: Waypoint): Waypoint
+    {
+        if (!this.isNeighborOf(other))
         {
             this.neighbours.push(other);
         }
-        if (other.neighbours.indexOf(this) == -1)
+        if (!other.isNeighborOf(this))
         {
             other.neighbours.push(this);
         }
+
+        return this;
+    }
+
+    setTraverseCost(newCost: number): Waypoint
+    {
+        this.traverseCost = newCost;
+        return this;
+    }
+
+    getTraverseCost(): number
+    {
+        return this.traverseCost;
     }
 }
