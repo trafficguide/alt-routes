@@ -39,14 +39,16 @@ var Line = /** @class */ (function () {
         return this.flagCircular;
     };
     Line.prototype.calculateURL = function () {
+        // Using USHB to support local groups; also, bus fandom is too nerdy for the average user.
+        // For minibus, the 16seats.net is average enough for user-level nneds.
         if (this.type == lineType_KMB) {
-            return "https://hkbus.fandom.com/wiki/九巴" + this.name + "線";
+            return "https://search.ushb.net/bus/KMB/" + this.name;
         }
         if (this.type == lineType_GMB_NT) {
             return "http://www.16seats.net/chi/gmb/gn_" + this.name.toLowerCase() + ".html";
         }
         if (this.type == lineType_HARBOUR) {
-            return "https://hkbus.fandom.com/wiki/過海隧巴" + this.name + "線";
+            return "https://search.ushb.net/bus/XHT/" + this.name;
         }
         return this.url;
     };
