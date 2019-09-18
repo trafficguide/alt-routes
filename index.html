@@ -4,853 +4,114 @@
         <title>港鐵替代路線 Replace MTR</title>
         <meta charset="UTF-16">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Previous version JS references -->
+        <!--
         <script src="database_AllLines.js"></script>
         <script src="database_StationUtils.js"></script>
         <script src="database_ShortID.js"></script>
         <script src="station_utilities.js"></script>
         <script src="line_utilities.js"></script>
         <script src="interchange_manager.js"></script>
+        -->
+        <!-- TypeScript JS scripts -->
+        <!-- From basic to complex -->
+        <script src="src/waypoint.js"></script>
+        <script src="src/line.js"></script>
+        <script src="src/connection.js"></script>
+        <script src="src/path.js"></script>
+        <!-- Library-styled scripts -->
+        <script src="src/waypointlibrary.js"></script>
+        <script src="src/linetype.js"></script>
+        <script src="src/linelibrary.js"></script>
+        <script src="src/pathfinder.js"></script>
+        <script src="src/mtrSelector.js"></script>
+        <!-- Main script: controlling everything from a centralized control. -->
+        <script src="src/mainscript.js"></script>
         <script>
-            var cachedDB = null;
-            var totalLines = 0;
-            var displayedLines = 0;
-            var displayedCombos = -1;
+            var fromSelector;
+            var toSelector;
 
-            function cacheDatabase()
-            {
-                cachedDB = database_GetAllAndRaw();
-            }
-
-            function getCachedDatabase()
-            {
-                if (cachedDB == null)
-                {
-                    cacheDatabase();
-                }
-
-                return cachedDB;
-            }
-
-            function getVersionString()
-            {
-                return "Version: 13 September, 2019";
-            }
-
-            function clearResultTable()
-            {
-                document.getElementById("results").innerHTML = "<table><tr><th style='width: 40%; min-width:280px'>路線</th><th style='width: 40%; min-width:280px'>轉乘優惠</th><th style='width: 20%; min-width:140px'>備註</th></tr></table>";
-            }
-
+            /**
+             * Mechanically swaps the buttons in FROM and TO.
+             */
             function swapFromAndTo()
             {
-                var tempLine = document.getElementById("fromLine").selectedIndex;
-                var fromStation = document.getElementById("fromStation").selectedIndex;
-                var toStation = document.getElementById("toStation").selectedIndex;
+                // Save values before swapping
+                let fromLine = document.getElementById("fromLine").selectedIndex;
+                let fromStation = document.getElementById("fromStation").selectedIndex;
+                let toStation = document.getElementById("toStation").selectedIndex;
+                // Swap lines
                 document.getElementById("fromLine").selectedIndex = document.getElementById("toLine").selectedIndex;
-                document.getElementById("toLine").selectedIndex = tempLine;
+                document.getElementById("toLine").selectedIndex = fromLine;
                 // Force update of the station dropdown first before we apply the values
                 // Otherwise, since the changed event is never fired, strange items will be chosen.
-                event_HandleStationDropdownChange(document.getElementById("fromLine"), document.getElementById("fromStation"));
-                event_HandleStationDropdownChange(document.getElementById("toLine"), document.getElementById("toStation"));
+                fromSelector.updateDropdown();
+                toSelector.updateDropdown();
+                // Finally re-selecting the stations
                 document.getElementById("fromStation").selectedIndex = toStation;
-                document.getElementById("toStation").selectedIndex = fromStation;s
-            }
-
-            function event_LineChanged()
-            {
-                var stationsDropdownObj;
-                if (this.id == "fromLine")
-                {
-                    stationsDropdownObj = document.getElementById("fromStation");
-                }
-                else
-                {
-                    stationsDropdownObj = document.getElementById("toStation");
-                }
-                event_HandleStationDropdownChange(this, stationsDropdownObj);
-            }
-
-            function event_HandleStationDropdownChange(lineDropdown, stationDropdown)
-            {
-                var optionList = "<option value='0'>---</option>";
-                var selectedLine = lineDropdown[lineDropdown.selectedIndex].value;
-                if (selectedLine == "erl")
-                {
-                    optionList += "<option value='adm'>金鐘</option>";
-                    optionList += "<option value='exh'>會展</option>";
-                    optionList += "<option value='hh'>紅磡</option>";
-                    optionList += "<option value='mke'>旺角東</option>";
-                    optionList += "<option value='klt'>九龍塘</option>";
-                    optionList += "<option value='twa'>大圍</option>";
-                    optionList += "<option value='st'>沙田</option>";
-                    optionList += "<option value='ft'>火炭</option>";
-                    optionList += "<option value='cuhk'>大學</option>";
-                    optionList += "<option value='tpm'>大埔墟</option>";
-                    optionList += "<option value='two'>太和</option>";
-                    optionList += "<option value='fl'>粉嶺</option>";
-                    optionList += "<option value='ss'>上水</option>";
-                }
-                else if (selectedLine == "tmle")
-                {
-                    optionList += "<option value='wks'>烏溪沙</option>";
-                    optionList += "<option value='mos'>馬鞍山</option>";
-                    optionList += "<option value='ho'>恆安</option>";
-                    optionList += "<option value='tsh'>大水坑</option>";
-                    optionList += "<option value='sm'>石門</option>";
-                    optionList += "<option value='cto'>第一城</option>";
-                    optionList += "<option value='stw'>沙田圍</option>";
-                    optionList += "<option value='ckt'>車公廟</option>";
-                    optionList += "<option value='twa'>大圍</option>";
-                    optionList += "<option value='hk'>顯徑</option>";
-                }
-                stationDropdown.selectedIndex = 0;
-                stationDropdown.innerHTML = optionList;
+                document.getElementById("toStation").selectedIndex = fromStation;
             }
 
             /**
-             * Returns a list of lines (or line-combos) that matches the search criteria.
-             * 
-             * Note that the return value is an array of linkers:
-             * [[[line, transfer, cost], [line, null, cost]], [[line, null, cost]], ...]
+             * A wrapper to signal the correct MTRSelector to update itself.
              */
-            function obtainResults(from, to)
+            function event_LineChanged()
             {
-                //console.log("Obtained " + from + " " + to)
-                if (from === to)
+                if (this.id == "fromLine")
                 {
-                    // Same location, no need to obtain results.
-                    return [];
-                }
-
-                var database = getCachedDatabase();
-
-                var results = [];
-                var tempResults = [];
-                var minimumCost = Infinity;
-
-                // Level 0: direct lines
-                for (var i = 0; i < database.length; i++)
-                {
-                    var j;
-                    var index_FROM = -1;
-                    var index_TO = -1;
-                    var listOfStations = database[i]["lineStops"];
-                    for (j = 0; j < listOfStations.length; j++)
-                    {
-                        if (getUnifiedStationID(listOfStations[j]) == from)
-                        {
-                            break;
-                        }
-                    }
-                    if (j == listOfStations.length)
-                    {
-                        // Line does not involve fromStation.
-                        // Rejected.
-                        continue;
-                    }
-                    index_FROM = j;
-                    // We are not setting initial action to j++ because that will cause out-of-bounds
-                    // if we stopped at the end of the line.
-                    for (j = j; j < listOfStations.length; j++)
-                    {
-                        if (getUnifiedStationID(listOfStations[j]) == to)
-                        {
-                            break;
-                        }
-                    }
-                    if (j == listOfStations.length)
-                    {
-                        // Line does not involve toStation, or toStation does not appear after fromStation.
-                        // Rejected.
-                        continue;
-                    }
-                    index_TO = j;
-
-                    // Calculate line cost, to be used to find "faster alternatives"
-                    var costL0 = 0;
-                    for (var k = index_FROM; k < index_TO; k++)
-                    {
-                        // Ignore the interchange station if the next station is a regular station.
-                        if (station_GetIsInterchangeStation(listOfStations[k]))
-                        {
-                            if (!station_GetIsInterchangeStation(listOfStations[k + 1]))
-                            {
-                                continue;
-                            }
-                        }
-                        costL0++;
-                    }
-
-                    // Refer to function documentation for explaining the linker system.
-                    console.log("Found direct line " + database[i]["lineName"] + " with cost " + costL0);
-                    var linker = [];
-                    linker.push(database[i], null, costL0);
-                    var lineguide = [];
-                    lineguide.push(linker);
-                    tempResults.push(lineguide);
-                }
-                //console.log("stage 1 results " + tempResults + "; length " + tempResults.length);
-
-                // Optionally sort them a bit
-                // Push the sorted list back to the results list
-                displayedLines = tempResults.length;
-                if (displayedLines > 0)
-                {
-                    // Direct lines available.
-                    // Still, also consider those transfer combos that have lower cost, simply as a matter of having alternatives.
-                    results = results.concat(tempResults);
-                    tempResults = [];
-                    //console.log("results " + results + "; tempresults " + tempResults)
-
-                    // Find minimum cost of direct lines
-                    for (var i = 0; i < results.length; i++)
-                    {
-                        var currentCost = results[i][0][2];
-                        console.log("cost is " + currentCost)
-                        // Ignore the interchange station if the next station is a regular station.
-                        if (currentCost < minimumCost)
-                        {
-                            minimumCost = currentCost;
-                        }
-                    }
-                    //console.log("Minimum cost is now " + minimumCost)
+                    fromSelector.updateDropdown();
                 }
                 else
                 {
-                    results = [];
+                    toSelector.updateDropdown();
                 }
-
-                // Additional feature:
-                // Level 1: one-transfer combos
-
-                // Find lines that contains either From or To
-                var tempResults_1T = [];
-                var lineCandidates = [];
-                for (var i = 0; i < database.length; i++)
-                {
-                    // foreach line:
-                    var line = database[i];
-                    // If direct lines can already handle the journey, then no need to include it again.
-                    var shouldBreak = false;
-                    for (var j = 0; j < results.length; j++)
-                    {
-                        // Supposedly they should be referencing to the same stuff.
-                        if (line == results[j][0][0])
-                        {
-                            shouldBreak = true;
-                        }
-                    }
-                    if (shouldBreak)
-                    {
-                        continue;
-                    }
-
-                    var stops = line["lineStops"];
-                    for (var j = 0; j < stops.length; j++)
-                    {
-                        // if line contains From or To as one of its stations
-                        var currentStop = getUnifiedStationID(stops[j]);
-                        if (currentStop == from || currentStop == to)
-                        {
-                            // Add it to the list of lines
-                            lineCandidates.push(line);
-                            // No need to check further for this line.
-                            break;
-                        }
-                    }
-                }
-
-                /*
-                console.log("Line combo candidates are ");
-                for (var i = 0; i < lineCandidates.length; i++)
-                {
-                    console.log(lineCandidates[i]["lineName"]);
-                }
-                */
-
-                // We now have a list of lines that contains either the From or the To (or both)
-                // Directly check line combos
-                var candidatesCount = lineCandidates.length;
-                for (var i = 0; i < candidatesCount; i++)
-                {
-                    for (var j = 0; j < candidatesCount; j++)
-                    {
-                        if (j == i)
-                        {
-                            //console.log("Self to self. Skipping.")
-                            continue;
-                        }
-
-                        var L1 = lineCandidates[i];
-                        var L2 = lineCandidates[j];
-                        var L1_stops = L1["lineStops"];
-                        var L2_stops = L2["lineStops"];
-                        var index_L1_FROM = 0;
-                        var index_L2_TO = 0;
-
-                        //console.log("Preliminary for pair " + L1["lineName"] + " -> " + L2["lineName"])
-
-                        // Locate both FROM and TO in L1 and L2 respectively
-                        while (index_L1_FROM < L1_stops.length)
-                        {
-                            if (getUnifiedStationID(L1_stops[index_L1_FROM]) == from)
-                            {
-                                break;
-                            }
-                            index_L1_FROM++;
-                        }
-                        //console.log("left loop 1")
-                        if (index_L1_FROM == L1_stops.length)
-                        {
-                            // FROM is not found in L1; next!
-                            //console.log("FROM not found; Processing next combo.")
-                            continue;
-                        }
-                        //console.log("entering loop 2")
-                        while (index_L2_TO < L2_stops.length)
-                        {
-                            //console.log("the index is now " + index_L2_TO)
-                            if (getUnifiedStationID(L2_stops[index_L2_TO]) == to)
-                            {
-                                break;
-                            }
-                            index_L2_TO++;
-                        }
-                        if (index_L2_TO == L2_stops.length)
-                        {
-                            // TO is not found in L2; next!
-                            continue;
-                        }
-
-                        //console.log("The start-end positions are " + index_L1_FROM + " " + index_L2_TO)
-
-                        // We now know where the FROM and TO is at in L1 and L2 respectively.
-                        // Now determine if L1 and L2 intersect each other.
-                        // Also determine location of intersection in L1 and L2
-                        // This is done by counting the number of occurences of stations
-
-                        //console.log("L1F, L2T: " + index_L1_FROM + ", " + index_L2_TO)
-                        var intersectionChecker = new Object();
-                        var index_L1_INTER = -1;
-                        var index_L2_INTER = -1;
-                        for (var k = index_L1_FROM; k < L1_stops.length; k++)
-                        {
-                            // The associative array is definitely empty, no need to check further.
-                            intersectionChecker[getUnifiedStationID(L1_stops[k])] = 1;
-                        }
-                        /*
-                        console.log("Considering " + L1["lineName"] + " -> " + L2["lineName"])
-                        for (var key in intersectionChecker)
-                        {
-                            console.log("key " + key + " value " + intersectionChecker[key])
-                        }
-                        */
-                        // Just in case when the interchange station is even earlier in the line.
-                        var index_L2_INTER_X = -1;
-                        for (var k = 0; k < index_L2_TO; k++)
-                        {
-                            if (typeof intersectionChecker[getUnifiedStationID(L2_stops[k])] != "undefined")
-                            {
-                                // Intersection found!
-                                if (station_GetIsInterchangeStation(L2_stops[k]))
-                                {
-                                    index_L2_INTER_X = k;
-                                }
-                                else
-                                {
-                                    index_L2_INTER = k;
-                                    // Dont break yet, we may have better intersections further down the line.
-                                }
-                            }
-                        }
-                        // Preferrentially choose the intersection with concession
-                        if (index_L2_INTER_X != -1)
-                        {
-                            index_L2_INTER = index_L2_INTER_X;
-                        }
-                        // Otherwise, just use the regular intersection
-                        if (index_L2_INTER == -1)
-                        {
-                            // L2 does not intersect with L1, even when concession intersections are considered. Next!
-                            continue;
-                        }
-                        
-                        if (index_L2_INTER == index_L2_TO)
-                        {
-                            // Intersection is at TO; had better take L1 to arrive at TO.
-                            // This pair is meaningless.
-                            // Check next pair
-                            continue;
-                        }
-                        var intersectionID = L2_stops[index_L2_INTER];
-                        //console.log("Intersection (unified) should be " + getUnifiedStationID(intersectionID))
-                        // For the sake of completeness, also find intersection position in L1
-                        for (var k = index_L1_FROM; k < L1_stops.length; k++)
-                        {
-                            //console.log("Checking k = " + k + ", stop (unified) = " + getUnifiedStationID(L1_stops[k]))
-                            //console.log("Double-equal check will return: " + (getUnifiedStationID(L1_stops[k]) == intersectionID))
-                            //console.log("Triple-equal check will return: " + (getUnifiedStationID(L1_stops[k]) === intersectionID))
-                            if (getUnifiedStationID(L1_stops[k]) == getUnifiedStationID(intersectionID))
-                            {
-                                index_L1_INTER = k;
-                                break;
-                            }
-                            index_L2_TO++;
-                        }
-                        if (index_L2_TO == L2_stops.length)
-                        {
-                            // TO is not found in L2; next!
-                            continue;
-                        }
-
-                        // We now know where the FROM and TO is at in L1 and L2 respectively.
-                        // Now determine if L1 and L2 intersect each other.
-                        // Also determine location of intersection in L1 and L2
-                        // This is done by counting the number of occurences of stations
-
-                        //console.log("L1F, L2T: " + index_L1_FROM + ", " + index_L2_TO)
-                        var intersectionChecker = new Object();
-                        var index_L1_INTER = -1;
-                        var index_L2_INTER = -1;
-                        for (var k = index_L1_FROM; k < L1_stops.length; k++)
-                        {
-                            // The associative array is definitely empty, no need to check further.
-                            intersectionChecker[getUnifiedStationID(L1_stops[k])] = 1;
-                        }
-                        for (var k = index_L2_TO; k >= 0; k--)
-                        {
-                            if (typeof intersectionChecker[getUnifiedStationID(L2_stops[k])] != "undefined")
-                            {
-                                // Intersection found!
-                                index_L2_INTER = k;
-                                break;
-                            }
-                        }
-                        if (index_L2_INTER == -1)
-                        {
-                            // Intersection does not exist, check next pair
-                            continue;
-                        }
-                        if (index_L1_INTER == -1)
-                        {
-                            // This should normally be impossible!
-                            console.log("The immpossible has happened. L1 INTER is -1.")
-                        }
-                        if (index_L1_INTER == index_L1_FROM)
-                        {
-                            // Intersection is at FROM; had better take L2 to depart from FROM.
-                            // This pair is meaningless.
-                            // Check nexy pair
-                            continue;
-                        }
-
-                        // We have found intersection.
-                        // Refer to function documentation for explanation on the linker system.
-                        var linker = [];
-                        var costL1 = 0;
-                        var costL2 = 0;
-
-                        for (var k = index_L1_FROM; k < index_L1_INTER; k++)
-                        {
-                            // Ignore the interchange station if the next station is a regular station.
-                            if (station_GetIsInterchangeStation(L1_stops[k]))
-                            {
-                                if (!station_GetIsInterchangeStation(L1_stops[k + 1]))
-                                {
-                                    continue;
-                                }
-                            }
-                            costL1++;
-                        }
-                        // Double the cose if the line is a walking line; walking is tough, dude.
-                        if (L1["isWalking"])
-                        {
-                            costL1 *= 2;
-                        }
-                        for (var k = index_L2_INTER; k < index_L2_TO; k++)
-                        {
-                            // Same rule as above.
-                            // Ignore the interchange station if the next station is a regular station.
-                            if (station_GetIsInterchangeStation(L2_stops[k]))
-                            {
-                                if (!station_GetIsInterchangeStation(L2_stops[k + 1]))
-                                {
-                                    continue;
-                                }
-                            }
-                            costL2++;
-                        }
-                        // Same rule as above.
-                        if (L2["isWalking"])
-                        {
-                            costL2 *= 2;
-                        }
-
-                        console.log("Line combo " + L1["lineName"] + " " + L2["lineName"] + ", intersecting at " + intersectionID + ", has cost " + costL1 + " " + costL2)
-
-                        linker.push(L1, intersectionID, costL1);
-                        var lineguide = [];
-                        lineguide.push(linker);
-                        linker = [];
-                        linker.push(L2, null, costL2);
-                        lineguide.push(linker);
-                        tempResults_1T.push(lineguide);
-
-                        //console.log("Considering Combo " + L1["lineName"] + " -> " + L2["lineName"] + "; cost = " + (costL1 + costL2))
-                        /*
-                        console.log("------BEGIN------")
-                        console.log("Considering Combo " + L1["lineName"] + " -> " + L2["lineName"] + "; cost = " + (costL1 + costL2))
-                        console.log("Cost breakdown: L1 ->  " + costL1 + "; L2 -> " + costL2)
-                        console.log("Sanity: L1 From " + index_L1_FROM + ", Intersection " + index_L1_INTER);
-                        console.log("------END------")
-                        */
-                    }
-                }
-
-                /*
-                // Filtration effort:
-                // Only those line combos with total cost less than the average of all combos will be counted as "valid combos".
-                // This is to combat non-sensical "go back and go forth" situations that may arise from simple observation.
-                var averageTotalCost = 0;
-                for (var i = 0; i < results.length; i++)
-                {
-                    var currentLineGuide = results[i];
-                    for (var j = 0; j < currentLineGuide.length; j++)
-                    {
-                        var currentEdge = currentLineGuide[j];
-                        // Adding in the cost.
-                        averageTotalCost += currentEdge[2];
-                    }
-                }
-                averageTotalCost /= results.length;
-                console.log("Average cost is: " + averageTotalCost);
-                // We now have the average cost ready.
-                // We may now remove unoptimal solutions using this value.
-                for (var i = results.length - 1; i >= 0; i--)
-                {
-                    var currentLineGuide = results[i];
-                    var totalCost = 0;
-                    for (var j = 0; j < currentLineGuide.length; j++)
-                    {
-                        var currentEdge = currentLineGuide[j];
-                        // Adding in the cost.
-                        totalCost += currentEdge[2];
-                    }
-                    if (totalCost >= averageTotalCost)
-                    {
-                        // Removes at index
-                        results.splice(i, 1);
-                    }
-                }
-                */
-
-                // Filtration effort:
-                // Only the fastest path (i.e., path with the least cost) will be displayed.
-                // This should be most effective.
-                //console.log("Search loops have been left")
-                //var minCostSeen = Infinity;
-                // We already have minimumCost set to Infinity or lower from above.
-                //console.log("Results length: " + results.length)
-                if (minimumCost == Infinity)
-                {
-                    
-                }
-                for (var i = 0; i < tempResults_1T.length; i++)
-                {
-                    var currentLineGuide = tempResults_1T[i];
-                    var currentCost = 0;
-                    for (var j = 0; j < currentLineGuide.length; j++)
-                    {
-                        var currentEdge = currentLineGuide[j];
-                        // Adding in the cost.
-                        currentCost += currentEdge[2];
-                    }
-                    if (currentCost < minimumCost)
-                    {
-                        minimumCost = currentCost;
-                    }
-                }
-                
-                //console.log("Min cost determined to be " + minCostSeen)
-                // We have now found the minimum cost.
-                // Filter out unoptimal solutions.
-                for (var i = tempResults_1T.length - 1; i >= 0; i--)
-                {
-                    var currentLineGuide = tempResults_1T[i];
-                    var totalCost = 0;
-                    for (var j = 0; j < currentLineGuide.length; j++)
-                    {
-                        var currentEdge = currentLineGuide[j];
-                        // Adding in the cost.
-                        totalCost += currentEdge[2];
-                    }
-                    if (totalCost > minimumCost)
-                    {
-                        // Removes at index
-                        tempResults_1T.splice(i, 1);
-                    }
-                }
-
-                // Update stats
-                displayedCombos = tempResults_1T.length;
-                //console.log("now remaining entries # " + displayedCombos)
-                results = results.concat(tempResults_1T);
-                //tempResults = [];
-                //console.log("result: " + results)
-                // Optionally sort them a bit
-                return results;
             }
 
-            function printResults(results)
+            function signal_BeginSearch()
             {
-                // Print results table
-                var tableHTML = "<table><tr><th style='width: 40%; min-width:280px'>路線</th><th style='width: 40%; min-width:280px'>轉乘優惠</th><th style='width: 20%; min-width:140px'>備註</th></tr>";
-                //alert("Hey! Printing from print results.");
-
-                // Alert: results will look something like this:
-                // [[[line, transfer], [line, null]], [[line, null]], ...]
-                // results = [line guides], line guides = [linkers]
-
-                // foreach lineguide in this results
-                for (var i = 0; i < results.length; i++)
-                {
-                    //console.log("result length = " + results.length)
-                    //console.log("begin printing row " + i)
-                    tableHTML += "<tr><td>";
-
-                    var currentLineGuide = results[i];
-                    // Very important: check if the result is a single line or a line combo
-                    var isDirectLine = (currentLineGuide.length == 1);
-                    // foreach linker inside this lineguide
-                    // Print line introduction
-                    for (var j = 0; j < currentLineGuide.length; j++)
-                    {
-                        var currentLinker = currentLineGuide[j];
-                        
-                        var entry = currentLinker[0];
-                        tableHTML += lineObject_ToString(entry);
-                        if (currentLinker[1] != null)
-                        {
-                            // Display transit info
-                            tableHTML += "<br>於 ";
-                            tableHTML += getCommonName(getUnifiedStationID(currentLinker[1]));
-                            tableHTML += " (或附近)轉乘<br>";
-                        }
-                    }
-                    tableHTML += "</td><td>";
-                        //console.log("printing concessions")
-                        
-                    // Interchange concessions
-                    var interchangeObjects = [];
-                    // 1. find interchange stations
-                    for (var j = 0; j < currentLineGuide.length; j++)
-                    {
-                        var currentLinker = currentLineGuide[j];
-                        // Check if current line-edge contains a pointer to the next line
-                        if (currentLinker[1] != null)
-                        {
-                            // Pointer exists, interchange implied.
-                            // Check if the interchange is a "preferred interchange"
-                            var inter = currentLineGuide[j][1];
-                            var L1 = currentLineGuide[j][0];
-                            var L2 = currentLineGuide[j+1][0];
-                            
-                            var interInfo = getInterchangeInfoForLinePair(inter, L1, L2);
-                            if (interInfo != null)
-                            {
-                                interchangeObjects.push(interInfo);
-                            }
-                        }
-                    }
-                    if (interchangeObjects.length > 0)
-                    {
-                        // Interchange concession exists
-                        //tableHTML += "有轉乘優惠：<br>";
-                        for (var k = 0; k < interchangeObjects.length; k++)
-                        {
-                            tableHTML += interchangeInfo_ToString(interInfo);
-                            if (interchangeObjects.length - k - 1 > 0)
-                            {
-                                // Entries remain.
-                                tableHTML += "<br>";
-                            }
-                        }
-                    }
-                    else
-                    {
-                        // No fare concession
-                        tableHTML += "無";
-                    }
-
-                    //console.log("printing notes")
-                    tableHTML += "</td><td>";
-                    // foreach linker inside this lineguide
-                    // Print line notes
-                    for (var j = 0; j < currentLineGuide.length; j++)
-                    {
-                        var currentLinker = currentLineGuide[j];
-                        var entry = currentLinker[0];
-
-                        if (!isDirectLine)
-                        {
-                            // Specify line info for line combos
-                            tableHTML += lineObject_GetShortID(entry);
-                            tableHTML += "：";
-                        }
-                        if (entry["isCircular"])
-                        {
-                            tableHTML += "循環線";
-                            if (entry["notes"])
-                            {
-                                tableHTML += "；";
-                            }
-                        }
-                        if (entry["notes"])
-                        {
-                            tableHTML += entry["notes"];
-                        }
-                        else
-                        {
-                            if (!isDirectLine && !entry["isCircular"])
-                            {
-                                tableHTML += "無";
-                            }
-                        }
-                        if (currentLinker[1] != null)
-                        {
-                            // Some entries remain
-                            tableHTML += "<br>";
-                        }
-                    }
-                    
-                    tableHTML += "</td></tr>"
-                    //console.log("row complete")
-                }
-
-                tableHTML += "</table>";
-
-                // Finally printing it
-                document.getElementById("results").innerHTML = tableHTML;
-            }
-
-            function conductSearch()
-            {
-                var from = document.getElementById("fromLine").value + "_" + document.getElementById("fromStation").value;
-                var to = document.getElementById("toLine").value + "_" + document.getElementById("toStation").value;
-
-                // Check validity.
-                if (from.includes("0") || to.includes("0"))
-                {
-                    // Incomplete selection! Cannot compute.
-                    document.getElementById("search_criteria").innerHTML = "查找參數不完整。查找無效。";
-                    document.getElementById("search_lv0").innerHTML = "";
-                    document.getElementById("search_lv1").innerHTML = "";
-                    clearResultTable();
-                    return;
-                }
-
-                // Check same station.
-                from = getUnifiedStationID(from);
-                to = getUnifiedStationID(to);
-                if (from == to)
-                {
-                    // Same location! Search not necessary.
-                    document.getElementById("search_criteria").innerHTML = "起訖兩點相同，無須展示任何資料。";
-                    document.getElementById("search_lv0").innerHTML = "";
-                    document.getElementById("search_lv1").innerHTML = "";
-                    clearResultTable();
-                    return;
-                }
-
-                /*
-                // begin test
-                from = "mos_ckt";
-                to = "tcl_ty";
-                from = getUnifiedStationID(from);
-                to = getUnifiedStationID(to);
-                // end test
-                */
-
-                printResults(obtainResults(from, to));
-
-                // Determine readble strings
-                var readableFromLine = document.getElementById("fromLine").options[document.getElementById("fromLine").selectedIndex].text;
-                var readableFromStation = document.getElementById("fromStation").options[document.getElementById("fromStation").selectedIndex].text;
-                var readableToLine = document.getElementById("toLine").options[document.getElementById("toLine").selectedIndex].text;
-                var readableToStation = document.getElementById("toStation").options[document.getElementById("toStation").selectedIndex].text;
-
-                // Display search criteria
-                var criteriaString = "現正檢視由 ";
-                criteriaString += readableFromLine;
-                criteriaString += " ";
-                criteriaString += readableFromStation;
-                criteriaString += " 往 ";
-                criteriaString += readableToLine;
-                criteriaString += " ";
-                criteriaString += readableToStation;
-                criteriaString += " 的路線。"
-                document.getElementById("search_criteria").innerHTML = criteriaString;
-
-                // Display count of Lv0 lines
-                if (displayedLines > 0)
-                {
-                    // Direct lines are available
-                    var lv0Count = "有 ";
-                    lv0Count += displayedLines;
-                    lv0Count += " 條直達路線。";
-                    document.getElementById("search_lv0").innerHTML = lv0Count;
-                    if (displayedCombos > 0)
-                    {
-                        document.getElementById("search_lv1").innerHTML = "正同時展示 " + displayedCombos + " 組可考慮的一次轉車組合。";
-                    }
-                    else
-                    {
-                        document.getElementById("search_lv1").innerHTML = "無須展示任何轉車組合。";
-                    }
-                }
-                else
-                {
-                    // No direct lines available.
-                    document.getElementById("search_lv0").innerHTML = "沒有任何直達路線。";
-                    // Display count of Lv1 lines
-                    var lv1Count = "有 ";
-                    lv1Count += displayedCombos;
-                    lv1Count += " 組一次轉車組合。";
-                    document.getElementById("search_lv1").innerHTML = lv1Count;
-                }
-
+                let generalFeedback = document.getElementById("search_criteria");
+                let directLineFeedback = document.getElementById("search_lv0");
+                let interchangeLineFeedback = document.getElementById("search_lv1");
+                let resultTable = document.getElementById("results");
+                conductSearch(fromSelector, toSelector, generalFeedback, directLineFeedback, interchangeLineFeedback, resultTable);
                 return;
             }
 
-            document.addEventListener("DOMContentLoaded", function()
+            /**
+             * Do all your initialization here.
+             */
+            function initializeComponents()
             {
-                // Finally count and print how many entries are there.
-                var count;
-                for (count = 0; count < cachedDB.length; count++)
-                {
+                // Print some database stats.
+                prepareDatabaseStats(document.getElementById("db_stats_count"));
 
-                }
-                var string = "資料庫共存有 ";
-                string += count;
-                string += " 項路線資料。";
-                document.getElementById("db_stats_count").innerHTML = string;
-
-                // Set up line change detector
-                document.getElementById("fromLine").addEventListener("change", event_LineChanged);
-                document.getElementById("toLine").addEventListener("change", event_LineChanged);
+                // Print version info.
                 document.getElementById("versionInfo").innerHTML = getVersionString();
 
-                // Initialize table
-                clearResultTable();
-            });
+                // Initialize the two MTRSelectors.
+                fromSelector = new MTRSelector(document.getElementById("fromLine"), document.getElementById("fromStation"));
+                toSelector = new MTRSelector(document.getElementById("toLine"), document.getElementById("toStation"));
 
-            cacheDatabase();
+                // Add some signal-change detectors.
+                document.getElementById("fromLine").addEventListener("change", event_LineChanged);
+                document.getElementById("toLine").addEventListener("change", event_LineChanged);
+
+                // Reset the MTRSelectors, such that the dropdown is immediately usable when the user "previous-pages" into this page.
+                fromSelector.updateDropdown();
+                toSelector.updateDropdown();
+
+                // Initialize the results table.
+                clearResultDisplay(document.getElementById("results"));
+            }
+
+            document.addEventListener("DOMContentLoaded", initializeComponents);
         </script>
         <style>
             *
             {
-                font-family: Microsoft JhengHei
+                font-family: Microsoft JhengHei, Microsoft YaHei, STXihei
             }
+
             table
             {
                 overflow-x: auto;
@@ -879,7 +140,7 @@
         </p>
         <p>
             <div id="versionInfo"></div>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeeID8c0JpELbUfUQMyG1d7OLSJ_v5IBQzu00nYJwcDw-y2Ew/viewform">意見反映</a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeeID8c0JpELbUfUQMyG1d7OLSJ_v5IBQzu00nYJwcDw-y2Ew/viewform" target="_blank">意見反映</a>
         </p>
         <!-- Selections -->
         <h2>查找目標</h2>
@@ -907,7 +168,7 @@
         </p>
         <p>
             <!-- Buttons -->
-            <button type="button" onclick="conductSearch()">查找</button>
+            <button type="button" onclick="signal_BeginSearch()">查找</button>
             <button type="button" onclick="swapFromAndTo()">互換</button>
         </p>
         <!-- Result printout -->
@@ -916,6 +177,7 @@
         <div id="search_criteria"></div>
         <div id="search_lv0"></div>
         <div id="search_lv1"></div>
+        <div id="externalLinkInfo">本網頁有超連結，連結至其他網站，以查閱路線詳細資訊，包括<b>車資</b>及<b>車程</b>。</div>
         <div id="test" style="overflow-x:auto;">
 
         </div>

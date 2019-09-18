@@ -1,22 +1,11 @@
-class Line
-{
-    name: string;
-    type: LineType;
-    from: string;
-    to: string;
-    /**
-     * Stores the path of the line in the form of an array of Waypoints, starting from index 0.
-     */
-    stops: Array<Waypoint>;
-    /**
-     * Stores the URL to some webpage that can describe the line in more detail.
-     */
-    url: string = "";
-    notes: string = "";
-    flagCircular: boolean = false;
-
-    constructor(lineName: string, lineType: LineType, lineFrom: string, lineTo: string, lineStops: Array<Waypoint>)
-    {
+var Line = /** @class */ (function () {
+    function Line(lineName, lineType, lineFrom, lineTo, lineStops) {
+        /**
+         * Stores the URL to some webpage that can describe the line in more detail.
+         */
+        this.url = "";
+        this.notes = "";
+        this.flagCircular = false;
         this.name = lineName;
         this.type = lineType;
         this.from = lineFrom;
@@ -28,142 +17,104 @@ class Line
         this.flagCircular = isCircular;
         */
     }
-
-    setURL(url: string): Line
-    {
+    Line.prototype.setURL = function (url) {
         this.url = url;
         return this;
-    }
-
-    setNotes(lineNotes: string): Line
-    {
+    };
+    Line.prototype.setNotes = function (lineNotes) {
         this.notes = lineNotes;
         return this;
-    }
-
-    markCircular(): Line
-    {
+    };
+    Line.prototype.markCircular = function () {
         this.flagCircular = true;
         return this;
-    }
-
-    getName(): string
-    {
+    };
+    Line.prototype.getName = function () {
         return this.name;
-    }
-
-    getStops(): Array<Waypoint>
-    {
+    };
+    Line.prototype.getStops = function () {
         return this.stops;
-    }
-
-    isCircular(): boolean
-    {
+    };
+    Line.prototype.isCircular = function () {
         return this.flagCircular;
-    }
-
-    calculateURL(): string
-    {
+    };
+    Line.prototype.calculateURL = function () {
         // Using USHB to support local groups; also, bus fandom is too nerdy for the average user.
         // For minibus, the 16seats.net is average enough for user-level nneds.
-        if (this.type == lineType_KMB)
-        {
+        if (this.type == lineType_KMB) {
             return "https://search.ushb.net/bus/KMB/" + this.name;
         }
-        if (this.type == lineType_GMB_NT)
-        {
+        if (this.type == lineType_GMB_NT) {
             return "http://www.16seats.net/chi/gmb/gn_" + this.name.toLowerCase() + ".html";
         }
-        if (this.type == lineType_HARBOUR)
-        {
+        if (this.type == lineType_HARBOUR) {
             return "https://search.ushb.net/bus/XHT/" + this.name;
         }
-
         return this.url;
-    }
-
-    isGreenMinibus(): boolean
-    {
+    };
+    Line.prototype.isGreenMinibus = function () {
         return this.type == lineType_GMB_HKI || this.type == lineType_GMB_KL || this.type == lineType_GMB_NT;
-    }
-
+    };
     /**
      * Returns short qualifier for this line.
      * Format is: NAME (TYPE)
      */
-    getHTMLShortID(): string
-    {
-        let shortID = this.name;
+    Line.prototype.getHTMLShortID = function () {
+        var shortID = this.name;
         // URL on the line ID
-        let url = this.calculateURL();
-        if (url.length > 0)
-        {
-            let aTagOpen = "<a href='" + url + "' target='_blank'>";
-            let aTagClose = "</a>";
+        var url = this.calculateURL();
+        if (url.length > 0) {
+            var aTagOpen = "<a href='" + url + "' target='_blank'>";
+            var aTagClose = "</a>";
             shortID = aTagOpen + shortID + aTagClose;
         }
         shortID += " (";
-        if (this.isGreenMinibus())
-        {
+        if (this.isGreenMinibus()) {
             shortID += "<font color='green'>" + this.type.getValue() + "</font>";
         }
-        else if (this.type == lineType_HARBOUR)
-        {
+        else if (this.type == lineType_HARBOUR) {
             shortID += "<font color='purple'>" + this.type.getValue() + "</font>";
         }
-        else
-        {
+        else {
             shortID += this.type.getValue();
         }
         shortID += ")";
-
         return shortID;
-    }
-
+    };
     /**
      * Returns the long qualifier of this line.
      * Format is: SHORT_ID FROM SYMBOL TO
      */
-    getHTMLLongID(): string
-    {
-        let htmlString = this.getHTMLShortID();
+    Line.prototype.getHTMLLongID = function () {
+        var htmlString = this.getHTMLShortID();
         htmlString += " ";
         htmlString += this.from;
-        if (this.isCircular())
-        {
+        if (this.isCircular()) {
             htmlString += " &#x21BA; ";
         }
-        else
-        {
+        else {
             htmlString += " &#x2192; ";
         }
         htmlString += this.to;
-
         return htmlString;
-    }
-
-    getNotes(): string
-    {
+    };
+    Line.prototype.getNotes = function () {
         return this.notes;
-    }
-
+    };
     /**
      * Returns the index of the waypoint, or the station which is a neighbour of the waypoint, of the given waypoint.
-     * 
+     *
      * Returns -1 if the waypoint is not found.
-     * @param waypoint 
+     * @param waypoint
      */
-    getIndexOfWaypoint(waypoint: Waypoint): number
-    {
-        for (let i = 0; i < this.stops.length; i++)
-        {
-            let currentStop = this.stops[i];
-            if (currentStop == waypoint || currentStop.isNeighborOf(waypoint))
-            {
+    Line.prototype.getIndexOfWaypoint = function (waypoint) {
+        for (var i = 0; i < this.stops.length; i++) {
+            var currentStop = this.stops[i];
+            if (currentStop == waypoint || currentStop.isNeighborOf(waypoint)) {
                 return i;
             }
         }
-
         return -1;
-    }
-}
+    };
+    return Line;
+}());
