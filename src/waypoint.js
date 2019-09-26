@@ -75,5 +75,8 @@ var Waypoint = /** @class */ (function () {
     Waypoint.prototype.getTraverseCost = function () {
         return this.traverseCost;
     };
+    Waypoint.prototype.checkEqual = function (other) {
+        return this == other || this.isNeighborOf(other);
+    };
     return Waypoint;
 }());

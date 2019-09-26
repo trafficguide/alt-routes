@@ -1,0 +1,677 @@
+
+
+function findPathsBetween_old(from: Waypoint, to: Waypoint): Array<Path>
+{
+    let allResults = Array<Path>();
+    let minCost = Infinity;
+    // If is virgin, then display all lines of the degree, regardless of cost, then mark it as "deflowered"
+    // Can't find the right word for the action, so excuse me for any offenses.
+    let isVirgin = true;
+
+    /**
+     * 0X Pathfinder
+     * Finding the direct paths.
+     */
+    // Find 0-interchange paths (i.e. direct paths)
+    let paths_0X = findPaths_0X(from, to);
+
+    // Analyze: find minimum costs
+    for (let i = 0; i < paths_0X.length; i++)
+    {
+        let cost = paths_0X[i].getTotalAdjustedCost();
+        if (cost < minCost)
+        {
+            minCost = cost;
+        }
+    }
+
+    // 0X paths analysis complete.
+    allResults = paths_0X;
+    console.log("0X gives min cost = " + minCost);
+    results_DirectCount = paths_0X.length;
+    if (results_DirectCount > 0)
+    {
+        isVirgin = false;
+    }
+
+    /**
+     * 1X Pathfinder
+     */
+    // Find 1-interchange paths
+
+    // test
+    minCost = Infinity;
+
+    let rawPaths_1X = findPaths_1X_old(from, to);
+    let processingPaths_Better0X = new Array<Path>();
+    let processingPaths_New1X = new Array<Path>();
+
+    // Distribute path results to better 0X and new 1X.
+    for (let i = 0; i < rawPaths_1X.length; i++)
+    {
+        let currentPath = rawPaths_1X[i];
+        let index_0X_Similar = -1;
+
+        // Find whether some 0X path is similar to this 1X path
+        for (let j = 0; j < paths_0X.length; i++)
+        {
+            let currentCheckPath = paths_0X[j];
+            let currentCheckCon = currentCheckPath.getConnections();
+            let occurenceCount = 0;
+
+            for (let k = 0; k < currentCheckCon.length; k++)
+            {
+                if (currentPath.pathIsContainingLine(currentCheckCon[k].getLine()))
+                {
+                    occurenceCount++;
+                }
+            }
+
+            if (occurenceCount == currentCheckCon.length)
+            {
+                index_0X_Similar = j;
+                break;
+            }
+        }
+
+        if (index_0X_Similar == -1)
+        {
+            // Nothing similar. Add to the "new items" list
+            processingPaths_New1X.push(currentPath);
+        }
+        else
+        {
+            // Something similar.
+            // Check cost also.
+            if (currentPath.getTotalAdjustedCost() < paths_0X[index_0X_Similar].getTotalAdjustedCost())
+            {
+                processingPaths_Better0X.push();
+            }
+        }
+    }
+
+    // Check the New 1X pile to find the paths with lowest cost
+    let minCost_1X = Infinity;
+    for (let i = 0; i < processingPaths_New1X.length; i++)
+    {
+        let cost = processingPaths_New1X[i].getTotalAdjustedCost();
+        if (cost < minCost_1X)
+        {
+            minCost_1X = cost;
+        }
+    }
+    for (let i = processingPaths_New1X.length - 1; i >= 0; i--)
+    {
+        if (processingPaths_New1X[i].getTotalAdjustedCost() > minCost_1X)
+        {
+            processingPaths_New1X.splice(i, 1);
+        }
+    }
+
+    // All new 1X paths processed.
+    // Prepare to merge.
+    let paths_1X = [].concat(processingPaths_Better0X, processingPaths_New1X);
+    results_InterchangeCount = paths_1X.length;
+    allResults = allResults.concat(paths_1X);
+    console.log("1X gives min cost = " + minCost_1X);
+
+    /**
+     * 2X Pathfinder
+     */
+    // Find 2-interchange paths
+    // Reset minCost
+    minCost = Infinity;
+
+    let paths_2X = findPaths_nX(from, to, 2);
+    let rawPaths_2X = findPaths_nX(from, to, 2);
+    let processingPaths_Better1X = new Array<Path>();
+    let processingPaths_New2X = new Array<Path>();
+
+    // Distribute path results to better 1X and new 2X.
+    for (let i = 0; i < rawPaths_2X.length; i++)
+    {
+        let currentPath = rawPaths_2X[i];
+        let index_1X_Similar = -1;
+
+        // Find whether some 0X path is similar to this 1X path
+        for (let j = 0; j < paths_0X.length; i++)
+        {
+            let currentCheckPath = paths_0X[j];
+            let currentCheckCon = paths_0X[j].getConnections();
+            let occurenceCount = 0;
+
+            for (let k = 0; k < currentCheckCon.length; k++)
+            {
+                if (currentPath.pathIsContainingLine(currentCheckCon[k].getLine()))
+                {
+                    occurenceCount++;
+                }
+            }
+
+            if (occurenceCount == currentCheckCon.length)
+            {
+                //index_0X_Similar = j;
+                break;
+            }
+        }
+
+        if (false)
+        {
+            // Nothing similar. Add to the "new items" list
+            processingPaths_New1X.push(currentPath);
+        }
+        else
+        {
+            // Something similar.
+            // Check cost also.
+            if (currentPath.getTotalAdjustedCost() < paths_0X[-1].getTotalAdjustedCost())
+            {
+                processingPaths_Better0X.push();
+            }
+        }
+    }
+
+    // Analyse: again, find minimum costs
+    for (let i = 0; i < paths_2X.length; i++)
+    {
+        let cost = paths_2X[i].getTotalAdjustedCost();
+        if (cost < minCost)
+        {
+            minCost = cost;
+        }
+    }
+
+    // Display all results if is virgin; splice otherwise.
+    // test
+    for (let i = paths_2X.length - 1; i >= 0; i--)
+    {
+        if (paths_2X[i].getTotalAdjustedCost() > minCost)
+        {
+            paths_2X.splice(i, 1);
+        }
+    }
+
+    if (!isVirgin)
+    {
+        
+        isVirgin = false;
+    }
+
+    // 2X paths analysis complete.
+    allResults = allResults.concat(paths_2X);
+    console.log("2X gives min cost = " + minCost);
+    results_InterchangeCount += paths_2X.length;
+
+    // If 3X searches are allowed...
+    if (shouldConduct_3X)
+    {
+        let paths_3X = findPaths_nX(from, to, 2);
+
+        // Analyse: again, find minimum costs
+        for (let i = 0; i < paths_3X.length; i++)
+        {
+            let cost = paths_3X[i].getTotalAdjustedCost();
+            if (cost < minCost)
+            {
+                minCost = cost;
+            }
+        }
+
+        // Display all results if is virgin; splice otherwise.
+        // test
+
+        for (let i = paths_3X.length - 1; i >= 0; i--)
+        {
+            if (paths_3X[i].getTotalAdjustedCost() > minCost)
+            {
+                paths_3X.splice(i, 1);
+            }
+        }
+
+        if (!isVirgin)
+        {
+            
+            isVirgin = false;
+        }
+
+        // 3X paths analysis complete.
+        allResults = allResults.concat(paths_3X);
+        results_InterchangeCount += paths_3X.length;
+    }
+
+    // Finally complete.
+    return allResults;
+}
+
+/**
+ * Finds paths from one place to another which use exactly n interchanges.
+ * 
+ * Basic sanity constraints apply, such as "can really travel using this path", "no endpoint interchanges", and "no comeback trips"
+ * 
+ * You should write your own code if you wish to filter the results by e.g. travel costs.
+ * @param from 
+ * @param to 
+ * @param n
+ */
+function findPathsDirect_nX_old(from: Waypoint, to: Waypoint, n: number): Array<Path>
+{
+    if (n <= 0)
+    {
+        return findPaths_0X(from, to);
+    }
+    else if (n == 1)
+    {
+
+    }
+    else 
+    {
+
+    }
+}
+
+/**
+ * Finds paths such that users may reach their destination without any interchanges. Returns an array of Path.
+ * @param from 
+ * @param to 
+ */
+function findPaths_0X_old(from: Waypoint, to: Waypoint): Array<Path>
+{
+    // Check if both place are the same.
+    // If both place are the same, then no need to travel at all; just walk to there!
+    if (from.checkEqual(to))
+    {
+        // Same place. No query needed. Return empty array.
+        return new Array<Path>();
+    }
+
+    // Begin search!
+    let pathfindingResults = new Array<Path>();
+    for (let i = 0; i < HK18_ALL_LINES.length; i++)
+    {
+        let currentLine = HK18_ALL_LINES[i];
+        let index_BEGIN = -1;
+        let index_END = -1;
+
+        for (let j = 0; j < currentLine.stops.length; j++)
+        {
+            let currentWaypoint = currentLine.stops[j];
+
+            if (currentWaypoint.checkEqual(from))
+            {
+                index_BEGIN = j;
+            }
+            if (currentWaypoint.checkEqual(to))
+            {
+                index_END = j;
+            }
+        }
+
+        if (index_END <= index_BEGIN)
+        {
+            // If this is true:
+
+            // Case 0: both endpoint are the same.
+            // However, we have excluded this possibility at the beginning of the method.
+
+            // Case 1: line contains neither endpoints, i.e., both values = -1
+            // This means the line is not relevant to the user.
+
+            // Case 2: line contains both endpoints, but both appeared in the wrong order.
+            // This may occur when the algorithm is processing the "inversion" of the actual line.
+
+            // Anyways, the line is not useful.
+            // Check next line.
+            continue;
+        }
+
+        // Line is valid.
+        // Add it into the results.
+
+        let connection = new Connection(currentLine, index_BEGIN, index_END);
+        let path = new Path();
+        path.addConnection(connection);
+        pathfindingResults.push(path);
+    }
+
+    // All lines checked.
+    // Return the results.
+    return pathfindingResults;
+}
+
+/**
+ * Finds paths such that users may reach their destination using exactly 1 interchange. Returns an array of Path.
+ * 
+ * Note that users are not expected to interchange at internal stations.
+ * @param from The waypoint that the user wants to depart from
+ * @param to The waypoint that the user intends to arrive at
+ */
+function findPaths_1X_old(from: Waypoint, to: Waypoint): Array<Path>
+{
+    // Again, if both are in the same spot, then no need to travel.
+    if (from.checkEqual(to))
+    {
+        return new Array<Path>();
+    }
+
+    let pathfindingResults = new Array<Path>();
+    for (let i = 0; i < HK18_ALL_LINES.length; i++)
+    {
+        let L1 = HK18_ALL_LINES[i];
+        let L1_BEGIN = L1.getIndexOfWaypoint(from);
+        if (L1_BEGIN == -1)
+        {
+            // L1 does not have the departing endpoint. Check next line.
+            continue;
+        }
+
+        for (let j = 0; j < HK18_ALL_LINES.length; j++)
+        {
+            let L2 = HK18_ALL_LINES[j];
+            if (L2.checkEqual(L1))
+            {
+                // This would mean:
+                // 1. Both are the same *exact* line
+                // 2. Both are the same line but in different direction.
+                // Check next line.
+                continue;
+            }
+
+            let L2_END = L2.getIndexOfWaypoint(to);
+            if (L2_END == -1)
+            {
+                // L2 does not have the arriving endpoint. Check next line.
+                continue;
+            }
+
+            // Now we begin to check intersection.
+
+            let intersection = L1.findBestXWaypointWithLine(L2);
+            if (intersection == null)
+            {
+                // No intersection. Next!
+                continue;
+            }
+
+            let L1_INTERSECTION = L1.getIndexOfWaypoint(intersection);
+            let L2_INTERSECTION = L2.getIndexOfWaypoint(intersection);
+            if (L1_INTERSECTION > L1_BEGIN && L2_INTERSECTION < L2_END)
+            {
+                // Valid and makes sense.
+                // Add it.
+                let path = new Path();
+                path.addConnection(new Connection(L1, L1_BEGIN, L1_INTERSECTION));
+                path.addConnection(new Connection(L2, L2_INTERSECTION, L2_END));
+                pathfindingResults.push(path);
+            }
+        }
+    }
+
+    // All paths are found. Leaving.
+    return pathfindingResults;
+}
+
+/**
+ * Finds paths such that users may reach their destination using exactly n interchanges. Returns an array of Path.
+ * 
+ * This is a generalized form, combining both findPaths_0X and findPaths_1X to reach higher interchange counts.
+ * @param from The waypoint that the user wants to depart from
+ * @param to The waypoint that the user intends to arrive at
+ * @param n The number of remaining permitted interchanges; used for recursion indication
+ * @param lineBanList An array of lines that are already being considered (and hence do not require repetition); used only by this function only
+ * @param costBound As a reference, indicates the maximum cost of paths permitted by the algorithm.
+ */
+function findPaths_nX_old(from: Waypoint, to: Waypoint, n: number, lineBanList: Array<Line>, costBound: number): Array<Path>
+{
+    //console.log("nX finder (" + n + ") from " + from.getName() + " to " + to.getName())
+    // Basically:
+    // f(0) => f(0)
+    // f(1) => f(1)
+    // f(n) = f(0) + f(n-1) for n >= 2
+    /**
+     * Remember to process this once again after obtaining the results.
+     */
+    let tempResults = new Array<Path>();
+    if (n <= 0)
+    {
+        tempResults = findPaths_0X(from, to);
+    }
+    else if (n == 1)
+    {
+        tempResults = findPaths_1X(from, to);
+    }
+    else
+    {
+        // n >= 2; requires recursion.
+        let degree = n - 1;
+        for (let i = 0; i < HK18_ALL_LINES.length; i++)
+        {
+            let current_L1 = HK18_ALL_LINES[i];
+            // First check if the user may depart from FROM
+            let current_L1_FROM = current_L1.getIndexOfWaypoint(from);
+            if (current_L1_FROM == -1)
+            {
+                // User cannot leave from FROM. Check next.
+                continue;
+            }
+            // For each station down the line, see whether the user may reach the destination by interchanging there (if possible)
+            for (let j = 0; j < current_L1.stops.length; j++)
+            {
+                let currentStop = current_L1.stops[j];
+                let rawResults = findPaths_nX(currentStop, to, degree);
+                // rawResults now contain all combinations that can reach the destination.
+                // Merge it
+                for (let k = 0; k < rawResults.length; k++)
+                {
+                    let newConnection = new Connection(current_L1, current_L1_FROM, j);
+                    rawResults[k].connections.unshift(newConnection);
+                    tempResults.push(rawResults[k]);
+                }
+            }
+        }
+    }
+
+    // tempResult now contains all raw lines.
+    // return for now.
+    return tempResults;
+
+    if (n <= 0)
+    {
+        let tempResults = findPaths_0X(from, to);
+        // Need to exclude possibility of some results overapping with the lineStack.
+        for (let i = 0; i < tempResults.length; i++)
+        {
+            let currentResult = tempResults[i];
+            let shouldAddCurrentResult = true;
+            for (let j = 0; j < currentResult.connections.length; j++)
+            {
+                let currentLine = currentResult.connections[j].getLine();
+
+                for (let k = 0; k < lineBanList.length; k++)
+                {
+                    if (lineBanList[k].checkEqual(currentLine))
+                    {
+                        shouldAddCurrentResult = false;
+                        break;
+                    }
+                }
+
+                if (!shouldAddCurrentResult)
+                {
+                    break;
+                }
+            }
+            if (shouldAddCurrentResult)
+            {
+                tempResults.push(tempResults[i]);
+            }
+        }
+        return tempResults;
+    }
+
+    if (n == 1)
+    {
+        let tempResults = findPaths_1X(from, to);
+        // Need to exclude awkward possibility of "come-back trips", most notably indicated in the line ban list.
+        for (let i = 0; i < tempResults.length; i++)
+        {
+            let currentPath = tempResults[i];
+            let notInvolvedInLinestack = true;
+            // Loop through the line ban list
+            for (let j = 0; j < lineBanList.length; j++)
+            {
+                // Theoretical guarantee: current path only has exactly 2 connections.
+                let currentBannedLine = lineBanList[j];
+                if (currentPath.connections[0].getLine().checkEqual(currentBannedLine))
+                {
+                    notInvolvedInLinestack = false;
+                    break;
+                }
+                if (currentPath.connections[1].getLine().checkEqual(currentBannedLine))
+                {
+                    notInvolvedInLinestack = false;
+                    break;
+                }
+            }
+            if (notInvolvedInLinestack)
+            {
+                tempResults.push(currentPath);
+            }
+        }
+        return tempResults;
+    }
+
+    for (let i = 0; i < HK18_ALL_LINES.length; i++)
+    {
+        let L1 = HK18_ALL_LINES[i];
+        if (lineBanList.indexOf(L1) != -1)
+        {
+            // It is already being considered. Move on.
+            continue;
+        }
+        let L1_beginCheckIndex = L1.getIndexOfWaypoint(from);
+        if (L1_beginCheckIndex == -1)
+        {
+            // Line does not call at FROM, user will never be able to leave using Line
+            continue;
+        }
+
+        // Here, user definitely can depart from FROM.
+        // But will he ever reach the destination with paths satisfying the above parameters?
+        // There's no easy way to find out except brute-force checking everyone.
+
+        // For each waypoint of L1:
+        let L1_stops = L1.getStops();
+        let degree = n - 1;
+        let newBanList = lineBanList.concat(L1);
+        for (let j = L1_beginCheckIndex + 1; j < L1_stops.length; j++)
+        {
+            // Conduct search
+            let checkingStop = L1_stops[j];
+            if (checkingStop.isInternal())
+            {
+                // Interchanging at internal stations is banned. Next ine.
+                continue;
+            }
+
+            // Find the possible results
+            let probableResults = findPaths_nX(checkingStop, to, degree, newBanList, costBound);
+            if (probableResults.length == 0)
+            {
+                // No results. Next.
+                continue;
+            }
+            // Have results. Prepend/unshift the paths to include this line, then filter by cost bound.
+            let thisConnection = new Connection(L1, L1_beginCheckIndex, j);
+            for (let k = 0; k < probableResults.length; k++)
+            {
+                let currentResult = probableResults[k];
+                currentResult.connections.unshift(thisConnection);
+                // Add to result if the final cost is lower than costBound.
+                if (currentResult.getTotalAdjustedCost() < costBound)
+                {
+                    tempResults.push(currentResult);
+                }
+            }
+        }
+
+        /*
+        let stops = L1.getStops();
+        let degree = n - 1;
+        let tempLineStack = lineBanList.concat(L1);
+        //console.log("LineStack = " + tempLineStack)
+        let fromIndex = -1;
+        // Check from index = 1 (exclude the 1st) so that the line is effective.
+        for (let j = L1_fromIndex + 1; j < stops.length; j++)
+        {
+            // First check that L1 is contains FROM.
+            if (stops[j] == from || stops[j].isNeighborOf(from))
+            {
+                fromIndex = j;
+                break;
+            }
+        }
+        if (fromIndex == -1)
+        {
+            // User can never depart from FROM using L1. Next line.
+            continue;
+        }
+        
+        // We know the user may depart at some index -> FROM.
+        // But at which waypoint should the user interchange?
+        // Check every waypoint down the line.
+        for (let j = fromIndex + 1; j < stops.length; j++)
+        {
+            
+        }
+        */
+    }
+
+    // Again, having to interchange is a very significant cost already, so we aim to minimize the travel cost.
+    /*
+    let minCost = Infinity;
+    for (let i = 0; i < results.length; i++)
+    {
+        let calcCost = results[i].getTotalAdjustedCost();
+        if (calcCost < minCost)
+        {
+            minCost = calcCost;
+        }
+    }
+    for (let i = results.length - 1; i >= 0; i--)
+    {
+        if (results[i].getTotalAdjustedCost() > minCost)
+        {
+            results.splice(i, 1);
+        }
+    }
+    */
+
+    // Here, we need additional work.
+    // Sometimes, you may obtain results where several lines travel along the same path towards the destination.
+    // The algorithm may wrongly identify several interchange points and suggests interchanges,
+    // but as we humans observe the results, we find that those suggestions are quite similar.
+    // We need to eliminate results that are similar.
+
+    let tempResults = tempResults;
+    tempResults = [];
+    // Transfer tempResults back to results
+    for (let i = 0; i < tempResults.length; i++)
+    {
+        let shouldAdd = true;
+        for (let j = 0; j < tempResults.length; j++)
+        {
+            if (!tempResults[i].isDistinctComparedToOther(tempResults[j]))
+            {
+                shouldAdd = false;
+                break;
+            }
+        }
+        if (shouldAdd)
+        {
+            tempResults.push(tempResults[i]);
+        }
+    }
+
+    // Supposedly, all is done. Return the results.
+    return tempResults;
+}

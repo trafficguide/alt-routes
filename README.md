@@ -1,37 +1,28 @@
-## Welcome to GitHub Pages
+## 港鐵替代路線查找器
 
-You can use the [editor on GitHub](https://github.com/trafficguide/alt-routes/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+This is the Repo of 港鐵替代路線查找器. The UI is built using HTML. The internal features such as pathfinding are all written using TypeScript and then compiled to JavaScript. This ensures that the JavaScript is, at very most of the time, free of any syntax errors.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Due to the limitation of GitHub Pages, all server-side code is disabled. This means that PHP and JSP files will not work.
 
-### Markdown
+This also means that the only thing that works is Javascript/TypeScript.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### Currently-completed features
 
-```markdown
-Syntax highlighted code block
+- Route Search
+- Path-finding
+- Interchange suggestions
+- Interchange concessions
 
-# Header 1
-## Header 2
-### Header 3
+### Features WIP
 
-- Bulleted
-- List
+- Commuter Mode and Night Mode
+- Travel time estimation
+- Real-time countdown of lines
 
-1. Numbered
-2. List
+### Other Notes
 
-**Bold** and _Italic_ and `Code` text
+We are currently looking for GitHub help! Feel free to fork and submit pull requests to enhance this web-app further.
 
-[Link](url) and ![Image](src)
-```
+## Documentation
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/trafficguide/alt-routes/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+Documentation on individual components under /src is available in the individual files.

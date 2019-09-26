@@ -12,8 +12,12 @@ var LineType = /** @class */ (function () {
     return LineType;
 }());
 var lineType_KMB = new LineType("kmb", "九巴");
+var lineType_CTB = new LineType("ctb", "城巴");
+var lineType_NWFB = new LineType("nwfb", "新巴");
 var lineType_GMB_HKI = new LineType("gmb", "綠巴");
 var lineType_GMB_KL = new LineType("gmb", "綠巴");
 var lineType_GMB_NT = new LineType("gmb", "綠巴");
 var lineType_HARBOUR = new LineType("cht", "過海");
 var lineType_WALK = new LineType("walk", "步行");
+var lineType_TRAM = new LineType("tram", "電車");
+var lineType_FERRY = new LineType("ferry", "渡輪/街渡");

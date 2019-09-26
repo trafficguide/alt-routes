@@ -1,0 +1,4 @@
+Sample:
+http://www.kmb.hk/ajax/tc.p2presult.php?num=73A&bound=1&fr=&to=&interchange=72A
+
+Decode it if you will.

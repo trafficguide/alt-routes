@@ -1,3 +1,6 @@
+/**
+ * A Path contains several Connections; together they represent a path that the user may take to reach their destination.
+ */
 class Path
 {
     connections: Array<Connection>;
@@ -19,12 +22,48 @@ class Path
 
     getTotalAdjustedCost(): number
     {
-        let totalCost = 0;
+        let pathCost = 0;
+        //connectionCost += this.getLine().getTimeCostAdjustment();
+        //let pathCost = this.connections[0].getLine().getTimeCostAdjustment();
         for (let i = 0; i < this.connections.length; i++)
         {
-            totalCost += this.connections[i].calculateConnectionCost();
+            //console.log(this.connections[i]);
+            pathCost += this.connections[i].calculateConnectionCost();
         }
-        return totalCost;
+        // Add in interchange cost: 2 cost for 1 intercgange
+        pathCost += (this.connections.length - 1) * 2;
+        // Reduce interchange cost: -1 cost for 1 "supported" interchange
+        for (let i = 0; i < this.connections.length - 1; i++)
+        {
+            let C1 = this.connections[i];
+            let L1 = C1.getLine();
+            let L2 = this.connections[i + 1].getLine();
+            if (L1.isWalking() || L2.isWalking())
+            {
+                // Walking involve no money and no time interval.
+                // Partial refund of the interchange cost.
+                pathCost -= 1;
+                continue;
+            }
+            else if (L1.type != L2.type)
+            {
+                // Homogeneous synergy; if they aint homogeneous, add to the cost.
+                pathCost += 1;
+            }
+            let interchangeRule = getInterchangeRuleForPair(L1, L2);
+            if (interchangeRule != null && interchangeRule.getWaypoint().checkEqual(L1.getStops()[C1.endIndex]))
+            {
+                // Also need to check if the interchange recommendation matches with the interchange rules.
+                pathCost--;
+            }
+        }
+        // Make sure the overall cost is positive.
+        // This makes more sense than the individual line positive requirement.
+        if (pathCost < 1)
+        {
+            pathCost = 1;
+        }
+        return pathCost;
     }
 
     getBeginningWaypoint(): Waypoint
@@ -54,6 +93,19 @@ class Path
         for (let i = 0; i < this.connections.length; i++)
         {
             if (this.connections[i].getLine() != other.connections[i].getLine())
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    pathIsContainingLine(query: Line): boolean
+    {
+        for (let i = 0; i < this.connections.length; i++)
+        {
+            if (this.connections[i].getLine().checkEqual(query))
             {
                 return true;
             }
