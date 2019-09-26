@@ -1,3 +1,6 @@
+/**
+ * A line (e.g. a bus line, a GMB line, etc.)
+ */
 class Line
 {
     name: string;
@@ -14,14 +17,83 @@ class Line
     url: string = "";
     notes: string = "";
     flagCircular: boolean = false;
+    /**
+     * Determined by service frequency:
+     * 
+     * <= 7 min per vehicle: -3
+     * 
+     * 7 - 12 min per vehicle: -2
+     * 
+     * 13 - 18 min per vehicle: -1
+     * 
+     * 19 - 25 min per vehicle: 0
+     * 
+     * 26 - 35 min per vehicle: 1
+     * 
+     * 36 - 50 min per vehicle: 2
+     * 
+     * 51 - 60 min per vehicle: 3
+     * 
+     * > 60 min per vehicle: 4
+     */
+    timeCostAdjustment: number = 0;
+    /**
+     * Should be true when the line sends a vehicle very quickly, e.g., below 10 minutes frequency.
+     */
+    flagRapidFreq: boolean = false;
+    travelCost_FerryOverride: number = -1;
 
-    constructor(lineName: string, lineType: LineType, lineFrom: string, lineTo: string, lineStops: Array<Waypoint>)
+    constructor(lineName: string, lineType: LineType, lineFrom: string, lineTo: string, lineStops: Array<Waypoint>, overallFreq: number = 15)
     {
         this.name = lineName;
         this.type = lineType;
         this.from = lineFrom;
         this.to = lineTo;
         this.stops = lineStops;
+
+        // Time cost adjustment (not applicable to walking)
+        if (this.type != lineType_WALK)
+        {                
+            let freq = overallFreq;
+            if (freq <= 5)
+            {
+                this.timeCostAdjustment = -3;
+            }
+            else if (freq <= 8)
+            {
+                this.timeCostAdjustment = -2;
+            }
+            else if (freq <= 15)
+            {
+                // 4
+                this.timeCostAdjustment = -1;
+            }
+            else if (freq <= 20)
+            {
+                // 3
+                this.timeCostAdjustment = 0;
+            }
+            else if (freq <= 30)
+            {
+                // About 2.5 vehicles per hour
+                this.timeCostAdjustment = 1;
+            }
+            else if (freq <= 45)
+            {
+                // About 1.5 vehicles per hour
+                this.timeCostAdjustment = 2;
+            }
+            else if (freq <= 60)
+            {
+                // About 1+ vehicles per hour
+                this.timeCostAdjustment = 3;
+            }
+            else
+            {
+                // Less than 1 per hour
+                this.timeCostAdjustment = 4;
+            }
+        }
         /*
         this.url = lineURL;
         this.notes = notes;
@@ -78,8 +150,21 @@ class Line
         {
             return "https://search.ushb.net/bus/XHT/" + this.name;
         }
+        if (this.type == lineType_CTB)
+        {
+            return "https://search.ushb.net/bus/CTB/" + this.name;
+        }
+        if (this.type == lineType_NWFB)
+        {
+            return "https://search.ushb.net/bus/NWFB/" + this.name;
+        }
 
         return this.url;
+    }
+
+    isWalking(): boolean
+    {
+        return this.type == lineType_WALK;
     }
 
     isGreenMinibus(): boolean
@@ -94,6 +179,12 @@ class Line
     getHTMLShortID(): string
     {
         let shortID = this.name;
+        /*
+        if (this.type == lineType_FERRY || this.type == lineType_WALK || this.type == lineType_TRAM)
+        {
+            shortID = "";
+        }
+        */
         // URL on the line ID
         let url = this.calculateURL();
         if (url.length > 0)
@@ -110,6 +201,22 @@ class Line
         else if (this.type == lineType_HARBOUR)
         {
             shortID += "<font color='purple'>" + this.type.getValue() + "</font>";
+        }
+        else if (this.type == lineType_CTB)
+        {
+            shortID += "<font color='coral'>" + this.type.getValue() + "</font>";
+        }
+        else if (this.type == lineType_NWFB)
+        {
+            shortID += "<font color='mediumseagreen'>" + this.type.getValue() + "</font>";
+        }
+        else if (this.type == lineType_TRAM)
+        {
+            shortID += "<font color='darkslategrey'>" + this.type.getValue() + "</font>";
+        }
+        else if (this.type == lineType_FERRY)
+        {
+            shortID += "<font color='blue'>" + this.type.getValue() + "</font>";
         }
         else
         {
@@ -157,13 +264,81 @@ class Line
     {
         for (let i = 0; i < this.stops.length; i++)
         {
-            let currentStop = this.stops[i];
-            if (currentStop == waypoint || currentStop.isNeighborOf(waypoint))
+            let currentWaypoint = this.stops[i];
+            if (currentWaypoint.checkEqual(waypoint))
             {
                 return i;
             }
         }
 
         return -1;
+    }
+
+    getTimeCostAdjustment(): number
+    {
+        return this.timeCostAdjustment;
+    }
+
+    checkEqual(other: Line): boolean
+    {
+        if (this.type == lineType_TRAM || this.type == lineType_WALK || this.type == lineType_FERRY)
+        {
+            return this == other || (this.from == other.to && this.to == other.from);
+        }
+        else
+        {
+            return this == other || this.name == other.name;
+        }
+    }
+
+    findBestXWaypointWithLine(other: Line): Waypoint
+    {
+        // 1. If both lines have no intersection, then no need to consider any further.
+        // Reject it and move to next line.
+        // 2. If both lines have exactly 1 intersection, then add it to the list of results.
+        // No need to consider any further.
+        // 3. If both lines have multiple intersections:
+        // 3A. If both lines have preferred intersection (e.g. by concession) then use that intersection
+        // 3B. Otherwise, pick the earliest intersection.
+
+        let intersectionCounter = new Array<Waypoint>();
+
+        for (let i = 0; i < other.stops.length; i++)
+        {
+            if (this.getIndexOfWaypoint(other.stops[i]) != -1)
+            {
+                intersectionCounter.push(other.stops[i]);
+            }
+        }
+
+        if (intersectionCounter.length == 0)
+        {
+            return null;
+        }
+
+        // Attempt to detect intersection by 3A.
+        let preferredIntersection = getInterchangeRuleForPair(this, other);
+        if (preferredIntersection != null)
+        {
+            return preferredIntersection.getWaypoint();
+        }
+
+        // Now searching by 3B
+        // Exclude internal stations.
+        for (let i = 0; i < intersectionCounter.length; i++)
+        {
+            if (intersectionCounter[i].isInternal())
+            {
+                continue;
+            }
+            return intersectionCounter[i];
+        }
+        return null;
+    }
+
+    markFerryTravelCost(travelCost: number): Line
+    {
+        this.travelCost_FerryOverride = travelCost;
+        return this;
     }
 }

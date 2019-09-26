@@ -1,11 +1,21 @@
+var shouldConduct_3X = false;
 /**
  * Returns a string indicating the version of the web-app.
  */
 function getVersionString() {
-    return "Version: 15 September 2019";
+    return "Version: 26 September 2019";
 }
+/**
+ * 10%, 70px
+ *
+ * 35%, 245px
+ *
+ * 35%, 245px
+ *
+ * 20%, 140px
+ */
 function getTableHeading() {
-    return "<table><tr><th style='width: 40%; min-width:280px'>路線</th><th style='width: 40%; min-width:280px'>轉乘優惠</th><th style='width: 20%; min-width:140px'>備註</th></tr>";
+    return "<table><tr><th style='width: 10%; min-width:70px'>(未開通)</th><th style='width: 35%; min-width: 245px'>路線</th><th style='width: 35%; min-width: 245px'>轉乘優惠</th><th style='width: 20%; min-width: 140px'>備註</th></tr>";
 }
 function getTableClosing() {
     return "</table>";
@@ -16,6 +26,17 @@ function getTableClosing() {
  */
 function clearResultDisplay(resultTableElm) {
     resultTableElm.innerHTML = getTableHeading() + getTableClosing();
+}
+function confirmChoiceFor_3X(toggle_3x) {
+    if (toggle_3x.checked) {
+        // Send a dialog box, ask if the user really wants to do 3X search
+        var message = "注意：三次轉車可能費時失事，亦會令查找時間增加！\n";
+        message += "按「確定」以確定同時查找三次轉車。";
+        if (!confirm(message)) {
+            toggle_3x.checked = false;
+        }
+    }
+    shouldConduct_3X = toggle_3x.checked;
 }
 /**
  * Prints some stats about the current database onto the specified Element.
@@ -34,7 +55,11 @@ function prepareDatabaseStats(statsDisplayElm) {
 function displayDetailedStats() {
     var stats = "路線統計：\n";
     stats += lineType_WALK.getValue() + "：" + WALK_HK18_ALL.length + "\n";
-    stats += lineType_KMB.getValue() + "：" + KMB_PURE_HK18_ALL.length + "\n";
+    stats += lineType_TRAM.getValue() + "：" + TRAM_ALL.length + "\n";
+    stats += lineType_FERRY.getValue() + "：" + FERRY_HK18_ALL.length + "\n";
+    stats += lineType_KMB.getValue() + "：" + KMB_HK18_ALL.length + "\n";
+    stats += lineType_CTB.getValue() + "：" + CTB_HK18_ALL.length + "\n";
+    stats += lineType_NWFB.getValue() + "：" + NWFB_HK18_ALL.length + "\n";
     stats += lineType_GMB_NT.getValue() + "：" + GMB_HK18_ALL.length + "\n";
     stats += lineType_HARBOUR.getValue() + "：" + CHT_HK18_ALL.length + "\n";
     stats += "\n註：每一項資料代表一方向的、由起至訖的行車；循環線只計為一項。";
@@ -102,10 +127,18 @@ function conductSearch(fromSelector, toSelector, generalFeedbackElm, directLines
     var resultTableHTML = getTableHeading();
     // For each result:
     for (var i = 0; i < pathfindingResults.length; i++) {
-        // 1. Print line information.
-        resultTableHTML += "<tr><td>";
+        // Preparation
         var path = pathfindingResults[i];
         var connections = path.getConnections();
+        console.log("Entry at " + i + " has cost " + path.getTotalAdjustedCost());
+        // Begin
+        resultTableHTML += "<tr>";
+        // 0. Print Live countdown
+        resultTableHTML += "<td>";
+        resultTableHTML += "-1 分鐘";
+        resultTableHTML += "</td>";
+        // 1. Print line information.
+        resultTableHTML += "<td>";
         for (var j = 0; j < connections.length; j++) {
             var connection = connections[j];
             resultTableHTML += connection.line.getHTMLLongID();
@@ -117,7 +150,32 @@ function conductSearch(fromSelector, toSelector, generalFeedbackElm, directLines
         }
         // 2. Print interchange info
         resultTableHTML += "</td><td>";
-        // TODO
+        // Loop each interchange spot, see if we have effects.
+        var effectStrings = new Array();
+        for (var j = 0; j < connections.length - 1; j++) {
+            var L1 = connections[j].getLine();
+            var L2 = connections[j + 1].getLine();
+            var interchange = getInterchangeRuleForPair(L1, L2);
+            if (interchange != null) {
+                var tempString = "";
+                tempString += "乘搭 " + L1.getHTMLShortID() + "<br>";
+                tempString += "於 " + interchange.getWaypoint().getName() + " 轉乘 " + L2.getHTMLShortID() + "<br>";
+                tempString += "可獲以下效果：" + interchange.directlyGetEffectReadout();
+                effectStrings.push(tempString);
+            }
+        }
+        if (effectStrings.length == 0) {
+            resultTableHTML += "無轉乘優惠";
+        }
+        else {
+            for (var j = 0; j < effectStrings.length; j++) {
+                resultTableHTML += effectStrings[j];
+                if (j < effectStrings.length - 1) {
+                    // Entries remain.
+                    resultTableHTML += "<br>";
+                }
+            }
+        }
         // 3. Print notes
         resultTableHTML += "</td><td>";
         if (connections.length == 1) {

@@ -44,6 +44,21 @@ var MTRSelector = /** @class */ (function () {
             case "tmle":
                 this.currentlyLoadedSelections = MTR_TMLE_ALL;
                 break;
+            case "tmlw":
+                this.currentlyLoadedSelections = MTR_TMLW_ALL;
+                break;
+            case "twl":
+                this.currentlyLoadedSelections = MTR_TWL_ALL;
+                break;
+            case "tcl":
+                this.currentlyLoadedSelections = MTR_TCL_ALL;
+                break;
+            case "seil":
+                this.currentlyLoadedSelections = MTR_SEIL_ALL;
+                break;
+            case "swil":
+                this.currentlyLoadedSelections = MTR_SWIL_ALL;
+                break;
             default:
                 //console.log("default")
                 this.currentlyLoadedSelections = [];

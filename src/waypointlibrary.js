@@ -70,7 +70,7 @@ var MTR_ktl_lokfu = new Waypoint("ktl_lf", "樂富");
 var MTR_ktl_kowloontong = MTR_erl_kowloontong;
 var MTR_ktl_shekkipmei = new Waypoint("ktl_skm", "石硤尾");
 var MTR_ktl_princeedward = new Waypoint("ktl_pe", "太子");
-var MTR_ktl_mongkok = new Waypoint("ktl_mk", "旺角");
+var MTR_ktl_mongkok = new Waypoint("ktl_mk", "旺角").addNeighbor(MTR_erl_mongkokeast);
 var MTR_ktl_yaumatei = new Waypoint("ktl_ymt", "油麻地");
 var MTR_ktl_homantin = MTR_tml_homantin;
 var MTR_ktl_whampoa = new Waypoint("ktl_wham", "黃埔");
@@ -102,6 +102,7 @@ var MTR_ill_admiralty = MTR_twl_admiralty;
 var MTR_ill_wanchai = new Waypoint("ill_wc", "灣仔");
 var MTR_ill_causewaybay = new Waypoint("ill_cwb", "銅鑼灣");
 var MTR_ill_tinhau = new Waypoint("ill_th", "天后");
+var MTR_ill_fortresshill = new Waypoint("ill_fth", "炮台山");
 var MTR_ill_northpoint = new Waypoint("ill_np", "北角");
 var MTR_ill_quarrybay = new Waypoint("ill_qwb", "鰂魚涌");
 var MTR_ill_taikoo = new Waypoint("ill_tk", "太古");
@@ -165,6 +166,26 @@ var MTR_MOS_ALL = [MTR_mos_wukaisha, MTR_mos_maonshan, MTR_mos_hengon, MTR_mos_t
  * All Tuen Ma Line (East) stations
  */
 var MTR_TMLE_ALL = MTR_MOS_ALL.concat(MTR_tml_hinkeng);
+/**
+ * All Tuen Ma Line // West Rail Line stations
+ */
+var MTR_TMLW_ALL = [MTR_tml_tsuenwanwest];
+/**
+ * All Tsuen Wan Line stations
+ */
+var MTR_TWL_ALL = [MTR_twl_tsuenking, MTR_twl_tsuenwan, MTR_twl_taiwohau, MTR_twl_kwaihing, MTR_twl_kwaifong, MTR_twl_laiking];
+/**
+ * All Tung Chung Line stations
+ */
+var MTR_TCL_ALL = [MTR_tcl_tsingyi];
+/**
+ * All South Island (East) Line stations
+ */
+var MTR_SEIL_ALL = [MTR_seil_southhoriz, MTR_seil_leitung, MTR_seil_wongchukhang, MTR_seil_oceanpark, MTR_seil_admiralty];
+/**
+ * All South Island (West) Line stations
+ */
+var MTR_SWIL_ALL = [MTR_swil_wongchukhang, MTR_swil_aberdeen, MTR_swil_tinwan, MTR_swil_wahfoo, MTR_swil_cyberport, MTR_swil_queenmary, MTR_swil_hku];
 // Other (internal) waypoints for road marking
 var TaiPoRoad_KowloonReservoir = new Waypoint("tpr_reservoir", "九龍水塘").markAttributes("i");
 var TaiPoRoad_ShatinHeights = new Waypoint("tpr_shatinheights", "沙田嶺").markAttributes("i");
@@ -172,7 +193,6 @@ var TaiPoRoad_MeiLam = new Waypoint("tpr_ml", "美林").markAttributes("x");
 var TaiPoRoad_Shatin = new Waypoint("tpr_st", "大埔公路 (沙田)").markAttributes("i");
 var TaiPoRoad_CUHK = new Waypoint("tpr_cuhk", "香港中文大學").addNeighbor(MTR_erl_university);
 var TaiPoRoad_TaiPoKau = new Waypoint("tpr_tpk", "大埔滘").markAttributes("i");
-var TaiPoRoad_TaiWoSupport = new Waypoint("tpr_twsr", "大窩支路").markAttributes("i");
 var LionRockTunnel = new Waypoint("lionrock", "獅子山隧道").markAttributes("i");
 var LionRockTunnel_Interchange = new Waypoint("lionrock_i", "獅隧轉車站").markAttributes("x");
 var JatMinEstate = new Waypoint("yatming", "乙明邨").addNeighbor(MTR_mos_shatinwai);
@@ -183,7 +203,8 @@ var PakShekKok = new Waypoint("pakshekkok", "白石角");
 var ShatinSeafood = new Waypoint("stseafood", "沙田海鮮舫");
 var LeeOnEstate = new Waypoint("leeon", "利安").addNeighbor(MTR_mos_wukaisha);
 var BelairGardens = new Waypoint("belairgardens", "富豪花園");
-var YuenWo = new Waypoint("yuenwo", "瀝源邨/禾輋邨").addNeighbor(MTR_erl_shatin);
+var YuenWo = new Waypoint("yuenwo", "瀝源邨/禾輋邨");
+var LekYuenEstate = new Waypoint("lekyuenestate", "瀝源邨");
 var HengHongStreet = new Waypoint("henghong", "恆康街").addNeighbor(MTR_mos_hengon);
 var MaOnShanRoad = new Waypoint("mosroad", "馬鞍山路");
 var WahMingTerminus = new Waypoint("wahming", "華明總站").markAttributes("s");
@@ -194,8 +215,10 @@ var KwongFukEstate = new Waypoint("kwongfukestate", "廣福邨").markAttributes(
 var LeiMukShueEstate = new Waypoint("leimukshue", "梨木樹邨/石圍角");
 var NinaTowers = new Waypoint("nina", "如心廣場").addNeighbor(MTR_tml_tsuenwanwest);
 var ChungOnStreet = new Waypoint("chungonstreet", "眾安街").addNeighbor(MTR_twl_tsuenwan);
-var ShingMunTunnel_Interchange = new Waypoint("smtInterchange", "城隧轉車站").markAttributes("x");
+var ShingMunTunnel_Interchange_East = new Waypoint("smt_x_east", "城隧轉車站").markAttributes("x");
+var ShingMunTunnel_Interchange_West = new Waypoint("smt_x_west", "城隧轉車站").markAttributes("x");
 var ShingMunTunnel = new Waypoint("smtActual", "城門隧道").markAttributes("i");
+var ShingMunTunnelHighway = new Waypoint("smt_highway", "").markAttributes("i");
 var ShatinTownCenter = new Waypoint("stcenter", "沙田市中心").addNeighbor(MTR_erl_shatin);
 var ShatinTownHall = new Waypoint("sttownhall", "沙田大會堂").addNeighbor(MTR_erl_shatin).addNeighbor(ShatinTownCenter);
 var FoTanTsuen = new Waypoint("fotanvillage", "火炭村").addNeighbor(MTR_erl_fotan);
@@ -208,9 +231,32 @@ var EastHarbourTunnel_Interchange = new Waypoint("eht_interchange", "東隧轉�
 var OldTatesTunnel = new Waypoint("ott", "大老山隧道").markAttributes("i");
 var OldTatesTunnel_Interchange = new Waypoint("ott_interchange", "大老山轉車站").markAttributes("x");
 var KowloonHospital = new Waypoint("klhospital", "九龍醫院");
+var FanlingHighway = new Waypoint("fanlinghw", "").markAttributes("i");
+var ShatinHeightsTunnel = new Waypoint("sthtunnel", "").markAttributes("i");
+var EaglesNestTunnel = new Waypoint("entunnel", "").markAttributes("i");
+var TsingShaInterchange = new Waypoint("ts-interchange", "青沙轉車站").markAttributes("x");
+var WestKowloonHighway = new Waypoint("wkhighway", "").markAttributes("i");
+var LionRockTunnelHighway = new Waypoint("lrthighway", "").markAttributes("i");
+var TaiPoRoad_HongLokYuen = new Waypoint("tpr_honglokyuen", "").markAttributes("i");
+var TaiPoRoad_KiuTau = new Waypoint("tpr_kiutau", "").markAttributes("i");
+var TaiPoRoad_Main = new Waypoint("tpr_main", "").markAttributes("i");
+var ShekTongTsui = new Waypoint("shektongtsui", "").addNeighbor(MTR_ill_hku);
+var ConnaughtRoadWest_Stop = new Waypoint("cnrw_stop", "").addNeighbor(MTR_ill_saiyingpun);
+var PrincessMargaretRoad = new Waypoint("pmroad", "").markAttributes("i");
+var CrossHarbourTunnel_Interchange = new Waypoint("cht_interchange", "紅隧轉車站").markAttributes("x").addNeighbor(MTR_erl_hunghom);
+var CrossHarbourTunnel = new Waypoint("cht_actual", "").markAttributes("i");
+var EasternCorridor = new Waypoint("east_corri", "").markAttributes("i");
+var AberdeenTunnel_Interchange = new Waypoint("abdt_interchange", "香港仔隧道").markAttributes("x").addNeighbor(MTR_seil_oceanpark);
+var AberdeenTunnel = new Waypoint("abdt_actual", "").markAttributes("i");
+var WestHarbourTunnel_Interchange = new Waypoint("wht_x", "").markAttributes("x");
+var WestHarbourTunnel = new Waypoint("wht_actual", "").markAttributes("i");
+var NgaCheungRoad_WHTX = new Waypoint("wht_x_ngacheung", "").markAttributes("x").addNeighbor(MTR_tcl_kowloon).addNeighbor(WestHarbourTunnel_Interchange);
+var CheungOn = new Waypoint("", "");
+var TsingYiPier = new Waypoint("", "");
+var ToloHighway_Coastal = new Waypoint("", "").markAttributes("i");
+var KowloonBayFlyover = new Waypoint("", "").markAttributes("i");
+var KwunTongBypass = new Waypoint("", "").markAttributes("i");
+var HangSengUniversity = new Waypoint("", "");
 function obtainAllMTRWaypoints() {
-    var allWaypoints = new Array();
-    allWaypoints = allWaypoints.concat(MTR_ERL_ALL);
-    allWaypoints = allWaypoints.concat(MTR_TMLE_ALL);
-    return allWaypoints;
+    return [].concat(MTR_ERL_ALL, MTR_TMLE_ALL, MTR_TMLW_ALL, MTR_TWL_ALL, MTR_TCL_ALL, MTR_SEIL_ALL, MTR_SWIL_ALL);
 }

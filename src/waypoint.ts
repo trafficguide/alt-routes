@@ -109,4 +109,9 @@ class Waypoint
     {
         return this.traverseCost;
     }
+
+    checkEqual(other: Waypoint): boolean
+    {
+        return this == other || this.isNeighborOf(other);
+    }
 }

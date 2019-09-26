@@ -25,6 +25,10 @@
         <script src="src/linelibrary.js"></script>
         <script src="src/pathfinder.js"></script>
         <script src="src/mtrSelector.js"></script>
+        <!-- Supplementary interchange scripts -->
+        <script src="src/interchange.js"></script>
+        <script src="src/interchangeeffect.js"></script>
+        <script src="src/interchangerules.js"></script>
         <!-- Main script: controlling everything from a centralized control. -->
         <script src="src/mainscript.js"></script>
         <script>
@@ -150,6 +154,11 @@
                 <option value="0">---</option>
                 <option value="erl">東鐵線</option>
                 <option value="tmle">屯馬線 (東)</option>
+                <option value="tmlw">屯馬線 (西)</option>
+                <option value="twl">荃灣線</option>
+                <option value="tcl">東涌線</option>
+                <option value="seil">南港島 (東)</option>
+                <option value="swil">南港島 (西)</option>
             </select>
             <select id="fromStation">
                 <option value="0">---</option>
@@ -161,10 +170,21 @@
                 <option value="0">---</option>
                 <option value="erl">東鐵線</option>
                 <option value="tmle">屯馬線 (東)</option>
+                <option value="tmlw">屯馬線 (西)</option>
+                <option value="twl">荃灣線</option>
+                <option value="tcl">東涌線</option>
+                <option value="seil">南港島 (東)</option>
+                <option value="swil">南港島 (西)</option>
             </select>
             <select id="toStation">
                 <option value="0">---</option>
             </select>
+        </p>
+        <label><input type="checkbox" onclick="confirmChoiceFor_3X(this)">容許搜尋三次轉車</input></label><br>
+        <p>
+            <label><input type="radio" name="searchMode" value="usual" checked>正常模式</label><br>
+            <label><input type="radio" name="searchMode" value="commute">晨昏模式 (未開通)</label><br>
+            <label><input type="radio" name="searchMode" value="night">晚間模式 (未開通)</label><br>
         </p>
         <p>
             <!-- Buttons -->
@@ -177,10 +197,8 @@
         <div id="search_criteria"></div>
         <div id="search_lv0"></div>
         <div id="search_lv1"></div>
-        <div id="externalLinkInfo">本網頁有超連結，連結至其他網站，以查閱路線詳細資訊，包括<b>車資</b>及<b>車程</b>。</div>
-        <div id="test" style="overflow-x:auto;">
+        <div id="externalLinkInfo">本網頁有超連結，連結至其他網站，以查閱路線詳細資訊，包括<b>實際走線</b>、<b>車資</b>及<b>車程</b>。</div>
 
-        </div>
         <div id="demo">
 
         </div>

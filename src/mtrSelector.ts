@@ -1,3 +1,6 @@
+/**
+ * A class for convenience. Give in two correct dropdowns, and this will correctly output what the user has chosen conveniently.
+ */
 class MTRSelector
 {
     lineDropdown: HTMLSelectElement | null;
@@ -62,6 +65,21 @@ class MTRSelector
             break;
             case "tmle":
                 this.currentlyLoadedSelections = MTR_TMLE_ALL;
+            break;
+            case "tmlw":
+                this.currentlyLoadedSelections = MTR_TMLW_ALL;
+            break;
+            case "twl":
+                this.currentlyLoadedSelections = MTR_TWL_ALL;
+            break;
+            case "tcl":
+                this.currentlyLoadedSelections = MTR_TCL_ALL;
+            break;
+            case "seil":
+                this.currentlyLoadedSelections = MTR_SEIL_ALL;
+            break;
+            case "swil":
+                this.currentlyLoadedSelections = MTR_SWIL_ALL;
             break;
             default:
                 //console.log("default")
