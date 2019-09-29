@@ -1,3 +1,6 @@
+/**
+ * A Connection, describing how a user may take a specific line to reach from one place to another.
+ */
 var Connection = /** @class */ (function () {
     function Connection(line, startPos, endPos) {
         this.line = line;

@@ -1,3 +1,8 @@
+/**
+ * A class storing a specific rule/pattern of preferred interchanges.
+ *
+ * This may be used to store interchanges with concessions, for example.
+ */
 var Interchange = /** @class */ (function () {
     function Interchange(fromLines, toLines, interchangeSpot) {
         this.effect = null;

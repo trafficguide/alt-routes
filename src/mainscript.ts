@@ -5,7 +5,7 @@ let shouldConduct_3X = false;
  */
 function getVersionString(): string
 {
-    return "Version: 26 September 2019";
+    return "Version: 29 September 2019";
 }
 
 /**

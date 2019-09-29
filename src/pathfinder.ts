@@ -186,11 +186,22 @@ function findPaths_0X(from: Waypoint, to: Waypoint): Array<Path>
 
             if (currentWaypoint.checkEqual(from))
             {
-                index_BEGIN = j;
-            }
-            if (currentWaypoint.checkEqual(to))
-            {
-                index_END = j;
+                for (let k = j + 1; k < currentLine.stops.length; k++)
+                {
+                    if (currentLine.stops[k].checkEqual(to))
+                    {
+                        // Mainly to counter the circular lines.
+                        // Valid path found
+                        index_BEGIN = j;
+                        index_END = k;
+                        break;
+                    }
+                }
+
+                if (index_BEGIN != -1 && index_END != -1)
+                {
+                    break;
+                }
             }
         }
 

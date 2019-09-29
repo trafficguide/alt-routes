@@ -1,3 +1,6 @@
+/**
+ * A Path contains several Connections; together they represent a path that the user may take to reach their destination.
+ */
 var Path = /** @class */ (function () {
     function Path() {
         this.connections = [];
@@ -22,7 +25,8 @@ var Path = /** @class */ (function () {
         for (var i = 0; i < this.connections.length - 1; i++) {
             var C1 = this.connections[i];
             var L1 = C1.getLine();
-            var L2 = this.connections[i + 1].getLine();
+            var C2 = this.connections[i + 1];
+            var L2 = C2.getLine();
             if (L1.isWalking() || L2.isWalking()) {
                 // Walking involve no money and no time interval.
                 // Partial refund of the interchange cost.
@@ -32,6 +36,13 @@ var Path = /** @class */ (function () {
             else if (L1.type != L2.type) {
                 // Homogeneous synergy; if they aint homogeneous, add to the cost.
                 pathCost += 1;
+            }
+            // Should prefer single place interchange
+            var fromXPoint = L1.stops[C1.getEndIndex()];
+            var toXPoint = L2.stops[C2.getStartIndex()];
+            if (fromXPoint != toXPoint) {
+                // Path assumed to be valid: both waypoints should be congruent or neighbours.
+                pathCost++;
             }
             var interchangeRule = getInterchangeRuleForPair(L1, L2);
             if (interchangeRule != null && interchangeRule.getWaypoint().checkEqual(L1.getStops()[C1.endIndex])) {

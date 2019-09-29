@@ -1,3 +1,6 @@
+/**
+ * A line (e.g. a bus line, a GMB line, etc.)
+ */
 var Line = /** @class */ (function () {
     function Line(lineName, lineType, lineFrom, lineTo, lineStops, overallFreq) {
         if (overallFreq === void 0) { overallFreq = 15; }
