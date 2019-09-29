@@ -101,6 +101,9 @@
                 document.getElementById("toLine").addEventListener("change", event_LineChanged);
 
                 // Reset the MTRSelectors, such that the dropdown is immediately usable when the user "previous-pages" into this page.
+                fromSelector.initializeDropdown();
+                toSelector.initializeDropdown();
+
                 fromSelector.updateDropdown();
                 toSelector.updateDropdown();
 
@@ -152,13 +155,6 @@
             起點
             <select id="fromLine">
                 <option value="0">---</option>
-                <option value="erl">東鐵線</option>
-                <option value="tmle">屯馬線 (東)</option>
-                <option value="tmlw">屯馬線 (西)</option>
-                <option value="twl">荃灣線</option>
-                <option value="tcl">東涌線</option>
-                <option value="seil">南港島 (東)</option>
-                <option value="swil">南港島 (西)</option>
             </select>
             <select id="fromStation">
                 <option value="0">---</option>
@@ -168,13 +164,6 @@
             終點
             <select id="toLine">
                 <option value="0">---</option>
-                <option value="erl">東鐵線</option>
-                <option value="tmle">屯馬線 (東)</option>
-                <option value="tmlw">屯馬線 (西)</option>
-                <option value="twl">荃灣線</option>
-                <option value="tcl">東涌線</option>
-                <option value="seil">南港島 (東)</option>
-                <option value="swil">南港島 (西)</option>
             </select>
             <select id="toStation">
                 <option value="0">---</option>
@@ -184,7 +173,7 @@
         <p>
             <label><input type="radio" name="searchMode" value="usual" checked>正常模式</label><br>
             <label><input type="radio" name="searchMode" value="commute">晨昏模式 (未開通)</label><br>
-            <label><input type="radio" name="searchMode" value="night">晚間模式 (未開通)</label><br>
+            <label><input type="radio" name="searchMode" value="night">深宵模式 (未開通)</label><br>
         </p>
         <p>
             <!-- Buttons -->

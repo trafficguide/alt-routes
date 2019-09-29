@@ -1,6 +1,11 @@
 var results_DirectCount = -1;
 var results_InterchangeCount = -1;
 var global_results = new Array();
+/**
+ * Finds paths that the user may take to travel from one place to another.
+ * @param from
+ * @param to
+ */
 function findPathsBetween(from, to) {
     var allResults = new Array();
     results_DirectCount = 0;
@@ -131,10 +136,18 @@ function findPaths_0X(from, to) {
         for (var j = 0; j < currentLine.stops.length; j++) {
             var currentWaypoint = currentLine.stops[j];
             if (currentWaypoint.checkEqual(from)) {
-                index_BEGIN = j;
-            }
-            if (currentWaypoint.checkEqual(to)) {
-                index_END = j;
+                for (var k = j + 1; k < currentLine.stops.length; k++) {
+                    if (currentLine.stops[k].checkEqual(to)) {
+                        // Mainly to counter the circular lines.
+                        // Valid path found
+                        index_BEGIN = j;
+                        index_END = k;
+                        break;
+                    }
+                }
+                if (index_BEGIN != -1 && index_END != -1) {
+                    break;
+                }
             }
         }
         if (index_END > index_BEGIN && index_BEGIN > -1) {

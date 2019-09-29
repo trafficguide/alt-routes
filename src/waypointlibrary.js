@@ -60,7 +60,7 @@ var MTR_mos_taiwai = MTR_tml_taiwai;
 var MTR_ktl_tiukengleng = new Waypoint("ktl_tkl", "調景嶺");
 var MTR_ktl_yautong = new Waypoint("ktl_yt", "油塘");
 var MTR_ktl_lamtin = new Waypoint("ktl_lt", "藍田");
-var MTR_ktl_kuntong = new Waypoint("ktl_kt", "觀塘");
+var MTR_ktl_kwuntong = new Waypoint("ktl_kt", "觀塘");
 var MTR_ktl_ngautaukok = new Waypoint("ktl_ntk", "牛頭角");
 var MTR_ktl_kowloonbay = new Waypoint("ktl_klb", "九龍灣");
 var MTR_ktl_choihung = new Waypoint("ktl_ch", "彩虹");
@@ -171,13 +171,25 @@ var MTR_TMLE_ALL = MTR_MOS_ALL.concat(MTR_tml_hinkeng);
  */
 var MTR_TMLW_ALL = [MTR_tml_tsuenwanwest];
 /**
+ * All Kwun Tong Line stations
+ */
+var MTR_KTL_ALL = [MTR_ktl_tiukengleng, MTR_ktl_yautong, MTR_ktl_lamtin, MTR_ktl_kwuntong, MTR_ktl_ngautaukok, MTR_ktl_kowloonbay, MTR_ktl_choihung, MTR_ktl_diamondhill, MTR_ktl_wongtaisin, MTR_ktl_lokfu, MTR_ktl_kowloontong, MTR_ktl_shekkipmei, MTR_ktl_princeedward, MTR_ktl_mongkok, MTR_ktl_yaumatei, MTR_ktl_homantin, MTR_ktl_whampoa];
+/**
  * All Tsuen Wan Line stations
  */
-var MTR_TWL_ALL = [MTR_twl_tsuenking, MTR_twl_tsuenwan, MTR_twl_taiwohau, MTR_twl_kwaihing, MTR_twl_kwaifong, MTR_twl_laiking];
+var MTR_TWL_ALL = [MTR_twl_tsuenking, MTR_twl_tsuenwan, MTR_twl_taiwohau, MTR_twl_kwaihing, MTR_twl_kwaifong, MTR_twl_laiking, MTR_twl_meifoo, MTR_twl_laichikok, MTR_twl_cheungshawan, MTR_twl_shamshuipo, MTR_twl_princeedward, MTR_twl_mongkok, MTR_twl_yaumatei, MTR_twl_jordan, MTR_twl_tsimshatsui, MTR_twl_admiralty, MTR_twl_central];
+/**
+ * All Island Line stations
+ */
+var MTR_ILL_ALL = [MTR_ill_kennedytown, MTR_ill_hku, MTR_ill_saiyingpun, MTR_ill_sheungwan, MTR_ill_central, MTR_ill_admiralty, MTR_ill_wanchai, MTR_ill_causewaybay, MTR_ill_tinhau, MTR_ill_fortresshill, MTR_ill_northpoint, MTR_ill_quarrybay, MTR_ill_taikoo, MTR_ill_saiwanho, MTR_ill_saukeiwan, MTR_ill_hengfachuen, MTR_ill_chaiwan];
 /**
  * All Tung Chung Line stations
  */
 var MTR_TCL_ALL = [MTR_tcl_tsingyi];
+/**
+* All Tseung Kwan O Line stations
+*/
+var MTR_TKO_ALL = [MTR_tko_polam, MTR_tko_hanghau, MTR_tko_tseungkwano, MTR_tko_lohaspark, MTR_tko_tiukengleng, MTR_tko_yautong, MTR_tko_quarrybay, MTR_tko_northpoint];
 /**
  * All South Island (East) Line stations
  */
@@ -252,11 +264,25 @@ var WestHarbourTunnel_Interchange = new Waypoint("wht_x", "").markAttributes("x"
 var WestHarbourTunnel = new Waypoint("wht_actual", "").markAttributes("i");
 var NgaCheungRoad_WHTX = new Waypoint("wht_x_ngacheung", "").markAttributes("x").addNeighbor(MTR_tcl_kowloon).addNeighbor(WestHarbourTunnel_Interchange);
 var CheungOn = new Waypoint("", "");
-var TsingYiPier = new Waypoint("", "");
+var TsingYiFerryPier = new Waypoint("", "");
 var ToloHighway_Coastal = new Waypoint("", "").markAttributes("i");
 var KowloonBayFlyover = new Waypoint("", "").markAttributes("i");
 var KwunTongBypass = new Waypoint("", "").markAttributes("i");
 var HangSengUniversity = new Waypoint("", "");
+var TseungKwanOTunnel_Interchange = new Waypoint("tkot_x", "").markAttributes("x");
+var TseungKwanOTunnel = new Waypoint("tkot_actual", "").markAttributes("i");
+var Anderson = new Waypoint("anderson", "");
+var SauMauPing = new Waypoint("", "");
+var KwunTongFerryPier = new Waypoint("", "");
+var EastKowloonMainBranch = new Waypoint("太子道東", "");
+var MongKokFlowerMarket = new Waypoint("", "").addNeighbor(MTR_erl_mongkokeast);
+var SunPoKong = new Waypoint("", "").addNeighbor(MTR_ktl_diamondhill);
+var BoundaryPrince = new Waypoint("", "");
+var LaiKingChokePoint = new Waypoint("", "").markAttributes("i");
+var TsuenWanRoad = new Waypoint("", "").markAttributes("i");
+var ClagueGardenEstate = new Waypoint("", "").addNeighbor(MTR_tml_tsuenwanwest);
+var WanChaiFerryPier = new Waypoint("", "").addNeighbor(MTR_erl_exhibition);
+var ChaiWanRoad = new Waypoint("", "");
 function obtainAllMTRWaypoints() {
-    return [].concat(MTR_ERL_ALL, MTR_TMLE_ALL, MTR_TMLW_ALL, MTR_TWL_ALL, MTR_TCL_ALL, MTR_SEIL_ALL, MTR_SWIL_ALL);
+    return [].concat(MTR_ERL_ALL, MTR_TMLE_ALL, MTR_TMLW_ALL, MTR_KTL_ALL, MTR_TWL_ALL, MTR_ILL_ALL, MTR_TCL_ALL, MTR_TKO_ALL, MTR_SEIL_ALL, MTR_SWIL_ALL);
 }

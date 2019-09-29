@@ -37,7 +37,8 @@ class Path
         {
             let C1 = this.connections[i];
             let L1 = C1.getLine();
-            let L2 = this.connections[i + 1].getLine();
+            let C2 = this.connections[i + 1];
+            let L2 = C2.getLine();
             if (L1.isWalking() || L2.isWalking())
             {
                 // Walking involve no money and no time interval.
@@ -49,6 +50,14 @@ class Path
             {
                 // Homogeneous synergy; if they aint homogeneous, add to the cost.
                 pathCost += 1;
+            }
+            // Should prefer single place interchange
+            let fromXPoint = L1.stops[C1.getEndIndex()];
+            let toXPoint = L2.stops[C2.getStartIndex()];
+            if (fromXPoint != toXPoint)
+            {
+                // Path assumed to be valid: both waypoints should be congruent or neighbours.
+                pathCost++;
             }
             let interchangeRule = getInterchangeRuleForPair(L1, L2);
             if (interchangeRule != null && interchangeRule.getWaypoint().checkEqual(L1.getStops()[C1.endIndex]))

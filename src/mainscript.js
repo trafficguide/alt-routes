@@ -3,7 +3,7 @@ var shouldConduct_3X = false;
  * Returns a string indicating the version of the web-app.
  */
 function getVersionString() {
-    return "Version: 26 September 2019";
+    return "Version: 29 September 2019";
 }
 /**
  * 10%, 70px

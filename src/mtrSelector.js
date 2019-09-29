@@ -1,8 +1,25 @@
+/**
+ * A class for convenience. Give in two correct dropdowns, and this will correctly output what the user has chosen conveniently.
+ */
 var MTRSelector = /** @class */ (function () {
     function MTRSelector(lineDrop, stationDrop) {
         this.lineDropdown = lineDrop;
         this.stationDropdown = stationDrop;
     }
+    MTRSelector.prototype.initializeDropdown = function () {
+        var resultingLineDropdown = "<option value='0'>---</option>";
+        resultingLineDropdown += "<option value='erl'>東鐵線</option>";
+        resultingLineDropdown += "<option value='tmle'>屯馬線 (東)</option>";
+        resultingLineDropdown += "<option value='tmlw'>屯馬線 (西)</option>";
+        resultingLineDropdown += "<option value='ktl'>觀塘線</option>";
+        resultingLineDropdown += "<option value='twl'>荃灣線</option>";
+        resultingLineDropdown += "<option value='ill'>港島線</option>";
+        resultingLineDropdown += "<option value='tcl'>東涌線</option>";
+        resultingLineDropdown += "<option value='tko'>將軍澳線</option>";
+        resultingLineDropdown += "<option value='seil'>南港島 (東)</option>";
+        resultingLineDropdown += "<option value='swil'>南港島 (西)</option>";
+        this.lineDropdown.innerHTML = resultingLineDropdown;
+    };
     MTRSelector.prototype.calculateSelectedStation = function () {
         var allWaypoints = obtainAllMTRWaypoints();
         var selectedStationID = this.stationDropdown.selectedOptions[0].value;
@@ -47,11 +64,20 @@ var MTRSelector = /** @class */ (function () {
             case "tmlw":
                 this.currentlyLoadedSelections = MTR_TMLW_ALL;
                 break;
+            case "ktl":
+                this.currentlyLoadedSelections = MTR_KTL_ALL;
+                break;
             case "twl":
                 this.currentlyLoadedSelections = MTR_TWL_ALL;
                 break;
+            case "ill":
+                this.currentlyLoadedSelections = MTR_ILL_ALL;
+                break;
             case "tcl":
                 this.currentlyLoadedSelections = MTR_TCL_ALL;
+                break;
+            case "tko":
+                this.currentlyLoadedSelections = MTR_TKO_ALL;
                 break;
             case "seil":
                 this.currentlyLoadedSelections = MTR_SEIL_ALL;
