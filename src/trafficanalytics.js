@@ -13,7 +13,7 @@ function obtainTrafficAnalytics(printoutArea) {
         message += "。";
         printoutArea.innerHTML = message;
     })["catch"](function (error) {
-        var message = "未能取得資料庫版本資訊：\n";
+        var message = "未能取得網頁流量資訊：\n";
         message += error;
         printoutArea.innerHTML = message;
     });

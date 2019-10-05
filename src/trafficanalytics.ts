@@ -16,7 +16,7 @@ function obtainTrafficAnalytics(printoutArea: HTMLDivElement)
         printoutArea.innerHTML = message;
     })
     .catch(error => {
-        let message = "未能取得資料庫版本資訊：\n";
+        let message = "未能取得網頁流量資訊：\n";
         message += error;
         printoutArea.innerHTML = message;
     });
