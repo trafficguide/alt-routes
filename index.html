@@ -31,6 +31,9 @@
         <script src="src/interchangerules.js"></script>
         <!-- Main script: controlling everything from a centralized control. -->
         <script src="src/mainscript.js"></script>
+        <!-- Supporting scripts -->
+        <script src="src/httprequest.js"></script>
+        <script src="src/latestcommit.js"></script>
         <script>
             var fromSelector;
             var toSelector;
@@ -89,8 +92,8 @@
                 // Print some database stats.
                 prepareDatabaseStats(document.getElementById("db_stats_count"));
 
-                // Print version info.
-                document.getElementById("versionInfo").innerHTML = getVersionString();
+                // Print version info. Already handles HTTP errors, etc.
+                obtainLatestCommitTimestanp(document.getElementById("versionInfo"));
 
                 // Initialize the two MTRSelectors.
                 fromSelector = new MTRSelector(document.getElementById("fromLine"), document.getElementById("fromStation"));
@@ -143,7 +146,8 @@
         <!-- Headers -->
         <h1>港鐵替代路線查找器</h1>
         <p>
-            為港鐵跣底嗰陣買定個保險。<img src="https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Ftrafficguide.github.io%2Falt-routes%2F" alt="Hits">
+            為港鐵跣底嗰陣買定個保險。<br>
+            <img src="https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Ftrafficguide.github.io%2Falt-routes%2F" alt="Hits">
         </p>
         <p>
             <div id="versionInfo"></div>
