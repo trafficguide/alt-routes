@@ -34,6 +34,7 @@
         <!-- Supporting scripts -->
         <script src="src/httprequest.js"></script>
         <script src="src/latestcommit.js"></script>
+        <script src="src/trafficanalytics.js"></script>
         <script>
             var fromSelector;
             var toSelector;
@@ -94,6 +95,7 @@
 
                 // Print version info. Already handles HTTP errors, etc.
                 obtainLatestCommitTimestanp(document.getElementById("versionInfo"));
+                obtainTrafficAnalytics(document.getElementById("trafficInfo"));
 
                 // Initialize the two MTRSelectors.
                 fromSelector = new MTRSelector(document.getElementById("fromLine"), document.getElementById("fromStation"));
@@ -151,6 +153,7 @@
         </p>
         <p>
             <div id="versionInfo"></div>
+            <div id="trafficInfo"></div>
             <a href="https://docs.google.com/forms/d/e/1FAIpQLSeeID8c0JpELbUfUQMyG1d7OLSJ_v5IBQzu00nYJwcDw-y2Ew/viewform" target="_blank">意見反映</a>
         </p>
         <!-- Selections -->

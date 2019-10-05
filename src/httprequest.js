@@ -21,9 +21,11 @@ function makeHttpRequest(url) {
             var statusMessage = this.status.toString();
             if (statusMessage.toString() == "") {
                 // Error that not even the server can respond: must be network-level errors
-                statusMessage = "Network Error";
+                reject(new Error("Network-related Error"));
             }
-            reject(new Error("XMLHttpRequest complains: " + statusMessage));
+            else {
+                reject(new Error("XMLHttpRequest returns: " + statusMessage));
+            }
         };
         request.open("GET", url);
         request.send();
