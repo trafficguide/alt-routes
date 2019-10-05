@@ -318,6 +318,8 @@ const GMB_NT_28S = new Line("28S", lineType_GMB_NT, "白石角", "沙田市中�
 // All 02*
 const GMB_NT_NUM_02x = [GMB_NT_26_EAST, GMB_NT_26_WEST, GMB_NT_28K, GMB_NT_28S];
 // 06*
+const GMB_NT_65A_EAST = new Line("65A", lineType_GMB_NT, "沙田市中心", "黃泥頭", [ShatinTownHall, BelairGardens, MTR_mos_cityone, HangSengUniversity], 7);
+const GMB_NT_65A_WEST = new Line("65A", lineType_GMB_NT, "黃泥頭", "沙田市中心", [HangSengUniversity, MTR_mos_cityone, ShatinSeafood, BelairGardens, ShatinTownHall], 7);
 const GMB_NT_65K_NORTH = new Line("65K", lineType_GMB_NT, "黃泥頭", "火炭站", [MTR_mos_cityone, ShatinSeafood, MTR_erl_fotan]);
 const GMB_NT_65K_SOUTH = new Line("65K", lineType_GMB_NT, "火炭站", "黃泥頭", [MTR_erl_fotan, MTR_mos_cityone]);
 const GMB_NT_67A_EAST = new Line("67A", lineType_GMB_NT, "沙田站", "碩門邨", [MTR_erl_shatin, BelairGardens, ShatinSeafood, MTR_mos_shekmun], 12);
@@ -325,7 +327,7 @@ const GMB_NT_67A_WEST = new Line("67A", lineType_GMB_NT, "碩門邨", "沙田站
 const GMB_NT_68K_EAST = new Line("68K", lineType_GMB_NT, "瑞峰花園", "沙田站", [MTR_mos_taiwai, MTR_mos_chekungtemple, ShatinTownCenter, MTR_erl_shatin], 8);
 const GMB_NT_68K_WEST = new Line("68K", lineType_GMB_NT, "沙田站", "瑞峰花園", [MTR_erl_shatin, ShatinTownHall, MTR_mos_chekungtemple, MTR_mos_taiwai], 8);
 // All 06*
-const GMB_NT_NUM_06x = [GMB_NT_65K_NORTH, GMB_NT_65K_SOUTH, GMB_NT_67A_EAST, GMB_NT_67A_WEST, GMB_NT_68K_EAST, GMB_NT_68K_WEST];
+const GMB_NT_NUM_06x = [GMB_NT_65A_EAST, GMB_NT_65A_WEST, GMB_NT_65K_NORTH, GMB_NT_65K_SOUTH, GMB_NT_67A_EAST, GMB_NT_67A_WEST, GMB_NT_68K_EAST, GMB_NT_68K_WEST];
 // All 0**
 const GMB_NT_NUM_0xx = [].concat(GMB_NT_NUM_02x, GMB_NT_NUM_06x);
 // 80*
