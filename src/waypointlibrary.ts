@@ -299,6 +299,7 @@ const TsuenWanRoad = new Waypoint("", "").markAttributes("i");
 const ClagueGardenEstate = new Waypoint("", "").addNeighbor(MTR_tml_tsuenwanwest);
 const WanChaiFerryPier = new Waypoint("", "").addNeighbor(MTR_erl_exhibition);
 const ChaiWanRoad = new Waypoint("", "");
+const ShuiChuenO = new Waypoint("", "");
 
 function obtainAllMTRWaypoints(): Array<Waypoint>
 {
