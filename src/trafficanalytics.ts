@@ -1,4 +1,4 @@
-const endpoint_TrafficAnalytics = "https://api.github.com/repos/trafficguide/alt-routes/traffic/views";
+const endpoint_TrafficAnalytics = "https://api.github.com/repos/Vectorial1024/alt-routes/traffic/views";
 
 function obtainTrafficAnalytics(printoutArea: HTMLDivElement)
 {

@@ -1,4 +1,4 @@
-var endpoint_TrafficAnalytics = "https://api.github.com/repos/trafficguide/alt-routes/traffic/views";
+var endpoint_TrafficAnalytics = "https://api.github.com/repos/Vectorial1024/alt-routes/traffic/views";
 function obtainTrafficAnalytics(printoutArea) {
     printoutArea.innerHTML = "正在獲取網頁流量資訊...";
     makeHttpRequest(endpoint_TrafficAnalytics)
