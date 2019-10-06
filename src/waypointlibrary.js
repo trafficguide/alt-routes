@@ -283,6 +283,7 @@ var TsuenWanRoad = new Waypoint("", "").markAttributes("i");
 var ClagueGardenEstate = new Waypoint("", "").addNeighbor(MTR_tml_tsuenwanwest);
 var WanChaiFerryPier = new Waypoint("", "").addNeighbor(MTR_erl_exhibition);
 var ChaiWanRoad = new Waypoint("", "");
+var ShuiChuenO = new Waypoint("", "");
 function obtainAllMTRWaypoints() {
     return [].concat(MTR_ERL_ALL, MTR_TMLE_ALL, MTR_TMLW_ALL, MTR_KTL_ALL, MTR_TWL_ALL, MTR_ILL_ALL, MTR_TCL_ALL, MTR_TKO_ALL, MTR_SEIL_ALL, MTR_SWIL_ALL);
 }

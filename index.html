@@ -85,6 +85,18 @@
                 return;
             }
 
+            function chart_Show()
+            {
+                document.getElementById("chart_normal").style.display = "block";
+                document.getElementById("chart_night").style.display = "block";
+            }
+
+            function chart_Hide()
+            {
+                document.getElementById("chart_normal").style.display = "none";
+                document.getElementById("chart_night").style.display = "none";
+            }
+
             /**
              * Do all your initialization here.
              */
@@ -95,7 +107,8 @@
 
                 // Print version info. Already handles HTTP errors, etc.
                 obtainLatestCommitTimestanp(document.getElementById("versionInfo"));
-                obtainTrafficAnalytics(document.getElementById("trafficInfo"));
+                // Traffic analytics seem not to work properly.
+                //obtainTrafficAnalytics(document.getElementById("trafficInfo"));
 
                 // Initialize the two MTRSelectors.
                 fromSelector = new MTRSelector(document.getElementById("fromLine"), document.getElementById("fromStation"));
@@ -148,8 +161,16 @@
         <!-- Headers -->
         <h1>港鐵替代路線查找器</h1>
         <p>
-            為港鐵跣底嗰陣買定個保險。<br>
-            <img src="https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Ftrafficguide.github.io%2Falt-routes%2F" alt="Hits">
+            為港鐵跣底嗰陣買定個保險。<b>一經載入，毋須上網，輕鬆查找。</b><br>
+            <img alt="Hit count info" src="https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Ftrafficguide.github.io%2Falt-routes%2F">
+            <a href="https://github.com/trafficguide/alt-routes/issues" target="_blank"><img alt="GitHub issues" src="https://img.shields.io/github/issues/trafficguide/alt-routes"></a>
+        </p>
+        <p>
+            <button type="button" onclick="chart_Show()">緊急召喚乘車大圖</button>
+            <button type="button" onclick="chart_Hide()">收起乘車大圖</button>
+            <br>
+            <img id="chart_normal" alt="Big pic: Normal" src="img/Instant_NormalMode.jpg" style="display: none">
+            <img id="chart_night" alt="Big pic: Night" src="img/Instant_NightMode.jpg" style="display: none">
         </p>
         <p>
             <div id="versionInfo"></div>

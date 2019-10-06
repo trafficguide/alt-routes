@@ -9,6 +9,8 @@ var MTRSelector = /** @class */ (function () {
     MTRSelector.prototype.initializeDropdown = function () {
         var resultingLineDropdown = "<option value='0'>---</option>";
         resultingLineDropdown += "<option value='erl'>東鐵線</option>";
+        resultingLineDropdown += "<option value='mos'>馬鞍山線</option>";
+        resultingLineDropdown += "<option value='wrl'>西鐵線</option>";
         resultingLineDropdown += "<option value='tmle'>屯馬線 (東)</option>";
         resultingLineDropdown += "<option value='tmlw'>屯馬線 (西)</option>";
         resultingLineDropdown += "<option value='ktl'>觀塘線</option>";
@@ -16,8 +18,8 @@ var MTRSelector = /** @class */ (function () {
         resultingLineDropdown += "<option value='ill'>港島線</option>";
         resultingLineDropdown += "<option value='tcl'>東涌線</option>";
         resultingLineDropdown += "<option value='tko'>將軍澳線</option>";
-        resultingLineDropdown += "<option value='seil'>南港島 (東)</option>";
-        resultingLineDropdown += "<option value='swil'>南港島 (西)</option>";
+        resultingLineDropdown += "<option value='seil'>南港島線 (東)</option>";
+        resultingLineDropdown += "<option value='swil'>南港島線 (西)</option>";
         this.lineDropdown.innerHTML = resultingLineDropdown;
     };
     MTRSelector.prototype.calculateSelectedStation = function () {
@@ -57,6 +59,12 @@ var MTRSelector = /** @class */ (function () {
         switch (this.lineDropdown.selectedOptions[0].value) {
             case "erl":
                 this.currentlyLoadedSelections = MTR_ERL_ALL;
+                break;
+            case "mos":
+                this.currentlyLoadedSelections = MTR_MOS_ALL;
+                break;
+            case "wrl":
+                this.currentlyLoadedSelections = MTR_TMLW_ALL;
                 break;
             case "tmle":
                 this.currentlyLoadedSelections = MTR_TMLE_ALL;
