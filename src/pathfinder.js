@@ -8,6 +8,8 @@ var global_results = new Array();
  */
 function findPathsBetween(from, to) {
     var allResults = new Array();
+    // A flag to allow "display all options" fir the earliest order of solutions.
+    var isVirgin = true;
     results_DirectCount = 0;
     results_InterchangeCount = 0;
     var maxDegree = 2;
@@ -54,9 +56,31 @@ function findPathsBetween(from, to) {
         // All results from this degree has been checked.
         // Now review both piles to filter by min-cost.
         // However, if the current degree is 0, we can add everything into it.
-        if (currentDegree > 0) {
-            var degreeMinCost = Infinity;
-            // NewPile
+        var degreeMinCost = Infinity;
+        if (isVirgin) {
+            // Skip everything if it is virgin but there's nothing to display.
+            // This may occur when you need at least 1 interchange to get to your destinations
+            if (completelyNewResult.length > 0) {
+                // You used up that
+                isVirgin = false;
+                // Filter by average first if there are more than 8 entries to display.
+                if (completelyNewResult.length > 10) {
+                    var sum = 0.0;
+                    for (var i = 0; i < completelyNewResult.length; i++) {
+                        sum += completelyNewResult[i].getTotalAdjustedCost();
+                    }
+                    var average = sum / completelyNewResult.length;
+                    for (var i = completelyNewResult.length - 1; i >= 0; i--) {
+                        if (completelyNewResult[i].getTotalAdjustedCost() > average) {
+                            completelyNewResult.splice(i, 1);
+                        }
+                    }
+                    // List of Completely-New-Results ready.
+                }
+            }
+        }
+        else {
+            // Filter by minimizing the cost
             for (var i = 0; i < completelyNewResult.length; i++) {
                 if (completelyNewResult[i].getTotalAdjustedCost() < degreeMinCost) {
                     degreeMinCost = completelyNewResult[i].getTotalAdjustedCost();
@@ -67,7 +91,9 @@ function findPathsBetween(from, to) {
                     completelyNewResult.splice(i, 1);
                 }
             }
-            // NewPile end
+        }
+        // Filter by comparison: suggested paths should be better than "similar" paths found previously.
+        if (betterThanPrevious.length > 0) {
             degreeMinCost = Infinity;
             // BetterPile
             for (var i = 0; i < betterThanPrevious.length; i++) {
@@ -222,7 +248,7 @@ function findPaths_1X(from, to) {
                 // No intersection. Next!
                 continue;
             }
-            var L1_INTERSECTION = L1.getIndexOfWaypoint(intersection);
+            var L1_INTERSECTION = L1.getIndexOfWaypoint(intersection, L1_BEGIN);
             var L2_INTERSECTION = L2.getIndexOfWaypoint(intersection);
             if (L1_INTERSECTION > L1_BEGIN && L2_INTERSECTION < L2_END) {
                 // Valid and makes sense.

@@ -10,6 +10,8 @@ var Line = /** @class */ (function () {
         this.url = "";
         this.notes = "";
         this.flagCircular = false;
+        this.flagCommuter = false;
+        this.flagNightOnly = false;
         /**
          * Determined by service frequency:
          *
@@ -92,6 +94,14 @@ var Line = /** @class */ (function () {
         this.flagCircular = true;
         return this;
     };
+    Line.prototype.markCommuter = function () {
+        this.flagCommuter = true;
+        return this;
+    };
+    Line.prototype.markNightOnly = function () {
+        this.flagNightOnly = true;
+        return this;
+    };
     Line.prototype.getName = function () {
         return this.name;
     };
@@ -100,6 +110,12 @@ var Line = /** @class */ (function () {
     };
     Line.prototype.isCircular = function () {
         return this.flagCircular;
+    };
+    Line.prototype.isCommuter = function () {
+        return this.flagCommuter;
+    };
+    Line.prototype.isNightOnly = function () {
+        return this.flagNightOnly;
     };
     Line.prototype.calculateURL = function () {
         // Using USHB to support local groups; also, bus fandom is too nerdy for the average user.
@@ -195,10 +211,12 @@ var Line = /** @class */ (function () {
      * Returns the index of the waypoint, or the station which is a neighbour of the waypoint, of the given waypoint.
      *
      * Returns -1 if the waypoint is not found.
-     * @param waypoint
+     * @param waypoint The waypoint to be searched
+     * @param beginIndex Optional. Specifies the index within the line to begin the search from. Defaults to 0.
      */
-    Line.prototype.getIndexOfWaypoint = function (waypoint) {
-        for (var i = 0; i < this.stops.length; i++) {
+    Line.prototype.getIndexOfWaypoint = function (waypoint, beginIndex) {
+        if (beginIndex === void 0) { beginIndex = 0; }
+        for (var i = beginIndex; i < this.stops.length; i++) {
             var currentWaypoint = this.stops[i];
             if (currentWaypoint.checkEqual(waypoint)) {
                 return i;
