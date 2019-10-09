@@ -17,6 +17,8 @@ class Line
     url: string = "";
     notes: string = "";
     flagCircular: boolean = false;
+    flagCommuter: boolean = false;
+    flagNightOnly: boolean = false;
     /**
      * Determined by service frequency:
      * 
@@ -119,6 +121,18 @@ class Line
         return this;
     }
 
+    markCommuter(): Line
+    {
+        this.flagCommuter = true;
+        return this;
+    }
+
+    markNightOnly(): Line
+    {
+        this.flagNightOnly = true;
+        return this;
+    }
+
     getName(): string
     {
         return this.name;
@@ -132,6 +146,16 @@ class Line
     isCircular(): boolean
     {
         return this.flagCircular;
+    }
+
+    isCommuter(): boolean
+    {
+        return this.flagCommuter;
+    }
+
+    isNightOnly(): boolean
+    {
+        return this.flagNightOnly;
     }
 
     calculateURL(): string
@@ -258,11 +282,12 @@ class Line
      * Returns the index of the waypoint, or the station which is a neighbour of the waypoint, of the given waypoint.
      * 
      * Returns -1 if the waypoint is not found.
-     * @param waypoint 
+     * @param waypoint The waypoint to be searched
+     * @param beginIndex Optional. Specifies the index within the line to begin the search from. Defaults to 0.
      */
-    getIndexOfWaypoint(waypoint: Waypoint): number
+    getIndexOfWaypoint(waypoint: Waypoint, beginIndex: number = 0): number
     {
-        for (let i = 0; i < this.stops.length; i++)
+        for (let i = beginIndex; i < this.stops.length; i++)
         {
             let currentWaypoint = this.stops[i];
             if (currentWaypoint.checkEqual(waypoint))

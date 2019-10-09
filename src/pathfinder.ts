@@ -11,6 +11,8 @@ let global_results = new Array<Path>();
 function findPathsBetween(from: Waypoint, to: Waypoint): Array<Path>
 {
     let allResults = new Array<Path>();
+    // A flag to allow "display all options" fir the earliest order of solutions.
+    let isVirgin = true;
     results_DirectCount = 0;
     results_InterchangeCount = 0;
     let maxDegree = 2;
@@ -75,10 +77,39 @@ function findPathsBetween(from: Waypoint, to: Waypoint): Array<Path>
         // All results from this degree has been checked.
         // Now review both piles to filter by min-cost.
         // However, if the current degree is 0, we can add everything into it.
-        if (currentDegree > 0)
+        let degreeMinCost = Infinity;
+        if (isVirgin)
         {
-            let degreeMinCost = Infinity;
-            // NewPile
+            // Skip everything if it is virgin but there's nothing to display.
+            // This may occur when you need at least 1 interchange to get to your destinations
+            if (completelyNewResult.length > 0)
+            {
+                // You used up that
+                isVirgin = false;
+                // Filter by average first if there are more than 8 entries to display.
+                if (completelyNewResult.length > 10)
+                {
+                    let sum = 0.0;
+                    for (let i = 0; i < completelyNewResult.length; i++)
+                    {
+                        sum += completelyNewResult[i].getTotalAdjustedCost();
+                    }
+                    let average = sum / completelyNewResult.length;
+                    for (let i = completelyNewResult.length - 1; i >= 0; i--)
+                    {
+                        if (completelyNewResult[i].getTotalAdjustedCost() > average)
+                        {
+                            completelyNewResult.splice(i, 1);
+                        }
+                    }
+
+                    // List of Completely-New-Results ready.
+                }
+            }
+        }
+        else
+        {
+            // Filter by minimizing the cost
             for (let i = 0; i < completelyNewResult.length; i++)
             {
                 if (completelyNewResult[i].getTotalAdjustedCost() < degreeMinCost)
@@ -93,7 +124,11 @@ function findPathsBetween(from: Waypoint, to: Waypoint): Array<Path>
                     completelyNewResult.splice(i, 1);
                 }
             }
-            // NewPile end
+        }
+
+        // Filter by comparison: suggested paths should be better than "similar" paths found previously.
+        if (betterThanPrevious.length > 0)
+        {
             degreeMinCost = Infinity;
             // BetterPile
             for (let i = 0; i < betterThanPrevious.length; i++)
@@ -298,7 +333,7 @@ function findPaths_1X(from: Waypoint, to: Waypoint): Array<Path>
                 continue;
             }
 
-            let L1_INTERSECTION = L1.getIndexOfWaypoint(intersection);
+            let L1_INTERSECTION = L1.getIndexOfWaypoint(intersection, L1_BEGIN);
             let L2_INTERSECTION = L2.getIndexOfWaypoint(intersection);
             if (L1_INTERSECTION > L1_BEGIN && L2_INTERSECTION < L2_END)
             {
