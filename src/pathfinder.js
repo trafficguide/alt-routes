@@ -82,6 +82,7 @@ function findPathsBetween(from, to) {
         else {
             // Filter by minimizing the cost
             for (var i = 0; i < completelyNewResult.length; i++) {
+                //console.log(completelyNewResult[i].toString() + ", it has cost " + completelyNewResult[i].getTotalAdjustedCost());
                 if (completelyNewResult[i].getTotalAdjustedCost() < degreeMinCost) {
                     degreeMinCost = completelyNewResult[i].getTotalAdjustedCost();
                 }

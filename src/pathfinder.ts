@@ -112,6 +112,7 @@ function findPathsBetween(from: Waypoint, to: Waypoint): Array<Path>
             // Filter by minimizing the cost
             for (let i = 0; i < completelyNewResult.length; i++)
             {
+                //console.log(completelyNewResult[i].toString() + ", it has cost " + completelyNewResult[i].getTotalAdjustedCost());
                 if (completelyNewResult[i].getTotalAdjustedCost() < degreeMinCost)
                 {
                     degreeMinCost = completelyNewResult[i].getTotalAdjustedCost();

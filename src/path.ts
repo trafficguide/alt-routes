@@ -25,8 +25,25 @@ class Path
         let pathCost = 0;
         //connectionCost += this.getLine().getTimeCostAdjustment();
         //let pathCost = this.connections[0].getLine().getTimeCostAdjustment();
+        let endpointConnectedByWalking = false;
         for (let i = 0; i < this.connections.length; i++)
         {
+            /*
+            if (i == 0 && this.connections.length > 1 && this.connections[i].getLine().isWalking())
+            {
+                // Cancel first path cost if the first path is a walking path
+                // Also check that the path length is at least 2.
+                endpointConnectedByWalking = true;
+                continue;
+            }
+            */
+            // For symmetry with above
+            /*
+            if (!endpointConnectedByWalking && i + 1 == this.connections.length && this.connections[i].getLine().isWalking())
+            {
+                continue;
+            }
+            */
             //console.log(this.connections[i]);
             pathCost += this.connections[i].calculateConnectionCost();
         }
@@ -46,11 +63,13 @@ class Path
                 pathCost -= 1;
                 continue;
             }
+            /*
             else if (L1.type != L2.type)
             {
                 // Homogeneous synergy; if they aint homogeneous, add to the cost.
                 pathCost += 1;
             }
+            */
             // Should prefer single place interchange
             let fromXPoint = L1.stops[C1.getEndIndex()];
             let toXPoint = L2.stops[C2.getStartIndex()];
@@ -121,5 +140,17 @@ class Path
         }
 
         return false;
+    }
+
+    toString(): string
+    {
+        let result = "";
+        for (let i = 0; i < this.connections.length; i++)
+        {
+            result += this.connections[i].getLine().getName();
+            result += " ";
+        }
+        result += "cost = " + this.getTotalAdjustedCost();
+        return result;
     }
 }
