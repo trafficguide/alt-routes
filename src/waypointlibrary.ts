@@ -5,8 +5,8 @@ const MTR_erl_sheungshui = new Waypoint("erl_ss", "上水");
 const MTR_erl_fanling = new Waypoint("erl_fl", "粉嶺");
 const MTR_erl_taiwo = new Waypoint("erl_two", "太和");
 const MTR_erl_taipomarket = new Waypoint("erl_tpm", "大埔墟");
+//const MTR_erl_CUHK = new Waypoint("erl_cuhk", "中文大學");
 const MTR_erl_university = new Waypoint("erl_uni", "大學");
-const MTR_erl_chungchi = new Waypoint("erl_cuhk", "崇基學院");
 const MTR_erl_fotan = new Waypoint("erl_ft", "火炭");
 const MTR_erl_shatin = new Waypoint("erl_st", "沙田");
 const MTR_erl_taiwai = new Waypoint("erl_twa", "大圍");
@@ -164,56 +164,6 @@ const MTR_swil_hku = MTR_ill_hku;
 // 其他
 const MTR_hsr_westkowloon = new Waypoint("hsr_wkl", "西九龍").addNeighbor(MTR_tml_austin).addNeighbor(MTR_tcl_kowloon);
 
-// Line-Arrays
-
-/**
- * An array containing all East Rail Line waypoints.
- */
-/**
- * All East Rail Line stations
- */
-const MTR_ERL_ALL = [MTR_erl_admiralty, MTR_erl_exhibition, MTR_erl_hunghom, MTR_erl_mongkokeast, MTR_erl_kowloontong, MTR_erl_taiwai, MTR_erl_shatin, MTR_erl_fotan, MTR_erl_university, MTR_erl_taipomarket, MTR_erl_taiwo, MTR_erl_fanling, MTR_erl_sheungshui];
-/**
- * All (former) Ma On Shan Line stations
- */
-const MTR_MOS_ALL = [MTR_mos_wukaisha, MTR_mos_maonshan, MTR_mos_hengon, MTR_mos_taishuihang, MTR_mos_shekmun, MTR_mos_cityone, MTR_mos_shatinwai, MTR_mos_chekungtemple, MTR_mos_taiwai];
-/**
- * All Tuen Ma Line (East) stations
- */
-const MTR_TMLE_ALL = MTR_MOS_ALL.concat(MTR_tml_hinkeng);
-/**
- * All Tuen Ma Line // West Rail Line stations
- */
-const MTR_TMLW_ALL = [MTR_tml_tuenmun, MTR_tml_siuhong, MTR_tml_tsuenwanwest, MTR_tml_meifoo, MTR_tml_namcheong, MTR_tml_austin, MTR_tml_easttsimshatsui];
-/**
- * All Kwun Tong Line stations
- */
-const MTR_KTL_ALL = [MTR_ktl_tiukengleng, MTR_ktl_yautong, MTR_ktl_lamtin, MTR_ktl_kwuntong, MTR_ktl_ngautaukok, MTR_ktl_kowloonbay, MTR_ktl_choihung, MTR_ktl_diamondhill, MTR_ktl_wongtaisin, MTR_ktl_lokfu, MTR_ktl_kowloontong, MTR_ktl_shekkipmei, MTR_ktl_princeedward, MTR_ktl_mongkok, MTR_ktl_yaumatei, MTR_ktl_homantin, MTR_ktl_whampoa];
-/**
- * All Tsuen Wan Line stations
- */
-const MTR_TWL_ALL = [MTR_twl_tsuenking, MTR_twl_tsuenwan, MTR_twl_taiwohau, MTR_twl_kwaihing, MTR_twl_kwaifong, MTR_twl_laiking, MTR_twl_meifoo, MTR_twl_laichikok, MTR_twl_cheungshawan, MTR_twl_shamshuipo, MTR_twl_princeedward, MTR_twl_mongkok, MTR_twl_yaumatei, MTR_twl_jordan, MTR_twl_tsimshatsui, MTR_twl_admiralty, MTR_twl_central];
-/**
- * All Island Line stations
- */
-const MTR_ILL_ALL = [MTR_ill_kennedytown, MTR_ill_hku, MTR_ill_saiyingpun, MTR_ill_sheungwan, MTR_ill_central, MTR_ill_admiralty, MTR_ill_wanchai, MTR_ill_causewaybay, MTR_ill_tinhau, MTR_ill_fortresshill, MTR_ill_northpoint, MTR_ill_quarrybay, MTR_ill_taikoo, MTR_ill_saiwanho, MTR_ill_saukeiwan, MTR_ill_hengfachuen, MTR_ill_chaiwan];
-/**
- * All Tung Chung Line stations
- */
-const MTR_TCL_ALL = [MTR_tcl_tsingyi, MTR_tcl_laiking, MTR_tcl_namcheong, MTR_tcl_olympic, MTR_tcl_kowloon, MTR_tcl_hongkong];
-/**
-* All Tseung Kwan O Line stations
-*/
-const MTR_TKO_ALL = [MTR_tko_polam, MTR_tko_hanghau, MTR_tko_tseungkwano, MTR_tko_lohaspark, MTR_tko_tiukengleng, MTR_tko_yautong, MTR_tko_quarrybay, MTR_tko_northpoint];
-/**
- * All South Island (East) Line stations
- */
-const MTR_SEIL_ALL = [MTR_seil_southhoriz, MTR_seil_leitung, MTR_seil_wongchukhang, MTR_seil_oceanpark, MTR_seil_admiralty];
-/**
- * All South Island (West) Line stations
- */
-const MTR_SWIL_ALL = [MTR_swil_wongchukhang, MTR_swil_aberdeen, MTR_swil_tinwan, MTR_swil_wahfoo, MTR_swil_cyberport, MTR_swil_queenmary, MTR_swil_hku];
-
 // Other (internal) waypoints for road marking
 const TaiPoRoad_KowloonReservoir = new Waypoint("tpr_reservoir", "九龍水塘").markAttributes("i");
 const TaiPoRoad_ShatinHeights = new Waypoint("tpr_shatinheights", "沙田嶺").markAttributes("i");
@@ -224,6 +174,9 @@ const TaiPoRoad_TaiPoKau = new Waypoint("tpr_tpk", "大埔滘").markAttributes("
 const LionRockTunnel = new Waypoint("lionrock", "獅子山隧道").markAttributes("i");
 const LionRockTunnel_Interchange = new Waypoint("lionrock_i", "獅隧轉車站").markAttributes("x");
 const JatMinEstate = new Waypoint("yatming", "乙明邨").addNeighbor(MTR_mos_shatinwai);
+/**
+ * Please use ChoiHungBusTerminus instead.
+ */
 const PikHoiHouse = new Waypoint("pikhoi", "碧海樓").addNeighbor(MTR_ktl_choihung);
 const RoyalAscot = new Waypoint("royalascot", "駿景園");
 const CheungShueTan = new Waypoint("cheungshuetan", "樟樹灘");
@@ -268,7 +221,7 @@ const LionRockTunnelHighway = new Waypoint("lrthighway", "").markAttributes("i")
 const TaiPoRoad_HongLokYuen = new Waypoint("tpr_honglokyuen", "").markAttributes("i");
 const TaiPoRoad_KiuTau = new Waypoint("tpr_kiutau", "").markAttributes("i");
 const TaiPoRoad_Main = new Waypoint("tpr_main", "").markAttributes("i");
-const ShekTongTsui = new Waypoint("shektongtsui", "").addNeighbor(MTR_ill_hku);
+const ShekTongTsui = new Waypoint("shektongtsui", "");
 const ConnaughtRoadWest_Stop = new Waypoint("cnrw_stop", "").addNeighbor(MTR_ill_saiyingpun);
 const PrincessMargaretRoad = new Waypoint("pmroad", "").markAttributes("i");
 const CrossHarbourTunnel_Interchange = new Waypoint("cht_interchange", "紅隧轉車站").markAttributes("x").addNeighbor(MTR_erl_hunghom);
@@ -307,15 +260,37 @@ const DiscoveryParkHoledHighway = new Waypoint("", "").markAttributes("i");
 const BelvedereGarden = new Waypoint("", "");
 const TuenMunHighway_YauKomTau = new Waypoint("", "").markAttributes("i");
 const TuenMunHighway_TsingLungTau = new Waypoint("", "").markAttributes("i");
-const TuenMunHighway_Interchange = new Waypoint("", "").markAttributes("x");
+const TuenMunHighway_InterchangeEast = new Waypoint("", "").markAttributes("x");
+const TuenMunHighway_InterchangeWest = new Waypoint("", "").markAttributes("x");
 const TuenMunHighway_SoKwunWat = new Waypoint("", "").markAttributes("i");
 const LingNamUniversity = new Waypoint("", "");
 const KwongFaiWai = new Waypoint("", "");
+const HappyValley = new Waypoint("", "");
+const PokFuLam_Actual = new Waypoint("", "");
+const HungNgokHouse_ChoiHung = new Waypoint("", "").addNeighbor(MTR_ktl_choihung);
+const SunTinWai = new Waypoint("", "");
+const ChoiHungBusTerminus = new Waypoint("", "");
+const Moreton_CausewayBay = new Waypoint("", "");
+const YiuTungEstate = new Waypoint("", "");
+const KowloonBayCommercial = new Waypoint("", "");
+const WestWood_HKU = new Waypoint("", "").addNeighbor(ShekTongTsui);
+const TaiPo_LamChuen = new Waypoint("", "");
+const Rural_Kadoorie = new Waypoint("", "");
+const KSR_SheugnChuen = new Waypoint("", "");
+const KSR_PatHeung = new Waypoint("", "");
+const KSR_KoPoTsuen = new Waypoint("", "");
+const YL_PokOiHospital = new Waypoint("", "");
+const TaiLamTunnel = new Waypoint("", "").markAttributes("i");
+const TaiLamTunnel_Interchange = new Waypoint("", "").markAttributes("x");
+const TsingLongHighway = new Waypoint("", "").markAttributes("i");
+const YuenLongHighway = new Waypoint("", "").markAttributes("i");
+const LongTinRoad = new Waypoint("", "").markAttributes("i");
 
 // Hmmm... Should LRT get their own codes?
 const KCR_lrt_samshing = new Waypoint("", "");
 const KCR_lrt_puito = new Waypoint("", "");
 const KCR_lrt_primeview = new Waypoint("", "");
+const KCR_lrt_fungninroad = new Waypoint("", "");
 
 // Code assist-generated by Excel
 
@@ -351,6 +326,57 @@ const KamTin = new Waypoint("hk18_kt", "錦田").markAttributes("");
 const TinShau = new Waypoint("hk18_tshau", "天秀路公園").markAttributes("");
 const TinPak = new Waypoint("hk18_tp", "天柏").markAttributes("");
 const TinShui = new Waypoint("hk18_tshui", "天瑞").markAttributes("");
+
+// Line-Arrays
+
+/**
+ * An array containing all East Rail Line waypoints.
+ */
+/**
+ * All East Rail Line stations
+ */
+const MTR_ERL_ALL = [MTR_erl_admiralty, MTR_erl_exhibition, MTR_erl_hunghom, MTR_erl_mongkokeast, MTR_erl_kowloontong, MTR_erl_taiwai, MTR_erl_shatin, MTR_erl_fotan, MTR_erl_university, MTR_erl_taipomarket, MTR_erl_taiwo, MTR_erl_fanling, MTR_erl_sheungshui];
+/**
+ * All (former) Ma On Shan Line stations
+ */
+const MTR_MOS_ALL = [MTR_mos_wukaisha, MTR_mos_maonshan, MTR_mos_hengon, MTR_mos_taishuihang, MTR_mos_shekmun, MTR_mos_cityone, MTR_mos_shatinwai, MTR_mos_chekungtemple, MTR_mos_taiwai];
+/**
+ * All Tuen Ma Line (East) stations
+ */
+const MTR_TMLE_ALL = MTR_MOS_ALL.concat(MTR_tml_hinkeng);
+/**
+ * All Tuen Ma Line // West Rail Line stations
+ */
+const MTR_TMLW_ALL = [MTR_tml_tuenmun, MTR_tml_siuhong, MTR_tml_hungshuikiu, MTR_tml_tinshuiwai, MTR_tml_longping, MTR_tml_yuenlong, MTR_tml_kamsheungroad, MTR_tml_tsuenwanwest, MTR_tml_meifoo, MTR_tml_namcheong, MTR_tml_austin, MTR_tml_easttsimshatsui];
+/**
+ * All Kwun Tong Line stations
+ */
+const MTR_KTL_ALL = [MTR_ktl_tiukengleng, MTR_ktl_yautong, MTR_ktl_lamtin, MTR_ktl_kwuntong, MTR_ktl_ngautaukok, MTR_ktl_kowloonbay, MTR_ktl_choihung, MTR_ktl_diamondhill, MTR_ktl_wongtaisin, MTR_ktl_lokfu, MTR_ktl_kowloontong, MTR_ktl_shekkipmei, MTR_ktl_princeedward, MTR_ktl_mongkok, MTR_ktl_yaumatei, MTR_ktl_homantin, MTR_ktl_whampoa];
+/**
+ * All Tsuen Wan Line stations
+ */
+const MTR_TWL_ALL = [MTR_twl_tsuenking, MTR_twl_tsuenwan, MTR_twl_taiwohau, MTR_twl_kwaihing, MTR_twl_kwaifong, MTR_twl_laiking, MTR_twl_meifoo, MTR_twl_laichikok, MTR_twl_cheungshawan, MTR_twl_shamshuipo, MTR_twl_princeedward, MTR_twl_mongkok, MTR_twl_yaumatei, MTR_twl_jordan, MTR_twl_tsimshatsui, MTR_twl_admiralty, MTR_twl_central];
+/**
+ * All Island Line stations
+ */
+const MTR_ILL_ALL = [MTR_ill_kennedytown, MTR_ill_hku, MTR_ill_saiyingpun, MTR_ill_sheungwan, MTR_ill_central, MTR_ill_admiralty, MTR_ill_wanchai, MTR_ill_causewaybay, MTR_ill_tinhau, MTR_ill_fortresshill, MTR_ill_northpoint, MTR_ill_quarrybay, MTR_ill_taikoo, MTR_ill_saiwanho, MTR_ill_saukeiwan, MTR_ill_hengfachuen, MTR_ill_chaiwan];
+/**
+ * All Tung Chung Line stations
+ */
+const MTR_TCL_ALL = [MTR_tcl_tsingyi, MTR_tcl_laiking, MTR_tcl_namcheong, MTR_tcl_olympic, MTR_tcl_kowloon, MTR_tcl_hongkong];
+/**
+* All Tseung Kwan O Line stations
+*/
+const MTR_TKO_ALL = [MTR_tko_polam, MTR_tko_hanghau, MTR_tko_tseungkwano, MTR_tko_lohaspark, MTR_tko_tiukengleng, MTR_tko_yautong, MTR_tko_quarrybay, MTR_tko_northpoint];
+/**
+ * All South Island (East) Line stations
+ */
+const MTR_SEIL_ALL = [MTR_seil_southhoriz, MTR_seil_leitung, MTR_seil_wongchukhang, MTR_seil_oceanpark, MTR_seil_admiralty];
+/**
+ * All South Island (West) Line stations
+ */
+const MTR_SWIL_ALL = [MTR_swil_wongchukhang, MTR_swil_aberdeen, MTR_swil_tinwan, MTR_swil_wahfoo, MTR_swil_cyberport, MTR_swil_queenmary, MTR_swil_hku];
+
 
 function obtainAllMTRWaypoints(): Array<Waypoint>
 {

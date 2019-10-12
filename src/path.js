@@ -15,7 +15,24 @@ var Path = /** @class */ (function () {
         var pathCost = 0;
         //connectionCost += this.getLine().getTimeCostAdjustment();
         //let pathCost = this.connections[0].getLine().getTimeCostAdjustment();
+        var endpointConnectedByWalking = false;
         for (var i = 0; i < this.connections.length; i++) {
+            /*
+            if (i == 0 && this.connections.length > 1 && this.connections[i].getLine().isWalking())
+            {
+                // Cancel first path cost if the first path is a walking path
+                // Also check that the path length is at least 2.
+                endpointConnectedByWalking = true;
+                continue;
+            }
+            */
+            // For symmetry with above
+            /*
+            if (!endpointConnectedByWalking && i + 1 == this.connections.length && this.connections[i].getLine().isWalking())
+            {
+                continue;
+            }
+            */
             //console.log(this.connections[i]);
             pathCost += this.connections[i].calculateConnectionCost();
         }
@@ -33,10 +50,13 @@ var Path = /** @class */ (function () {
                 pathCost -= 1;
                 continue;
             }
-            else if (L1.type != L2.type) {
+            /*
+            else if (L1.type != L2.type)
+            {
                 // Homogeneous synergy; if they aint homogeneous, add to the cost.
                 pathCost += 1;
             }
+            */
             // Should prefer single place interchange
             var fromXPoint = L1.stops[C1.getEndIndex()];
             var toXPoint = L2.stops[C2.getStartIndex()];
@@ -89,6 +109,15 @@ var Path = /** @class */ (function () {
             }
         }
         return false;
+    };
+    Path.prototype.toString = function () {
+        var result = "";
+        for (var i = 0; i < this.connections.length; i++) {
+            result += this.connections[i].getLine().getName();
+            result += " ";
+        }
+        result += "cost = " + this.getTotalAdjustedCost();
+        return result;
     };
     return Path;
 }());

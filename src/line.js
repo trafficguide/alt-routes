@@ -45,35 +45,32 @@ var Line = /** @class */ (function () {
         // Time cost adjustment (not applicable to walking)
         if (this.type != lineType_WALK) {
             var freq = overallFreq;
-            if (freq <= 5) {
+            if (freq < 8) {
                 this.timeCostAdjustment = -3;
             }
-            else if (freq <= 8) {
+            else if (freq < 15) {
+                // 4
                 this.timeCostAdjustment = -2;
             }
-            else if (freq <= 15) {
-                // 4
+            else if (freq < 20) {
+                // 3
                 this.timeCostAdjustment = -1;
             }
-            else if (freq <= 20) {
-                // 3
+            else if (freq < 30) {
+                // About 2.5 vehicles per hour
                 this.timeCostAdjustment = 0;
             }
-            else if (freq <= 30) {
-                // About 2.5 vehicles per hour
+            else if (freq < 45) {
+                // About 1.5 vehicles per hour
                 this.timeCostAdjustment = 1;
             }
-            else if (freq <= 45) {
-                // About 1.5 vehicles per hour
-                this.timeCostAdjustment = 2;
-            }
-            else if (freq <= 60) {
+            else if (freq < 60) {
                 // About 1+ vehicles per hour
-                this.timeCostAdjustment = 3;
+                this.timeCostAdjustment = 2;
             }
             else {
                 // Less than 1 per hour
-                this.timeCostAdjustment = 4;
+                this.timeCostAdjustment = 3;
             }
         }
         /*
