@@ -1,0 +1,143 @@
+select {
+  display: inline-block !important;
+  width: 40%;
+}
+
+select:focus {
+  outline: 1px solid #ffd740;
+}
+
+select option {
+  background: rgba(0, 0, 0, 0.3);
+  color: #000000;
+  padding: 10px;
+}
+
+select option[value="erl"] {
+  background: #51baea;
+  color: #fff;
+}
+
+select option[value="mos"] {
+  background: #983212;
+  color: #fff;
+}
+select option[value="wrl"] {
+  background: #a6228e;
+  color: #fff;
+}
+
+select option[value="tmle"] {
+  background: #983212;
+  color: #fff;
+}
+select option[value="tmlw"] {
+  background: #51baea;
+  color: #fff;
+}
+select option[value="ktl"] {
+  background: #00ab4e;
+  color: #fff;
+}
+select option[value="twl"] {
+  background: #ed1c24;
+  color: #fff;
+}
+select option[value="ill"] {
+  background: #007dc5;
+  color: #fff;
+}
+select option[value="tcl"] {
+  background: #f7943e;
+  color: #fff;
+}
+select option[value="tko"] {
+  background: #7e499d;
+  color: #fff;
+}
+select option[value="seil"] {
+  background: #cdce00;
+  color: #fff;
+}
+select option[value="swil"] {
+  background: #cdce00;
+  color: #fff;
+}
+
+[type="checkbox"]:checked + span:not(.lever):before {
+  border-right: 2px solid #ef6c00;
+  border-bottom: 2px solid #ef6c00;
+}
+
+[type="radio"]:checked + span:after,
+[type="radio"].with-gap:checked + span:before,
+[type="radio"].with-gap:checked + span:after {
+  border: 2px solid #ef6c00;
+}
+
+[type="radio"]:checked + span:after,
+[type="radio"].with-gap:checked + span:after {
+  background-color: #ef6c00;
+}
+a.link {
+  font-weight: bold;
+  font-size: 20px;
+  position: relative;
+  display: inline-block;
+}
+a.link:after {
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #000;
+  content: "";
+}
+table {
+  overflow-x: auto;
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 800px;
+}
+table a {
+  background: #e53935;
+  padding: 1px 8px;
+  display: inline-block;
+  border-radius: 5px;
+  color: #ffffff;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+table th {
+  text-align: center;
+}
+table td {
+  line-height: 1.4;
+  padding: 10px 10px;
+  white-space: nowrap;
+}
+font[color="mediumseagreen"] ~ a {
+  background: #00796b;
+}
+
+@media only screen and (min-width: 601px) {
+  .container {
+    width: 93%;
+  }
+  table {
+    border-radius: 8px;
+  }
+  table th {
+    background: #000000;
+    color: #ffffff;
+    font-weight: bold;
+    border-right: #000000 2px solid;
+  }
+  table td {
+    border-right: #ffffff 2px solid;
+  }
+  table td:last-child {
+    border-right: none;
+  }
+}
