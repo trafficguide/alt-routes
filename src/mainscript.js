@@ -223,4 +223,14 @@ function conductSearch(
   resultTableHTML += getTableClosing();
   // All is ready. Flush.
   resultTableElm.innerHTML = resultTableHTML;
+
+  $("font[color='purple']")
+    .prev("a")
+    .addClass("purple");
+  $("font[color='coral']")
+    .prev("a")
+    .addClass("coral");
+  $("font[color='mediumseagreen']")
+    .prev("a")
+    .addClass("mediumseagreen");
 }
