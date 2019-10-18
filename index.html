@@ -15,6 +15,12 @@
         <script src="interchange_manager.js"></script>
         -->
         <!-- TypeScript JS scripts -->
+        <!--Import Google Icon Font-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!--Import materialize.css-->
+        <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+        <link type="text/css" rel="stylesheet" href="css/common.css" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
         <!-- From basic to complex -->
         <script src="src/waypoint.js"></script>
         <script src="src/line.js"></script>
@@ -66,6 +72,7 @@
              */
             function event_LineChanged()
             {
+                console.log("Event Change",fromSelector);
                 if (this.id == "fromLine")
                 {
                     fromSelector.updateDropdown();
@@ -137,7 +144,7 @@
             {
                 font-family: Microsoft JhengHei, Microsoft YaHei, STXihei
             }
-
+/* 
             table
             {
                 overflow-x: auto;
@@ -155,10 +162,11 @@
             tr:nth-child(even)
             {
                 background-color: #dddddd;
-            }
+            } */
         </style>
     </head>
     <body>
+    <div class="container">
         <!-- Headers -->
         <h1>港鐵替代路線查找器</h1>
         <p>
@@ -168,8 +176,9 @@
             <img alt="Hit count info" src="https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Ftrafficguide.github.io%2Falt-routes%2F">
         </p>
         <p>
-            <button type="button" onclick="chart_Show()">緊急召喚乘車大圖</button>
-            <button type="button" onclick="chart_Hide()">收起乘車大圖</button>
+            <a class="waves-effect waves-light btn orange darken-3" onclick="chart_Show()"><i class="material-icons left">map</i>緊急召喚乘車大圖</a>
+            <a class="waves-effect waves-light btn orange darken-3" onclick="chart_Hide()"><i class="material-icons left">unfold_less</i>收起乘車大圖</a>
+            
             <br>
             <img id="chart_normal" alt="Big pic: Normal" src="img/Instant_NormalMode.jpg" style="display: none">
             <img id="chart_night" alt="Big pic: Night" src="img/Instant_NightMode.jpg" style="display: none">
@@ -177,42 +186,83 @@
         <p>
             <div id="versionInfo"></div>
             <div id="trafficInfo"></div>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeeID8c0JpELbUfUQMyG1d7OLSJ_v5IBQzu00nYJwcDw-y2Ew/viewform" target="_blank">意見反映</a> | <a href="https://docs.google.com/spreadsheets/d/1NTAl6hq-Mh4KsR8vFxvFazFxYB0iYS-3oAyuSb7seDU/edit?usp=sharing" target="_blank">協助輸入路線資料</a>
+            <a class="black-text link" href="https://docs.google.com/forms/d/e/1FAIpQLSeeID8c0JpELbUfUQMyG1d7OLSJ_v5IBQzu00nYJwcDw-y2Ew/viewform" target="_blank">意見反映</a> | <a class="black-text link" href="https://docs.google.com/spreadsheets/d/1NTAl6hq-Mh4KsR8vFxvFazFxYB0iYS-3oAyuSb7seDU/edit?usp=sharing" target="_blank">協助輸入路線資料</a>
             <!--
                 It was found that the Google My Maps function does not work very well...
                  | <a href="https://drive.google.com/open?id=1QknSh3gFDDT9wo-kpQpLMXHZU8xN4-jo&usp=sharing" target="_blank">區域劃分大圖 (Experimental)</a>
             -->
         </p>
         <!-- Selections -->
+        
         <h2>查找目標</h2>
         <p>
             起點
+            <div class="input-field col s12">
             <select id="fromLine">
-                <option value="0">---</option>
+                <option value="0" disabled selected>---</option>
             </select>
             <select id="fromStation">
-                <option value="0">---</option>
+                <option value="0" disabled selected>---</option>
             </select>
+            </div>
         </p>
+        
         <p>
             終點
+            <div class="input-field col s12">
             <select id="toLine">
                 <option value="0">---</option>
             </select>
             <select id="toStation">
                 <option value="0">---</option>
             </select>
+        </div>
         </p>
-        <label><input type="checkbox" onclick="confirmChoiceFor_3X(this)">容許搜尋三次轉車</input></label><br>
+            <p>
+            <label>
+                <input class="checkbox-orange" type="checkbox" id="cbxTransit" onclick="confirmChoiceFor_3X(this)"/>
+                <span>容許搜尋三次轉車</span>
+            </label>
+
+            </p>
+
+<!-- <label><input type="checkbox" onclick="confirmChoiceFor_3X(this)">容許搜尋三次轉車</input></label> -->
+<br>
         <p>
-            <label><input type="radio" name="searchMode" value="usual" checked>正常模式</label><br>
+            
+            <!-- <label><input type="radio" name="searchMode" value="usual" checked>正常模式</label><br>
             <label><input type="radio" name="searchMode" value="commute">晨昏模式 (未開通)</label><br>
-            <label><input type="radio" name="searchMode" value="night">深宵模式 (未開通)</label><br>
+            <label><input type="radio" name="searchMode" value="night">深宵模式 (未開通)</label><br> -->
         </p>
+
+        
+            <p>
+              <label>
+                <input class="with-gap" name="searchMode" type="radio" value="usual" checked />
+                <span>正常模式</span>
+              </label>
+            </p>
+            <p>
+              <label>
+                <input class="with-gap" name="searchMode" type="radio" value="commute" />
+                <span>晨昏模式 (未開通)</span>
+              </label>
+            </p>
+            <p>
+              <label>
+                <input class="with-gap" name="searchMode" type="radio"  value="night"/>
+                <span>深宵模式 (未開通)</span>
+              </label>
+            </p>
+
+
         <p>
             <!-- Buttons -->
-            <button type="button" onclick="signal_BeginSearch()">查找</button>
-            <button type="button" onclick="swapFromAndTo()">互換</button>
+            <a class="waves-effect waves-light btn orange darken-3" onclick="signal_BeginSearch()"><i class="material-icons left">search</i>查找</a>
+            <a class="waves-effect waves-light btn orange darken-3" onclick="swapFromAndTo()"><i class="material-icons left">import_export</i>互換</a>
+
+            <!-- <button type="button" onclick="signal_BeginSearch()">查找</button>
+            <button type="button" onclick="swapFromAndTo()">互換</button> -->
         </p>
         <!-- Result printout -->
         <h2>查找結果</h2>
@@ -233,5 +283,13 @@
             freedom is about being offered A, B, C, ..., being able to scrutinize them all, and,
             empowered by values and truths, choosing A all by yorself because you determine that A truly is the best."
         </p>
+        </div>
+        <!--JavaScript at end of body for optimized loading-->
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function() {
+            //$('select').formSelect();
+        });
+        </script>
     </body>
 </html>
