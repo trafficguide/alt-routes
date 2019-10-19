@@ -154,6 +154,33 @@ class Line
         return this.flagNightOnly;
     }
 
+    isMatchingCurrentSearchMode(): boolean
+    {
+        if (this.isCommuter())
+        {
+            if (isSearchingForCommute())
+            {
+                return true;
+            }
+        }
+        else if (this.isNightOnly())
+        {
+            if (isSearchingForLateNight())
+            {
+                return true;
+            }
+        }
+        else
+        {
+            // Normal stuff
+            if (!isSearchingForLateNight())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     calculateURL(): string
     {
         // Using USHB to support local groups; also, bus fandom is too nerdy for the average user.

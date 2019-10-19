@@ -114,6 +114,25 @@ var Line = /** @class */ (function () {
     Line.prototype.isNightOnly = function () {
         return this.flagNightOnly;
     };
+    Line.prototype.isMatchingCurrentSearchMode = function () {
+        if (this.isCommuter()) {
+            if (isSearchingForCommute()) {
+                return true;
+            }
+        }
+        else if (this.isNightOnly()) {
+            if (isSearchingForLateNight()) {
+                return true;
+            }
+        }
+        else {
+            // Normal stuff
+            if (!isSearchingForLateNight()) {
+                return true;
+            }
+        }
+        return false;
+    };
     Line.prototype.calculateURL = function () {
         // Using USHB to support local groups; also, bus fandom is too nerdy for the average user.
         // For minibus, the 16seats.net is average enough for user-level nneds.

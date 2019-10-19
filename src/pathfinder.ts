@@ -213,6 +213,11 @@ function findPaths_0X(from: Waypoint, to: Waypoint): Array<Path>
     for (let i = 0; i < HK18_ALL_LINES.length; i++)
     {
         let currentLine = HK18_ALL_LINES[i];
+        if (!currentLine.isMatchingCurrentSearchMode())
+        {
+            continue;
+        }
+
         let index_BEGIN = -1;
         let index_END = -1;
 
@@ -299,6 +304,10 @@ function findPaths_1X(from: Waypoint, to: Waypoint): Array<Path>
     for (let i = 0; i < HK18_ALL_LINES.length; i++)
     {
         let L1 = HK18_ALL_LINES[i];
+        if (!L1.isMatchingCurrentSearchMode())
+        {
+            continue;
+        }
         let L1_BEGIN = L1.getIndexOfWaypoint(from);
         if (L1_BEGIN == -1)
         {
@@ -309,6 +318,10 @@ function findPaths_1X(from: Waypoint, to: Waypoint): Array<Path>
         for (let j = 0; j < HK18_ALL_LINES.length; j++)
         {
             let L2 = HK18_ALL_LINES[j];
+            if (!L2.isMatchingCurrentSearchMode())
+            {
+                continue;
+            }
             if (L2.checkEqual(L1))
             {
                 // This would mean:
@@ -388,6 +401,10 @@ function findPaths_nX(from: Waypoint, to: Waypoint, n: number): Array<Path>
         for (let i = 0; i < HK18_ALL_LINES.length; i++)
         {
             let current_L1 = HK18_ALL_LINES[i];
+            if (!current_L1.isMatchingCurrentSearchMode())
+            {
+                continue;
+            }
             // First check if the user may depart from FROM
             let current_L1_FROM = current_L1.getIndexOfWaypoint(from);
             if (current_L1_FROM == -1)

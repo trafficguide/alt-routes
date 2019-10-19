@@ -229,7 +229,7 @@ var TseungKwanOTunnel = new Waypoint("tkot_actual", "").markAttributes("i");
 var Anderson = new Waypoint("anderson", "");
 var SauMauPing = new Waypoint("", "");
 var KwunTongFerryPier = new Waypoint("", "");
-var EastKowloonMainBranch = new Waypoint("ekl_mainbranch", "太子道東");
+var PE_RegalOrientalHotel = new Waypoint("", "富豪東方酒店");
 var MongKokFlowerMarket = new Waypoint("", "").addNeighbor(MTR_erl_mongkokeast);
 var SunPoKong = new Waypoint("", "").addNeighbor(MTR_ktl_diamondhill);
 var BoundaryPrince = new Waypoint("", "");
@@ -242,7 +242,7 @@ var ShuiChuenO = new Waypoint("", "");
 var ShatinHospital = new Waypoint("", "");
 var KwaiChungEstate = new Waypoint("", "");
 var YiPeiChuen = new Waypoint("", "");
-var DiscoveryParkHoledHighway = new Waypoint("", "").markAttributes("i");
+var CheungPeiShanRoad = new Waypoint("", "").markAttributes("i");
 var BelvedereGarden = new Waypoint("", "");
 var TuenMunHighway_YauKomTau = new Waypoint("", "").markAttributes("i");
 var TuenMunHighway_TsingLungTau = new Waypoint("", "").markAttributes("i");
@@ -271,6 +271,21 @@ var TaiLamTunnel_Interchange = new Waypoint("", "").markAttributes("x");
 var TsingLongHighway = new Waypoint("", "").markAttributes("i");
 var YuenLongHighway = new Waypoint("", "").markAttributes("i");
 var LongTinRoad = new Waypoint("", "").markAttributes("i");
+var ChukYuen = new Waypoint("", "");
+var ChingCheungRoad_BeaconHill = new Waypoint("", "");
+var ChingCheungRoad_Other = new Waypoint("", "");
+var KowloonTongCornwall = new Waypoint("", "");
+var UpperKennedyTown = new Waypoint("", "");
+var SoUkEstate = new Waypoint("", "");
+var OuterWahFoo = new Waypoint("", "");
+var ToKwaWanFlyover = new Waypoint("", "").markAttributes("i");
+var KaiTakTunnel = new Waypoint("", "").markAttributes("i");
+var HKITCE = new Waypoint("", "").markAttributes("x");
+var TsuenWanMarket = new Waypoint("", "").addNeighbor(ChungOnStreet).addNeighbor(MTR_twl_tsuenwan);
+var TsuenWanTownHall = new Waypoint("", "");
+var SciencePark = new Waypoint("", "");
+var PE_ChoiHung = new Waypoint("", "麗晶花園/坪石邨");
+var PE_SunPoKong = new Waypoint("", "");
 // Hmmm... Should LRT get their own codes?
 var KCR_lrt_samshing = new Waypoint("", "");
 var KCR_lrt_puito = new Waypoint("", "");
@@ -324,7 +339,7 @@ var MTR_MOS_ALL = [MTR_mos_wukaisha, MTR_mos_maonshan, MTR_mos_hengon, MTR_mos_t
 /**
  * All Tuen Ma Line (East) stations
  */
-var MTR_TMLE_ALL = MTR_MOS_ALL.concat(MTR_tml_hinkeng);
+var MTR_TMLE_ALL = MTR_MOS_ALL.concat(MTR_tml_hinkeng, MTR_tml_diamondhill, MTR_tml_kaitak, MTR_tml_sungwongtoi, MTR_tml_tokwawan, MTR_tml_homantin, MTR_tml_hunghom);
 /**
  * All Tuen Ma Line // West Rail Line stations
  */

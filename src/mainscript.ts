@@ -1,14 +1,6 @@
 let shouldConduct_3X = false;
 
 /**
- * Returns a string indicating the version of the web-app.
- */
-function getVersionString(): string
-{
-    return "Version: 29 September 2019";
-}
-
-/**
  * 10%, 70px
  * 
  * 35%, 245px
@@ -96,12 +88,14 @@ function conductSearch(
     fromSelector: MTRSelector,
     toSelector: MTRSelector,
     generalFeedbackElm: HTMLElement,
+    searchModeFeedbackElm: HTMLElement,
     directLinesFeedbackElm: HTMLElement,
     interchangeLinesFeedbackElm: HTMLElement,
     resultTableElm: HTMLElement)
 {
     // Clear everything first, so that the flow is easier to follow.
     generalFeedbackElm.innerHTML = "";
+    searchModeFeedbackElm.innerHTML = "";
     directLinesFeedbackElm.innerHTML = "";
     interchangeLinesFeedbackElm.innerHTML = "";
     clearResultDisplay(resultTableElm);
@@ -120,6 +114,7 @@ function conductSearch(
     }
     
     // The actual search.
+    searchModeFeedbackElm.innerHTML = "現正使用：" + findCurrentlySelectedSearchModeDisplayText();
     let fromStation = fromSelector.calculateSelectedStation();
     let toStation = toSelector.calculateSelectedStation();
 

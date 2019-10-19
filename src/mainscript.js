@@ -74,9 +74,10 @@ function displayDetailedStats() {
  * @param interchangeLinesFeedbackElm The Element that displays how many interchange paths are found
  * @param resultTableElm The Element where the results will be displayed as a table.
  */
-function conductSearch(fromSelector, toSelector, generalFeedbackElm, directLinesFeedbackElm, interchangeLinesFeedbackElm, resultTableElm) {
+function conductSearch(fromSelector, toSelector, generalFeedbackElm, searchModeFeedbackElm, directLinesFeedbackElm, interchangeLinesFeedbackElm, resultTableElm) {
     // Clear everything first, so that the flow is easier to follow.
     generalFeedbackElm.innerHTML = "";
+    searchModeFeedbackElm.innerHTML = "";
     directLinesFeedbackElm.innerHTML = "";
     interchangeLinesFeedbackElm.innerHTML = "";
     clearResultDisplay(resultTableElm);
@@ -91,6 +92,7 @@ function conductSearch(fromSelector, toSelector, generalFeedbackElm, directLines
         return;
     }
     // The actual search.
+    searchModeFeedbackElm.innerHTML = "現正使用：" + findCurrentlySelectedSearchModeDisplayText();
     var fromStation = fromSelector.calculateSelectedStation();
     var toStation = toSelector.calculateSelectedStation();
     var pathfindingResults = findPathsBetween(fromStation, toStation);

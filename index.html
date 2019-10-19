@@ -36,6 +36,7 @@
         <script src="src/httprequest.js"></script>
         <script src="src/latestcommit.js"></script>
         <script src="src/trafficanalytics.js"></script>
+        <script src="src/pathfindermode.js"></script>
         <script>
             var fromSelector;
             var toSelector;
@@ -79,10 +80,11 @@
             function signal_BeginSearch()
             {
                 let generalFeedback = document.getElementById("search_criteria");
+                let searchModeFeedback = document.getElementById("search_mode")
                 let directLineFeedback = document.getElementById("search_lv0");
                 let interchangeLineFeedback = document.getElementById("search_lv1");
                 let resultTable = document.getElementById("results");
-                conductSearch(fromSelector, toSelector, generalFeedback, directLineFeedback, interchangeLineFeedback, resultTable);
+                conductSearch(fromSelector, toSelector, generalFeedback, searchModeFeedback, directLineFeedback, interchangeLineFeedback, resultTable);
                 return;
             }
 
@@ -128,6 +130,9 @@
 
                 // Initialize the results table.
                 clearResultDisplay(document.getElementById("results"));
+
+                // Initialize search mode detector
+                initializePathfinderModeDetectors();
             }
 
             document.addEventListener("DOMContentLoaded", initializeComponents);
@@ -163,6 +168,7 @@
         <h1>港鐵替代路線查找器</h1>
         <p>
             為港鐵跣底嗰陣買定個保險。<b>一經載入，毋須上網，輕鬆離線查找。</b><br>
+            資料庫持續擴充中，資料亦會儲齊一堆才更新(好似茶樓炒飯咁)；如未能顯示乘車資訊，或如有展示奇怪資訊，請見諒！<br>
             <a href="https://github.com/trafficguide/alt-routes" target="_blank"><img alt="GitHub Repo Main Page" src="https://img.shields.io/badge/GitHub%20Repo-Click%20here%20to%20enter-blue"></a>
             <a href="https://github.com/trafficguide/alt-routes/issues" target="_blank"><img alt="GitHub Repo Issues Page" src="https://img.shields.io/github/issues/trafficguide/alt-routes"></a>
             <img alt="Hit count info" src="https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Ftrafficguide.github.io%2Falt-routes%2F">
@@ -206,8 +212,8 @@
         <label><input type="checkbox" onclick="confirmChoiceFor_3X(this)">容許搜尋三次轉車</input></label><br>
         <p>
             <label><input type="radio" name="searchMode" value="usual" checked>正常模式</label><br>
-            <label><input type="radio" name="searchMode" value="commute">晨昏模式 (未開通)</label><br>
-            <label><input type="radio" name="searchMode" value="night">深宵模式 (未開通)</label><br>
+            <label><input type="radio" name="searchMode" value="commute">通勤模式</label><br>
+            <label><input type="radio" name="searchMode" value="night">深宵模式</label><br>
         </p>
         <p>
             <!-- Buttons -->
@@ -218,6 +224,7 @@
         <h2>查找結果</h2>
         <div id="db_stats_count">資料庫共存有項路線資料。</div>
         <div id="search_criteria"></div>
+        <div id="search_mode"></div>
         <div id="search_lv0"></div>
         <div id="search_lv1"></div>
         <div id="externalLinkInfo">本網頁有超連結，連結至其他網站，以查閱路線詳細資訊，包括<b>實際走線</b>、<b>車資</b>及<b>車程</b>。</div>
