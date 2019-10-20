@@ -1,15 +1,8 @@
 ## 探路：港鐵替代路線搜尋器 Pathfinder: Alternative Routes of MTR
 
-<!--
-<p>
-    <a href="https://materializecss.com" target="_blank"><img alt="Materialize CSS Link" src="https://img.shields.io/badge/Uses-Materialize%20CSS-blue"></a>
-    <a href="https://shields.io" target="_blank"><img alt="Shields.IO Link" src="https://img.shields.io/badge/Uses-Shields.io-blue"></a>
-    <a href="https://hitcounter.pythonanywhere.com/" target="_blank"><img alt="Hitcounter Link" src="https://img.shields.io/badge/Uses-Hit Counter-blue"></a>
-</p>
--->
-
 ![MaterializeCSS](https://img.shields.io/badge/Uses-Materialize%20CSS-blue)
 ![ShieldsIO](https://img.shields.io/badge/Uses-Shields.io-blue)
+![HitCounter](https://img.shields.io/badge/Uses-Hit Counter-blue)
 ![Hits](https://hitcounter.pythonanywhere.com/nocount/tag.svg?url=https%3A%2F%2Ftrafficguide.github.io%2Falt-routes%2F)
 
 This is the Repo of 【探路】. The UI is built using HTML. The internal features such as pathfinding are all written using TypeScript and then compiled to JavaScript. This ensures that the JavaScript is, at very most of the time, free of any syntax errors.
