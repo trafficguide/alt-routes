@@ -13,11 +13,13 @@ var MTRSelector = /** @class */ (function () {
         resultingLineDropdown += "<option value='wrl'>西鐵線</option>";
         resultingLineDropdown += "<option value='tmle'>屯馬線 (東)</option>";
         resultingLineDropdown += "<option value='tmlw'>屯馬線 (西)</option>";
+        resultingLineDropdown += "<option value='lrt'>輕鐵</option>";
         resultingLineDropdown += "<option value='ktl'>觀塘線</option>";
         resultingLineDropdown += "<option value='twl'>荃灣線</option>";
         resultingLineDropdown += "<option value='ill'>港島線</option>";
         resultingLineDropdown += "<option value='tcl'>東涌線</option>";
         resultingLineDropdown += "<option value='tko'>將軍澳線</option>";
+        resultingLineDropdown += "<option value='aex'>機場快線</option>";
         resultingLineDropdown += "<option value='seil'>南港島線 (東)</option>";
         resultingLineDropdown += "<option value='swil'>南港島線 (西)</option>";
         this.lineDropdown.innerHTML = resultingLineDropdown;
@@ -55,7 +57,6 @@ var MTRSelector = /** @class */ (function () {
         // First insert a default option.
         var resultingDropdown = "<option value='0'>---</option>";
         // Then obtain the correct list of stations.
-        //console.log(this.lineDropdown.selectedOptions[0].value)
         switch (this.lineDropdown.selectedOptions[0].value) {
             case "erl":
                 this.currentlyLoadedSelections = MTR_ERL_ALL;
@@ -72,6 +73,9 @@ var MTRSelector = /** @class */ (function () {
             case "tmlw":
                 this.currentlyLoadedSelections = MTR_TMLW_ALL;
                 break;
+            case "lrt":
+                this.currentlyLoadedSelections = KCR_LRT_ALL;
+                break;
             case "ktl":
                 this.currentlyLoadedSelections = MTR_KTL_ALL;
                 break;
@@ -87,6 +91,9 @@ var MTRSelector = /** @class */ (function () {
             case "tko":
                 this.currentlyLoadedSelections = MTR_TKO_ALL;
                 break;
+            case "aex":
+                this.currentlyLoadedSelections = MTR_AEX_ALL;
+                break;
             case "seil":
                 this.currentlyLoadedSelections = MTR_SEIL_ALL;
                 break;
@@ -101,7 +108,11 @@ var MTRSelector = /** @class */ (function () {
         // Finally populate the dropdown list
         for (var i = 0; i < this.currentlyLoadedSelections.length; i++) {
             var station = this.currentlyLoadedSelections[i];
-            var optionString = "<option value='" + station.getID() + "'>" + station.getName() + "</option>";
+            var optionString = "<option value='" +
+                station.getID() +
+                "'>" +
+                station.getName() +
+                "</option>";
             resultingDropdown += optionString;
         }
         this.stationDropdown.innerHTML = resultingDropdown;

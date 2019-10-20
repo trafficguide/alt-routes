@@ -151,6 +151,9 @@ var Line = /** @class */ (function () {
         if (this.type == lineType_NWFB) {
             return "https://search.ushb.net/bus/NWFB/" + this.name;
         }
+        if (this.type == lineType_LWB) {
+            return "https://search.ushb.net/bus/LW/" + this.name;
+        }
         return this.url;
     };
     Line.prototype.isWalking = function () {
@@ -173,33 +176,45 @@ var Line = /** @class */ (function () {
         */
         // URL on the line ID
         var url = this.calculateURL();
+        var color = this.type.getColorClass();
         if (url.length > 0) {
-            var aTagOpen = "<a href='" + url + "' target='_blank'>";
+            var appearanceClass = "class='" + color + "'";
+            var aTagOpen = "<a href='" + url + "' target='_blank' " + appearanceClass + ">";
             var aTagClose = "</a>";
             shortID = aTagOpen + shortID + aTagClose;
         }
         shortID += " (";
-        if (this.isGreenMinibus()) {
+        shortID += "<font color='" + color + "'>" + this.type.getValue() + "</font>";
+        /*
+        if (this.isGreenMinibus())
+        {
             shortID += "<font color='green'>" + this.type.getValue() + "</font>";
         }
-        else if (this.type == lineType_HARBOUR) {
+        else if (this.type == lineType_HARBOUR)
+        {
             shortID += "<font color='purple'>" + this.type.getValue() + "</font>";
         }
-        else if (this.type == lineType_CTB) {
+        else if (this.type == lineType_CTB)
+        {
             shortID += "<font color='coral'>" + this.type.getValue() + "</font>";
         }
-        else if (this.type == lineType_NWFB) {
+        else if (this.type == lineType_NWFB)
+        {
             shortID += "<font color='mediumseagreen'>" + this.type.getValue() + "</font>";
         }
-        else if (this.type == lineType_TRAM) {
+        else if (this.type == lineType_TRAM)
+        {
             shortID += "<font color='darkslategrey'>" + this.type.getValue() + "</font>";
         }
-        else if (this.type == lineType_FERRY) {
+        else if (this.type == lineType_FERRY)
+        {
             shortID += "<font color='blue'>" + this.type.getValue() + "</font>";
         }
-        else {
+        else
+        {
             shortID += this.type.getValue();
         }
+        */
         shortID += ")";
         return shortID;
     };
