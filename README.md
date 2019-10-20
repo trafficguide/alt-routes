@@ -25,27 +25,34 @@ And therefore, I have taken it upon myself to jumpstart the entire movement of t
 
 And, as a result, there are several characteristics to this project that differentiates it from other competing projects/apps:
 
-- asdf
+- Cross-platform compatibility: this "app" is simply a webpage with JavaScript running, and can be run in both PC and mobile
+- Simplified representation: this pathfinder stores only the approximate location that bus routes pass through, but never the exact locations; details of the routes may be found in provided links
+- Offline operation: the database is loaded as part of the JavaScript and hence can still be used to find paths even when the phone is offline
+- Straightforward UI: just choose where you want to travel from and to as if you are taking the MTR, and the pathfinder will show the results to you
+- Special parameters for pathfinding: allows you to exclude rush-hour "special routes" from showing up when searching for regular routes; or allows you to search for midnight routes only
+- No Internet beyond necessity: Only the Badges and the hit-count uses the Internet for communication, and that's all of the Internet traffic
+- Ad-free: no advertisements in the page whatsoever
 
-Information of bus routes are all scattered, or are otherwise not available
+Furthermore, the entire scripting part is largely done using TypeScript, which provides more rigorous error-checking than what JavaScript may provide, speeding up development considerably.
 
-I think people may have underappreciated the 
+The use of other libraries is not encouraged but tolerated considering that some features may be impossible to do without the use of said libraries.
 
- Since the railways we may currently plan are "peripheral railways", transporting people from the "outer rims" to main trunk lines, 
-This means there will be even more congestion 
+### Limitations of this Project
 
-This is the Repo of 【探路】. The UI is built using HTML. The internal features such as pathfinding are all written using TypeScript and then compiled to JavaScript. This ensures that the JavaScript is, at very most of the time, free of any syntax errors.
-
-Due to the limitation of GitHub Pages, all server-side code is disabled. This means that PHP and JSP files will not work. This also means that the only thing that works is Javascript/TypeScript.
-
-I personally prefer to keep this project clean of other libraries and dependencies, but will tolerate them when necessary.
+Since this is hosted using GitHub Pages, and that GitHub Pages disallow the use of any server-side code, no PHP or JSP files (or other server-side files) can be used. This also means that no MySQL databases may be used. We have to take the "standalone offline database" approach during development, granting this Pathfinder some unexpected perks in the process.
 
 ### Currently-completed features
 
-- Path-finding
+- Pathfinding
 - Interchange suggestions
 - Interchange concessions (infrastructure only)
 - Search modes (commuter mode and night mode)
+
+### Possible general improvements
+
+- Add more lines
+- Add concession info
+- Extend the pathfinder to include more places (mostly the Light Rail network)
 
 ### Possible algorithmetic improvements
 
@@ -78,17 +85,17 @@ Handles the general direction of the Pathfinder project.
 
 ### Typescript-level Data Entry
 
-Inputs transit routes' pathways into linelibrary.ts file. The inputter should have good knowledge of the local area so to be able to add in appropriate waypoints for routes. May need to modify waypointlibrary.ts to add or fine-tune available waypoints.
+Inputs transit routes' pathways into `src/linelibrary.ts` file. The inputter should have good knowledge of the local area so to be able to add in appropriate waypoints for routes. May need to modify `src/waypointlibrary.ts` to add or fine-tune available waypoints.
 
 You will have to contact trafficguide to give you permission to also modify the Google Sheets so to tick on the checkboxes that indicates whether the routes are added.
 
 - Inputter (Shatin and Tai Wai): [Vectorial1024](https://github.com/Vectorial1024)
 
-### Pathfinder Algorithm
+### Pathfinder Algorithm Fine-tuning
 
-Adjusts the existing pathfinding algorithm to give better and more sensical results. May also need to modify waypointlibrary.ts to produce more accurate results.
+Adjusts the existing pathfinding algorithm to give better and more sensical results. May also need to modify `src/waypointlibrary.ts` to produce more accurate results.
 
-- Programmer: [Vectorial1024](https://github.com/Vectorial1024)
+- Fine-tuner: [Vectorial1024](https://github.com/Vectorial1024)
 
 ### UI Design
 
