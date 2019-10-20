@@ -21,11 +21,13 @@ class MTRSelector {
     resultingLineDropdown += "<option value='wrl'>西鐵線</option>";
     resultingLineDropdown += "<option value='tmle'>屯馬線 (東)</option>";
     resultingLineDropdown += "<option value='tmlw'>屯馬線 (西)</option>";
+    resultingLineDropdown += "<option value='lrt'>輕鐵</option>";
     resultingLineDropdown += "<option value='ktl'>觀塘線</option>";
     resultingLineDropdown += "<option value='twl'>荃灣線</option>";
     resultingLineDropdown += "<option value='ill'>港島線</option>";
     resultingLineDropdown += "<option value='tcl'>東涌線</option>";
     resultingLineDropdown += "<option value='tko'>將軍澳線</option>";
+    resultingLineDropdown += "<option value='aex'>機場快線</option>";
     resultingLineDropdown += "<option value='seil'>南港島線 (東)</option>";
     resultingLineDropdown += "<option value='swil'>南港島線 (西)</option>";
 
@@ -86,6 +88,9 @@ class MTRSelector {
       case "tmlw":
         this.currentlyLoadedSelections = MTR_TMLW_ALL;
         break;
+      case "lrt":
+        this.currentlyLoadedSelections = KCR_LRT_ALL;
+        break;
       case "ktl":
         this.currentlyLoadedSelections = MTR_KTL_ALL;
         break;
@@ -100,6 +105,9 @@ class MTRSelector {
         break;
       case "tko":
         this.currentlyLoadedSelections = MTR_TKO_ALL;
+        break;
+      case "aex":
+        this.currentlyLoadedSelections = MTR_AEX_ALL;
         break;
       case "seil":
         this.currentlyLoadedSelections = MTR_SEIL_ALL;
