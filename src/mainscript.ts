@@ -2,11 +2,11 @@ let shouldConduct_3X = false;
 
 /**
  * 10%, 70px
- * 
+ *
  * 35%, 245px
- * 
+ *
  * 35%, 245px
- * 
+ *
  * 20%, 140px
  */
 function getTableHeading()
@@ -30,8 +30,7 @@ function clearResultDisplay(resultTableElm: HTMLElement)
 
 function confirmChoiceFor_3X(toggle_3x: HTMLInputElement)
 {
-    if (toggle_3x.checked)
-    {
+    if (toggle_3x.checked) {
         // Send a dialog box, ask if the user really wants to do 3X search
         var message = "注意：三次轉車可能費時失事，亦會令查找時間增加！\n";
         message += "按「確定」以確定同時查找三次轉車。";
@@ -46,14 +45,14 @@ function confirmChoiceFor_3X(toggle_3x: HTMLInputElement)
 
 /**
  * Prints some stats about the current database onto the specified Element.
- * @param statsDisplayElm 
+ * @param statsDisplayElm
  */
 function prepareDatabaseStats(statsDisplayElm: HTMLElement)
 {
     let string = "資料庫共存有 ";
     string += HK18_ALL_LINES.length;
     string += " 項路線資料。";
-    string += " (<a href='javascript: displayDetailedStats();'>路線分類統計</a>)";
+    string += " (<a class='black-text link' href='javascript: displayDetailedStats();'>路線分類統計</a>)";
     statsDisplayElm.innerHTML = string;
 }
 
@@ -112,7 +111,7 @@ function conductSearch(
         generalFeedbackElm.innerHTML = "起訖兩點相同，無須展示任何資料。";
         return;
     }
-    
+
     // The actual search.
     searchModeFeedbackElm.innerHTML = "現正使用：" + findCurrentlySelectedSearchModeDisplayText();
     let fromStation = fromSelector.calculateSelectedStation();
@@ -132,6 +131,7 @@ function conductSearch(
     generalFeedbackStr += " 的路線建議。"
     generalFeedbackElm.innerHTML = generalFeedbackStr;
 
+    // Result feedback
     if (results_DirectCount > 0)
     {
         directLinesFeedbackElm.innerHTML = "有 " + results_DirectCount + " 條直達路線。";
@@ -159,13 +159,14 @@ function conductSearch(
     }
 
     let resultTableHTML = getTableHeading();
+
     // For each result:
     for (let i = 0; i < pathfindingResults.length; i++)
     {
         // Preparation
         let path = pathfindingResults[i];
         let connections = path.getConnections();
-        console.log("Entry at " + i + " has cost " + path.getTotalAdjustedCost()) 
+        console.log("Entry at " + i + " has cost " + path.getTotalAdjustedCost());
 
         // Begin
         resultTableHTML += "<tr>";
@@ -202,14 +203,19 @@ function conductSearch(
             {
                 let tempString = "";
                 tempString += "乘搭 " + L1.getHTMLShortID() + "<br>";
-                tempString += "於 " + interchange.getWaypoint().getName() + " 轉乘 " + L2.getHTMLShortID() + "<br>";
+                tempString +=
+                    "於 " +
+                    interchange.getWaypoint().getName() +
+                    " 轉乘 " +
+                    L2.getHTMLShortID() +
+                    "<br>";
                 tempString += "可獲以下效果：" + interchange.directlyGetEffectReadout();
                 effectStrings.push(tempString);
             }
         }
         if (effectStrings.length == 0)
         {
-            resultTableHTML += "無轉乘優惠";
+          resultTableHTML += "無轉乘優惠";
         }
         else
         {

@@ -1,11 +1,5 @@
 var shouldConduct_3X = false;
 /**
- * Returns a string indicating the version of the web-app.
- */
-function getVersionString() {
-    return "Version: 29 September 2019";
-}
-/**
  * 10%, 70px
  *
  * 35%, 245px
@@ -46,7 +40,7 @@ function prepareDatabaseStats(statsDisplayElm) {
     var string = "資料庫共存有 ";
     string += HK18_ALL_LINES.length;
     string += " 項路線資料。";
-    string += " (<a href='javascript: displayDetailedStats();'>路線分類統計</a>)";
+    string += " (<a class='black-text link' href='javascript: displayDetailedStats();'>路線分類統計</a>)";
     statsDisplayElm.innerHTML = string;
 }
 /**
@@ -107,6 +101,7 @@ function conductSearch(fromSelector, toSelector, generalFeedbackElm, searchModeF
     generalFeedbackStr += toSelector.stationDropdown.selectedOptions[0].text;
     generalFeedbackStr += " 的路線建議。";
     generalFeedbackElm.innerHTML = generalFeedbackStr;
+    // Result feedback
     if (results_DirectCount > 0) {
         directLinesFeedbackElm.innerHTML = "有 " + results_DirectCount + " 條直達路線。";
         if (results_InterchangeCount > 0) {
@@ -161,7 +156,12 @@ function conductSearch(fromSelector, toSelector, generalFeedbackElm, searchModeF
             if (interchange != null) {
                 var tempString = "";
                 tempString += "乘搭 " + L1.getHTMLShortID() + "<br>";
-                tempString += "於 " + interchange.getWaypoint().getName() + " 轉乘 " + L2.getHTMLShortID() + "<br>";
+                tempString +=
+                    "於 " +
+                        interchange.getWaypoint().getName() +
+                        " 轉乘 " +
+                        L2.getHTMLShortID() +
+                        "<br>";
                 tempString += "可獲以下效果：" + interchange.directlyGetEffectReadout();
                 effectStrings.push(tempString);
             }

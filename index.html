@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>港鐵替代路線 Replace MTR</title>
+        <title>探路 Pathfinder</title>
         <meta charset="UTF-16">
         <meta name="description" content="為港鐵跣底嗰陣買定個保險。一經載入，毋須上網，輕鬆離線查找。" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +15,12 @@
         <script src="interchange_manager.js"></script>
         -->
         <!-- TypeScript JS scripts -->
+        <!--Import Google Icon Font-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!--Import materialize.css-->
+        <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+        <link type="text/css" rel="stylesheet" href="css/common.css" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
         <!-- From basic to complex -->
         <script src="src/waypoint.js"></script>
         <script src="src/line.js"></script>
@@ -37,6 +43,8 @@
         <script src="src/latestcommit.js"></script>
         <script src="src/trafficanalytics.js"></script>
         <script src="src/pathfindermode.js"></script>
+        <!-- Basic traffic analytics -->
+        <script src="src/analytics.js"></script>
         <script>
             var fromSelector;
             var toSelector;
@@ -67,6 +75,7 @@
              */
             function event_LineChanged()
             {
+                console.log("Event Change",fromSelector);
                 if (this.id == "fromLine")
                 {
                     fromSelector.updateDropdown();
@@ -133,6 +142,9 @@
 
                 // Initialize search mode detector
                 initializePathfinderModeDetectors();
+
+                // Integrated method to register this visit and prepare the hit-counter badge
+                prepareHitsShield(document.getElementById("hit_shield"));
             }
 
             document.addEventListener("DOMContentLoaded", initializeComponents);
@@ -142,7 +154,7 @@
             {
                 font-family: Microsoft JhengHei, Microsoft YaHei, STXihei
             }
-
+/* 
             table
             {
                 overflow-x: auto;
@@ -160,22 +172,36 @@
             tr:nth-child(even)
             {
                 background-color: #dddddd;
-            }
+            } */
         </style>
     </head>
     <body>
+    <div class="container">
         <!-- Headers -->
-        <h1>港鐵替代路線查找器</h1>
+        <!-- Changed from h1 to h4 to adapt to the new Materialize CSS -->
+        <h4>探路：港鐵替代路線搜尋器</h4>
         <p>
             為港鐵跣底嗰陣買定個保險。<b>一經載入，毋須上網，輕鬆離線查找。</b><br>
-            資料庫持續擴充中，資料亦會儲齊一堆才更新(好似茶樓炒飯咁)；如未能顯示乘車資訊，或如有展示奇怪資訊，請見諒！<br>
+            資料庫持續擴充中，資料亦會儲齊一堆才更新(好似茶樓炒飯咁)。<br>
+            資料不齊全會令搜尋器搜出不合理結果。如因資料不全，而未能顯示乘車資訊，或展示奇怪資訊，請見諒！<br>
+            <!-- Shields.IO badges -->
             <a href="https://github.com/trafficguide/alt-routes" target="_blank"><img alt="GitHub Repo Main Page" src="https://img.shields.io/badge/GitHub%20Repo-Click%20here%20to%20enter-blue"></a>
+            <a href="https://materializecss.com" target="_blank"><img alt="Materialize CSS Link" src="https://img.shields.io/badge/Uses-Materialize%20CSS-blue"></a>
+            <a href="https://shields.io" target="_blank"><img alt="Shields.IO Link" src="https://img.shields.io/badge/Uses-Shields.io-blue"></a>
+            <a href="https://hitcounter.pythonanywhere.com/" target="_blank"><img alt="Hitcounter Link" src="https://img.shields.io/badge/Uses-Hit Counter-blue"></a>
+            <!-- The original page hits is back, but I am leaning to change its appeareance using shields.io; scripts are already set up. -->
+            <!-- As a matter of documentation, we previously used this link: https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Ftrafficguide.github.io%2Falt-routes%2F -->
+            <img id="hit_shield" alt="Hit Count Info" src="https://img.shields.io/badge/Hits-Loading...-lightgrey">
+            <a href="https://github.com/trafficguide/alt-routes/graphs/contributors" target="_blank"><img alt="GitHub Repo Contributors" src="https://img.shields.io/github/contributors/trafficguide/alt-routes"></a>
             <a href="https://github.com/trafficguide/alt-routes/issues" target="_blank"><img alt="GitHub Repo Issues Page" src="https://img.shields.io/github/issues/trafficguide/alt-routes"></a>
-            <img alt="Hit count info" src="https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Ftrafficguide.github.io%2Falt-routes%2F">
+            <a href="https://github.com/trafficguide/alt-routes/blob/master/LICENSE" target="_blank"><img alt="GitHub Repo License" src="https://img.shields.io/github/license/trafficguide/alt-routes"></a>
+            <a href="https://github.com/trafficguide/alt-routes/network/members" target="_blank"><img alt="GitHub Repo Forks" src="https://img.shields.io/github/forks/trafficguide/alt-routes?style=social"></a>
         </p>
+        <!-- Cached transit maps -->
         <p>
-            <button type="button" onclick="chart_Show()">緊急召喚乘車大圖</button>
-            <button type="button" onclick="chart_Hide()">收起乘車大圖</button>
+            <a class="waves-effect waves-light btn orange darken-3" onclick="chart_Show()"><i class="material-icons left">map</i>緊急召喚乘車大圖</a>
+            <a class="waves-effect waves-light btn orange darken-3" onclick="chart_Hide()"><i class="material-icons left">unfold_less</i>收起乘車大圖</a>
+            
             <br>
             <img id="chart_normal" alt="Big pic: Normal" src="img/Instant_NormalMode.jpg" style="display: none">
             <img id="chart_night" alt="Big pic: Night" src="img/Instant_NightMode.jpg" style="display: none">
@@ -183,45 +209,89 @@
         <p>
             <div id="versionInfo"></div>
             <div id="trafficInfo"></div>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeeID8c0JpELbUfUQMyG1d7OLSJ_v5IBQzu00nYJwcDw-y2Ew/viewform" target="_blank">意見反映</a> | <a href="https://docs.google.com/spreadsheets/d/1NTAl6hq-Mh4KsR8vFxvFazFxYB0iYS-3oAyuSb7seDU/edit?usp=sharing" target="_blank">協助輸入路線資料</a>
+            <a class="black-text link" href="https://docs.google.com/forms/d/e/1FAIpQLSeeID8c0JpELbUfUQMyG1d7OLSJ_v5IBQzu00nYJwcDw-y2Ew/viewform" target="_blank">意見反映</a> | <a class="black-text link" href="https://docs.google.com/spreadsheets/d/1NTAl6hq-Mh4KsR8vFxvFazFxYB0iYS-3oAyuSb7seDU/edit?usp=sharing" target="_blank">協助輸入路線資料</a>
             <!--
                 It was found that the Google My Maps function does not work very well...
                  | <a href="https://drive.google.com/open?id=1QknSh3gFDDT9wo-kpQpLMXHZU8xN4-jo&usp=sharing" target="_blank">區域劃分大圖 (Experimental)</a>
             -->
         </p>
         <!-- Selections -->
-        <h2>查找目標</h2>
+        <!-- Changed from h2 to h5 to adapt to the new Materialize CSS -->
+        <h5>搜尋目標</h5>
         <p>
             起點
-            <select id="fromLine">
-                <option value="0">---</option>
-            </select>
-            <select id="fromStation">
-                <option value="0">---</option>
-            </select>
+            <div class="input-field col s12">
+                <select id="fromLine">
+                    <option value="0" disabled selected>---</option>
+                </select>
+                <select id="fromStation">
+                    <option value="0" disabled selected>---</option>
+                </select>
+            </div>
         </p>
+        
         <p>
             終點
-            <select id="toLine">
-                <option value="0">---</option>
-            </select>
-            <select id="toStation">
-                <option value="0">---</option>
-            </select>
+            <div class="input-field col s12">
+                <select id="toLine">
+                    <option value="0">---</option>
+                </select>
+                <select id="toStation">
+                    <option value="0">---</option>
+                </select>
+            </div>
         </p>
-        <label><input type="checkbox" onclick="confirmChoiceFor_3X(this)">容許搜尋三次轉車</input></label><br>
+        <p>
+            <label>
+                <input class="checkbox-orange" type="checkbox" id="cbxTransit" onclick="confirmChoiceFor_3X(this)"/>
+                <span>容許搜尋三次轉車</span>
+            </label>
+        </p>
+
+        <!-- <label><input type="checkbox" onclick="confirmChoiceFor_3X(this)">容許搜尋三次轉車</input></label> -->
+        <br>
+
+        <!--
         <p>
             <label><input type="radio" name="searchMode" value="usual" checked>正常模式</label><br>
-            <label><input type="radio" name="searchMode" value="commute">通勤模式</label><br>
-            <label><input type="radio" name="searchMode" value="night">深宵模式</label><br>
+            <label><input type="radio" name="searchMode" value="commute">晨昏模式 (未開通)</label><br>
+            <label><input type="radio" name="searchMode" value="night">深宵模式 (未開通)</label><br>
+        </p>
+        -->
+        
+        <!-- Radio buttons for search modes -->
+        <p>
+            <label>
+                <input class="with-gap" name="searchMode" type="radio" value="usual" checked />
+                <span>正常模式</span>
+            </label>
         </p>
         <p>
-            <!-- Buttons -->
-            <button type="button" onclick="signal_BeginSearch()">查找</button>
-            <button type="button" onclick="swapFromAndTo()">互換</button>
+            <label>
+                <input class="with-gap" name="searchMode" type="radio" value="commute" />
+                <span>通勤模式</span>
+            </label>
         </p>
+        <p>
+            <label>
+                <input class="with-gap" name="searchMode" type="radio"  value="night"/>
+                <span>深宵模式</span>
+            </label>
+        </p>
+
+        <!-- Buttons to actually signal the search -->
+        <p>
+            <!-- Buttons -->
+            <a class="waves-effect waves-light btn orange darken-3" onclick="signal_BeginSearch()"><i class="material-icons left">search</i>查找</a>
+            <a class="waves-effect waves-light btn orange darken-3" onclick="swapFromAndTo()"><i class="material-icons left">import_export</i>互換</a>
+
+            <!-- <button type="button" onclick="signal_BeginSearch()">查找</button>
+            <button type="button" onclick="swapFromAndTo()">互換</button> -->
+        </p>
+        
         <!-- Result printout -->
-        <h2>查找結果</h2>
+        <!-- Changed from h2 to h5 to adapt to the new Materialize CSS -->
+        <h5>搜尋結果</h5>
         <div id="db_stats_count">資料庫共存有項路線資料。</div>
         <div id="search_criteria"></div>
         <div id="search_mode"></div>
@@ -240,5 +310,13 @@
             freedom is about being offered A, B, C, ..., being able to scrutinize them all, and,
             empowered by values and truths, choosing A all by yorself because you determine that A truly is the best."
         </p>
+
+        <!--JavaScript at end of body for optimized loading-->
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function() {
+            //$('select').formSelect();
+        });
+        </script>
     </body>
 </html>
