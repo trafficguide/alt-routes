@@ -154,6 +154,33 @@ class Line
         return this.flagNightOnly;
     }
 
+    isMatchingCurrentSearchMode(): boolean
+    {
+        if (this.isCommuter())
+        {
+            if (isSearchingForCommute())
+            {
+                return true;
+            }
+        }
+        else if (this.isNightOnly())
+        {
+            if (isSearchingForLateNight())
+            {
+                return true;
+            }
+        }
+        else
+        {
+            // Normal stuff
+            if (!isSearchingForLateNight())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     calculateURL(): string
     {
         // Using USHB to support local groups; also, bus fandom is too nerdy for the average user.
@@ -177,6 +204,10 @@ class Line
         if (this.type == lineType_NWFB)
         {
             return "https://search.ushb.net/bus/NWFB/" + this.name;
+        }
+        if (this.type == lineType_LWB)
+        {
+            return "https://search.ushb.net/bus/LW/" + this.name;
         }
 
         return this.url;
@@ -207,13 +238,17 @@ class Line
         */
         // URL on the line ID
         let url = this.calculateURL();
+        let color = this.type.getColorClass();
         if (url.length > 0)
         {
-            let aTagOpen = "<a href='" + url + "' target='_blank'>";
+            let appearanceClass = "class='" + color + "'";
+            let aTagOpen = "<a href='" + url + "' target='_blank' " + appearanceClass + ">";
             let aTagClose = "</a>";
             shortID = aTagOpen + shortID + aTagClose;
         }
         shortID += " (";
+        shortID += "<font color='" + color + "'>" + this.type.getValue() + "</font>";
+        /*
         if (this.isGreenMinibus())
         {
             shortID += "<font color='green'>" + this.type.getValue() + "</font>";
@@ -242,6 +277,7 @@ class Line
         {
             shortID += this.type.getValue();
         }
+        */
         shortID += ")";
 
         return shortID;

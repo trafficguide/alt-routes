@@ -158,6 +158,9 @@ function findPaths_0X(from, to) {
     var pathfindingResults = new Array();
     for (var i = 0; i < HK18_ALL_LINES.length; i++) {
         var currentLine = HK18_ALL_LINES[i];
+        if (!currentLine.isMatchingCurrentSearchMode()) {
+            continue;
+        }
         var index_BEGIN = -1;
         var index_END = -1;
         for (var j = 0; j < currentLine.stops.length; j++) {
@@ -224,6 +227,9 @@ function findPaths_1X(from, to) {
     var pathfindingResults = new Array();
     for (var i = 0; i < HK18_ALL_LINES.length; i++) {
         var L1 = HK18_ALL_LINES[i];
+        if (!L1.isMatchingCurrentSearchMode()) {
+            continue;
+        }
         var L1_BEGIN = L1.getIndexOfWaypoint(from);
         if (L1_BEGIN == -1) {
             // L1 does not have the departing endpoint. Check next line.
@@ -231,6 +237,9 @@ function findPaths_1X(from, to) {
         }
         for (var j = 0; j < HK18_ALL_LINES.length; j++) {
             var L2 = HK18_ALL_LINES[j];
+            if (!L2.isMatchingCurrentSearchMode()) {
+                continue;
+            }
             if (L2.checkEqual(L1)) {
                 // This would mean:
                 // 1. Both are the same *exact* line
@@ -295,6 +304,9 @@ function findPaths_nX(from, to, n) {
         var degree = n - 1;
         for (var i = 0; i < HK18_ALL_LINES.length; i++) {
             var current_L1 = HK18_ALL_LINES[i];
+            if (!current_L1.isMatchingCurrentSearchMode()) {
+                continue;
+            }
             // First check if the user may depart from FROM
             var current_L1_FROM = current_L1.getIndexOfWaypoint(from);
             if (current_L1_FROM == -1) {
