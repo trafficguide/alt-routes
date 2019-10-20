@@ -7,7 +7,7 @@ function obtainLatestCommitTimestanp(printoutArea: HTMLDivElement)
     .then(response => {
         let processedJSON = JSON.parse(response);
         let timestampDate = new Date(processedJSON["commit"]["commit"]["committer"]["date"]);
-        let message = "本【探路】(搜尋器及資料庫)版本為 ";
+        let message = "本【探路】(搜尋器及資料庫) 版本為 ";
         message += timestampDate.getFullYear() + "年";
         // Strange enough, perhaps for better integration with 0-based arrays, this returns the 0-based index of the month.
         message += (timestampDate.getMonth() + 1) + "月";

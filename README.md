@@ -81,7 +81,7 @@ This is the list of efforts that I can think about, and that others may be able 
 Handles the general direction of the Pathfinder project.
 
 - Hoster: [trafficguide](https://github.com/trafficguide)
-- Effort Coordinator: [Vectorial1024](https://github.com/Vectorial1024)
+- Effort Coordinator: [trafficguide](https://github.com/trafficguide), [Vectorial1024](https://github.com/Vectorial1024)
 
 ### Typescript-level Data Entry
 
