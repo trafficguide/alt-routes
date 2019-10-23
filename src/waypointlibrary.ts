@@ -181,7 +181,7 @@ const KCR_lrt_5_fungninroad = new Waypoint("lrt_fnr", "5區 豐年路");
 const KCR_lrt_5_yuenlong = new Waypoint("lrt_yl", "5區 元朗站").addNeighbor(MTR_tml_yuenlong);
 
 const KCR_lrt_1_ALL = [KCR_lrt_1_samshing];
-const KCR_lrt_2_ALL = [KCR_lrt_2_tuenmun, KCR_lrt_2_puito, KCR_lrt_2_primeview, KCR_lrt_2_taihing];
+const KCR_lrt_2_ALL = [KCR_lrt_2_tuenmun, KCR_lrt_2_puito, KCR_lrt_2_primeview, KCR_lrt_2_taihing, KCR_lrt_2_shanking];
 const KCR_lrt_3_ALL = [KCR_lrt_3_tinking, KCR_lrt_3_siuhong];
 const KCR_lrt_4_ALL = [KCR_lrt_4_hungshuikiu, KCR_lrt_4_pingshan, KCR_lrt_4_tinshuiwai, KCR_lrt_4_tintsz, KCR_lrt_4_tinshui, KCR_lrt_4_tinwing];
 const KCR_lrt_5_ALL = [KCR_lrt_5_fungninroad, KCR_lrt_5_yuenlong];
