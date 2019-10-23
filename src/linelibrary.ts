@@ -311,6 +311,11 @@ const KMB_234X_SOUTH = new Line("234X", lineType_KMB, "灣景花園", "尖東麼
 
 // All 23*
 const KMB_NUM_23x_ALL = [KMB_234X_NORTH, KMB_234X_SOUTH];
+// 24*
+const KMB_249X_EAST = new Line('249X', lineType_KMB, '青衣站', '沙田 (博康)', [MTR_tcl_tsingyi, TY_TsingYiWest, TY_CheungTsingEstate, TY_SouthBridge, LaiKingChokePoint, EaglesNestTunnel, TsingShaInterchange, ShatinHeightsTunnel, MTR_erl_taiwai, MTR_mos_chekungtemple, ShatinTownCenter, MTR_mos_shatinwai], 25).setNotes('經長青邨、青沙公路');
+const KMB_249X_WEST = new Line('249X', lineType_KMB, '沙田 (博康)', '青衣站', [MTR_mos_shatinwai, ShatinTownHall, MTR_mos_chekungtemple, MTR_mos_taiwai, ShatinHeightsTunnel, TsingShaInterchange, EaglesNestTunnel, LaiKingChokePoint, TY_SouthBridge, TY_CheungTsingEstate, TY_TsingYiWest, MTR_tcl_tsingyi], 25).setNotes('經長青邨、青沙公路');
+// All 24*
+const KMB_NUM_24x_ALL = [KMB_249X_EAST, KMB_249X_WEST];
 // 25*
 const KMB_251A = new Line('251A', lineType_KMB, '錦上路站', '上村', [MTR_tml_kamsheungroad, TaiLamTunnel_Interchange, KSR_YuenKongTsuen, KSR_SheugnTsuen, KSR_YuenKongTsuen, TaiLamTunnel_Interchange, MTR_tml_kamsheungroad], 20).markCircular().setNotes('繞經元崗村');
 const KMB_251B = new Line('251B', lineType_KMB, '八鄉路', '上村', [TaiLamTunnel_Interchange, MTR_tml_kamsheungroad, KSR_KamTinCore, KSR_PatHeungPolice, KSR_SheugnTsuen, KSR_PatHeungPolice, KSR_KamTinCore, MTR_tml_kamsheungroad, TaiLamTunnel_Interchange], 20).markCircular().setNotes('繞經錦田街市');
@@ -342,23 +347,24 @@ const KMB_278X_SOUTH = new Line('278X', lineType_KMB, '上水', '荃灣（如心
 const KMB_NUM_27x_ALL = [KMB_270A_NORTH, KMB_270A_SOUTH, KMB_273, KMB_273A, KMB_273D, KMB_278X_NORTH, KMB_278X_SOUTH];
 
 // 28*
-const KMB_280X_NORTH = new Line("280X", lineType_KMB, "尖東麼地道", "穗禾苑", [MTR_tml_easttsimshatsui, MTR_tml_austin, EaglesNestTunnel, TsingShaInterchange, ShatinHeightsTunnel, ShatinTownCenter, YuenWo, FoTanTsuen], 20);
-const KMB_280X_SOUTH = new Line("280X", lineType_KMB, "穗禾苑", "尖東麼地道", [FoTanTsuen, YuenWo, ShatinTownHall, ShatinHeightsTunnel, TsingShaInterchange, EaglesNestTunnel, NgaCheungRoad_WHTX, MTR_twl_tsimshatsui], 20);
+const KMB_280X_NORTH = new Line("280X", lineType_KMB, "尖東麼地道", "穗禾苑", [MTR_tml_easttsimshatsui, MTR_tml_austin, EaglesNestTunnel, TsingShaInterchange, ShatinHeightsTunnel, ShatinTownCenter, YuenWo, FoTanTsuen], 20).setNotes("經青沙公路");
+const KMB_280X_SOUTH = new Line("280X", lineType_KMB, "穗禾苑", "尖東麼地道", [FoTanTsuen, YuenWo, ShatinTownHall, ShatinHeightsTunnel, TsingShaInterchange, EaglesNestTunnel, NgaCheungRoad_WHTX, MTR_twl_tsimshatsui], 20).setNotes("經青沙公路");
 const KMB_281A_NORTH = new Line("281A", lineType_KMB, "九龍站", "沙田廣源", [MTR_tcl_kowloon, MTR_twl_tsimshatsui, MTR_twl_jordan, MTR_twl_yaumatei, MTR_twl_mongkok, MTR_twl_princeedward, MTR_erl_kowloontong, LionRockTunnel, LionRockTunnelHighway, MTR_mos_cityone]).setNotes("獅隧特快");
 const KMB_281A_SOUTH = new Line("281A", lineType_KMB, "沙田廣源", "九龍站", [MTR_mos_cityone, LionRockTunnelHighway, LionRockTunnel, MTR_erl_kowloontong, MTR_twl_princeedward, MTR_twl_mongkok, MTR_twl_yaumatei, MTR_twl_jordan, MTR_twl_tsimshatsui, MTR_tcl_kowloon]).setNotes("獅隧特快");
 const KMB_281M_NORTH = new Line("281M", lineType_KMB, "九龍塘站", "新田圍", [MTR_erl_kowloontong, LionRockTunnel, LionRockTunnel_Interchange, LionRockTunnelHighway, ST_LungHangEstate, MTR_tml_hinkeng, MTR_erl_taiwai, MTR_mos_chekungtemple, SunTinWai]);
 const KMB_281M_SOUTH = new Line("281M", lineType_KMB, "新田圍", "九龍塘站", [SunTinWai, MTR_mos_chekungtemple, MTR_erl_taiwai, MTR_tml_hinkeng, ST_LungHangEstate, LionRockTunnelHighway, LionRockTunnel_Interchange, LionRockTunnel, MTR_erl_kowloontong]);
 const KMB_282 = new Line("282", lineType_KMB, "沙田市中心", "新田圍", [ShatinTownCenter, MTR_mos_chekungtemple, SunTinWai, MTR_mos_chekungtemple, ShatinTownCenter]).markCircular();
 const KMB_284 = new Line("284", lineType_KMB, "沙田巿中心", "濱景花園", [ShatinTownCenter, BelairGardens, ShatinSeafood, BelairGardens, ShatinTownCenter], 9).markCircular();
-const KMB_287X = new Line("287X", lineType_KMB, "水泉澳", "佐敦", [ShuiChuenO, MTR_mos_shatinwai, JatMinEstate, MTR_mos_chekungtemple, MTR_mos_taiwai, ShatinHeightsTunnel, TsingShaInterchange, EaglesNestTunnel, WestKowloonHighway, MTR_tml_austin, MTR_twl_jordan, MTR_twl_yaumatei, MTR_twl_mongkok, MTR_tcl_olympic, WestKowloonHighway, EaglesNestTunnel, TsingShaInterchange, MTR_mos_taiwai, MTR_mos_chekungtemple, MTR_mos_shatinwai, ShuiChuenO], 13).markCircular();
+const KMB_286X = new Line('286X', lineType_KMB, '大圍顯徑邨', '深水埗', [MTR_tml_hinkeng, ST_LungHangEstate, MTR_erl_taiwai, ST_MeiLam_Inside, ShatinHeightsTunnel, TsingShaInterchange, EaglesNestTunnel, MTR_tcl_namcheong, MTR_twl_shamshuipo, MTR_twl_cheungshawan, MTR_twl_laichikok, MTR_twl_meifoo, EaglesNestTunnel, TsingShaInterchange, ST_MeiLam_Inside, MTR_erl_taiwai, ST_LungHangEstate, MTR_tml_hinkeng], 20).markCircular().setNotes('經青沙公路');
+const KMB_287X = new Line("287X", lineType_KMB, "水泉澳", "佐敦", [ShuiChuenO, MTR_mos_shatinwai, JatMinEstate, MTR_mos_chekungtemple, MTR_mos_taiwai, ShatinHeightsTunnel, TsingShaInterchange, EaglesNestTunnel, WestKowloonHighway, MTR_tml_austin, MTR_twl_jordan, MTR_twl_yaumatei, MTR_twl_mongkok, MTR_tcl_olympic, WestKowloonHighway, EaglesNestTunnel, TsingShaInterchange, MTR_mos_taiwai, MTR_mos_chekungtemple, MTR_mos_shatinwai, ShuiChuenO], 13).markCircular().setNotes("經青沙公路");
 const KMB_288 = new Line("288", lineType_KMB, "水泉澳", "沙田市中心", [MTR_mos_shatinwai, ShatinTownHall, MTR_mos_shatinwai]).markCircular();
 const KMB_289K = new Line("289K", lineType_KMB, "大學站", "富安花園", [MTR_erl_university, MTR_mos_hengon, ChevalierGarden, MTR_mos_hengon, MTR_erl_university], 15).markCircular();
 
 // All 28*
-const KMB_NUM_28x_ALL = [KMB_280X_NORTH, KMB_280X_SOUTH, KMB_281A_NORTH, KMB_281A_SOUTH, KMB_281M_NORTH, KMB_281M_SOUTH, KMB_282, KMB_284, KMB_287X, KMB_288, KMB_289K];
+const KMB_NUM_28x_ALL = [KMB_280X_NORTH, KMB_280X_SOUTH, KMB_281A_NORTH, KMB_281A_SOUTH, KMB_281M_NORTH, KMB_281M_SOUTH, KMB_282, KMB_284,KMB_286X, KMB_287X, KMB_288, KMB_289K];
 
 // All 2**
-const KMB_NUM_2xx_ALL = [].concat(KMB_NUM_21x_ALL, KMB_NUM_23x_ALL, KMB_NUM_25x_ALL, KMB_NUM_26x_ALL, KMB_NUM_27x_ALL, KMB_NUM_28x_ALL);
+const KMB_NUM_2xx_ALL = [].concat(KMB_NUM_21x_ALL, KMB_NUM_23x_ALL, KMB_NUM_24x_ALL, KMB_NUM_25x_ALL, KMB_NUM_26x_ALL, KMB_NUM_27x_ALL, KMB_NUM_28x_ALL);
 
 // Special Lines
 const KMB_W3_NORTH = new Line("W3", lineType_KMB, "西九龍站", "上水", [MTR_hsr_westkowloon, WestKowloonHighway, EaglesNestTunnel, TsingShaInterchange, ShatinHeightsTunnel, MTR_erl_shatin, TaiPoRoad_Shatin, ToloHighway_Coastal, KwongFukEstate, FanlingHighway_LamTsuen, MTR_erl_sheungshui]).setNotes("高鐵特快；設有雙程分段收費");
