@@ -32,6 +32,17 @@ var XEffect_Free = /** @class */ (function (_super) {
     }
     return XEffect_Free;
 }(InterchangeEffect));
+var XEffect_Fixed = /** @class */ (function (_super) {
+    __extends(XEffect_Fixed, _super);
+    /**
+     * Constructs a Fixed Payment interchange effect.
+     * @param fixedPayment The amount of payment required
+     */
+    function XEffect_Fixed(fixedPayment) {
+        return _super.call(this, "轉乘時追加 $" + fixedPayment) || this;
+    }
+    return XEffect_Fixed;
+}(InterchangeEffect));
 var XEffect_Reduction = /** @class */ (function (_super) {
     __extends(XEffect_Reduction, _super);
     /**
@@ -42,6 +53,18 @@ var XEffect_Reduction = /** @class */ (function (_super) {
         return _super.call(this, "第二程減收 $" + fareReduction) || this;
     }
     return XEffect_Reduction;
+}(InterchangeEffect));
+var XEffect_Refund = /** @class */ (function (_super) {
+    __extends(XEffect_Refund, _super);
+    /**
+     * Constructs a Fare Refund interchange effect.
+     * This effect is rare by the way.
+     * @param fareRefund Amount of fare to be refunded
+     */
+    function XEffect_Refund(fareRefund) {
+        return _super.call(this, "即時回贈 $" + fareRefund) || this;
+    }
+    return XEffect_Refund;
 }(InterchangeEffect));
 var XEffect_Ceiling = /** @class */ (function (_super) {
     __extends(XEffect_Ceiling, _super);
