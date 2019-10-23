@@ -26,6 +26,18 @@ class XEffect_Free extends InterchangeEffect
     }
 }
 
+class XEffect_Fixed extends InterchangeEffect
+{
+    /**
+     * Constructs a Fixed Payment interchange effect.
+     * @param fixedPayment The amount of payment required
+     */
+    constructor(fixedPayment: number)
+    {
+        super("轉乘時追加 $" + fixedPayment);
+    }
+}
+
 class XEffect_Reduction extends InterchangeEffect
 {
     /**
@@ -35,6 +47,19 @@ class XEffect_Reduction extends InterchangeEffect
     constructor(fareReduction: number)
     {
         super("第二程減收 $" + fareReduction);
+    }
+}
+
+class XEffect_Refund extends InterchangeEffect
+{
+    /**
+     * Constructs a Fare Refund interchange effect.
+     * This effect is rare by the way.
+     * @param fareRefund Amount of fare to be refunded
+     */
+    constructor(fareRefund: number)
+    {
+        super("即時回贈 $" + fareRefund);
     }
 }
 

@@ -22,9 +22,23 @@ function getAllInterchangeRules() {
         cachedInterchangeRules.push(new Interchange(XScheme_LionRock, XScheme_LionRock, LionRockTunnel_Interchange).setEffect(new XEffect_Reduction(4.2)));
         // Shing Mun Interchange Scheme
         // East-bound rules
-        cachedInterchangeRules.push(new Interchange([WILDCARD_ANYLINE], [KMB_46X_NEGATIVE, KMB_47X_EAST, KMB_48X_EAST, KMB_49X_EAST], ShingMunTunnel_Interchange_East).setEffect(new XEffect_Free()));
+        // Rule 1: Most Shatin routes are free of charge.
+        cachedInterchangeRules.push(new Interchange([WILDCARD_ANYLINE], [KMB_46X_NEGATIVE, KMB_47A_EAST, KMB_47X_EAST, KMB_48X_EAST, KMB_49X_EAST, KMB_263_EAST, KMB_269D_EAST], ShingMunTunnel_Interchange_East).setEffect(new XEffect_Free()));
+        // Rule 2: Ma On Shan routes require little additional charge.
+        cachedInterchangeRules.push(new Interchange([WILDCARD_ANYLINE], [KMB_40X_EAST, KMB_43X_EAST], ShingMunTunnel_Interchange_East).setEffect(new XEffect_Fixed(1)));
+        // Rule 3: Tai Po route(s) require some additional charge.
+        cachedInterchangeRules.push(new Interchange([WILDCARD_ANYLINE], [KMB_73X_NORTH], ShingMunTunnel_Interchange_East).setEffect(new XEffect_Fixed(2)));
+        // Rule 4: North District route(s) require quite some additional charge.
+        cachedInterchangeRules.push(new Interchange([WILDCARD_ANYLINE], [KMB_278X_NORTH], ShingMunTunnel_Interchange_East).setEffect(new XEffect_Fixed(4.9)));
         // West-bound rules
-        cachedInterchangeRules.push(new Interchange([WILDCARD_ANYLINE], [KMB_46X_POSITIVE, KMB_47X_WEST, KMB_48X_WEST, KMB_49X_WEST], ShingMunTunnel_Interchange_West).setEffect(new XEffect_Free()));
+        // Rule 1: All Tsuen Wan routes are free of charge.
+        cachedInterchangeRules.push(new Interchange([WILDCARD_ANYLINE], [KMB_40X_WEST, KMB_43X_WEST, KMB_46X_POSITIVE, KMB_47A_WEST, KMB_47X_WEST, KMB_48X_WEST, KMB_49X_WEST, KMB_73X_SOUTH, KMB_278X_SOUTH], ShingMunTunnel_Interchange_West).setEffect(new XEffect_Free()));
+        // Rule 2: Tsing Long Tau routes require some additional charge.
+        cachedInterchangeRules.push(new Interchange([WILDCARD_ANYLINE], [], ShingMunTunnel_Interchange_West).setEffect(new XEffect_Free()));
+        // Rule 3: Tuen Mun require additional charge.
+        cachedInterchangeRules.push(new Interchange([WILDCARD_ANYLINE], [KMB_263_WEST, KMB_263A_AFTERNOON], ShingMunTunnel_Interchange_West).setEffect(new XEffect_Fixed(6.7)));
+        // Rule 4: Yuen Long require the most additional charge.
+        cachedInterchangeRules.push(new Interchange([WILDCARD_ANYLINE], [KMB_269D_WEST], ShingMunTunnel_Interchange_West).setEffect(new XEffect_Fixed(8.3)));
     }
     return cachedInterchangeRules;
 }

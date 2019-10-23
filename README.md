@@ -68,6 +68,7 @@ Since this is hosted using GitHub Pages, and that GitHub Pages disallow the use 
 
 ### Possible feature improvements
 
+- Add in dedicated fields in the Bus Route constructor to store the departure times of the first bus and the last bus leaving the terminus, and also to add in last bus warning, and to exclude search results by checking whether the last bus may have departed from the terminus
 - Construct a system with UI to allow others to directly add lines without relying on manual Typescript input (explained below)
 
 ## Effort Coordination
