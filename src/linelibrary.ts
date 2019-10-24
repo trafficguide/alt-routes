@@ -458,10 +458,19 @@ const CTB_NUM_59x_ALL = [CTB_592_NORTH, CTB_592_SOUTH];
 const CTB_NUM_5xx_ALL = [].concat(CTB_NUM_59x_ALL);
 
 // Special
+// E2*
+const CTB_E21_EAST = new Line('E21', lineType_CTB, '機場博覽館', '大角咀 (維港灣)', [MTR_aex_asiaworldexpo, MTR_aex_airport, Airport_CathayPacificCity, MTR_tcl_tungchung, LantauLink_SiuHoWan, LantauLink_YamO, LantauLink_Interchange, LantauLink_TsingMaBridge, TY_TsingYiWest, TsuenWanRoad, LaiKingChokePoint, MTR_twl_meifoo, MTR_twl_laichikok, MTR_twl_cheungshawan, MTR_twl_shamshuipo, MTR_twl_princeedward, MTR_twl_mongkok, MTR_tcl_olympic], 20).setNotes('經國泰城');
+const CTB_E21_WEST = new Line('E21', lineType_CTB, '大角咀 (維港灣)', '機場博覽館', [MTR_tcl_olympic, MTR_twl_mongkok, MTR_twl_princeedward, MTR_twl_shamshuipo, MTR_twl_cheungshawan, MTR_twl_laichikok, MTR_tml_meifoo, LaiKingChokePoint, TsuenWanRoad, TY_TsingYiWest, LantauLink_TsingMaBridge, LantauLink_Interchange, LantauLink_YamO, LantauLink_SiuHoWan, MTR_tcl_tungchung, Airport_CathayPacificCity, MTR_aex_airport, MTR_aex_asiaworldexpo], 20).setNotes('經國泰城');
+// All E2*
+const CTB_NUM_E2x_ALL = [CTB_E21_EAST, CTB_E21_WEST];
+// All E**
+const CTB_NUM_Exx_ALL = [].concat(CTB_NUM_E2x_ALL);
+// W**
 const CTB_W1_NORTH = new Line('W1', lineType_CTB, '金鐘西', '高鐵西九龍站', [MTR_ill_admiralty, MTR_ill_central, MTR_ill_sheungwan, WestHarbourTunnel, MTR_hsr_westkowloon], 25).setNotes('西九特快');
 const CTB_W1_SOUTH = new Line('W1', lineType_CTB, '高鐵西九龍站', '金鐘西', [MTR_hsr_westkowloon, WestHarbourTunnel, MTR_ill_sheungwan, MTR_ill_central, MTR_ill_admiralty], 25).setNotes('西九特快');
-
-const CTB_NUM_SPECIAL_ALL = [CTB_W1_NORTH, CTB_W1_SOUTH];
+// All W**
+const CTB_NUM_Wxx_ALL = [CTB_W1_NORTH, CTB_W1_SOUTH];
+const CTB_NUM_SPECIAL_ALL = [].concat(CTB_NUM_Exx_ALL, CTB_NUM_Wxx_ALL);
 
 const CTB_HK18_ALL = [].concat(CTB_NUM_0xx_ALL, CTB_NUM_5xx_ALL, CTB_NUM_SPECIAL_ALL);
 

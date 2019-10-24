@@ -250,8 +250,8 @@ var KMB_234X_SOUTH = new Line("234X", lineType_KMB, "灣景花園", "尖東麼�
 // All 23*
 var KMB_NUM_23x_ALL = [KMB_234X_NORTH, KMB_234X_SOUTH];
 // 24*
-var KMB_249X_EAST = new Line('249X', lineType_KMB, '青衣站', '沙田 (博康)', [MTR_tcl_tsingyi, TY_TsingYiWest, TY_CheungTsingEstate, TY_SouthBridge, LaiKingChokePoint, EaglesNestTunnel, TsingShaInterchange, ShatinHeightsTunnel, MTR_erl_taiwai, MTR_mos_chekungtemple, ShatinTownCenter, MTR_mos_shatinwai], 25).setNotes('經長青邨');
-var KMB_249X_WEST = new Line('249X', lineType_KMB, '沙田 (博康)', '青衣站', [MTR_mos_shatinwai, ShatinTownHall, MTR_mos_chekungtemple, MTR_mos_taiwai, ShatinHeightsTunnel, TsingShaInterchange, EaglesNestTunnel, LaiKingChokePoint, TY_SouthBridge, TY_CheungTsingEstate, TY_TsingYiWest, MTR_tcl_tsingyi], 25).setNotes('經長青邨');
+var KMB_249X_EAST = new Line('249X', lineType_KMB, '青衣站', '沙田 (博康)', [MTR_tcl_tsingyi, TY_TsingYiWest, TY_CheungTsingEstate, TY_SouthBridge, LaiKingChokePoint, EaglesNestTunnel, TsingShaInterchange, ShatinHeightsTunnel, MTR_erl_taiwai, MTR_mos_chekungtemple, ShatinTownCenter, MTR_mos_shatinwai], 25).setNotes('經長青邨、青沙公路');
+var KMB_249X_WEST = new Line('249X', lineType_KMB, '沙田 (博康)', '青衣站', [MTR_mos_shatinwai, ShatinTownHall, MTR_mos_chekungtemple, MTR_mos_taiwai, ShatinHeightsTunnel, TsingShaInterchange, EaglesNestTunnel, LaiKingChokePoint, TY_SouthBridge, TY_CheungTsingEstate, TY_TsingYiWest, MTR_tcl_tsingyi], 25).setNotes('經長青邨、青沙公路');
 // All 24*
 var KMB_NUM_24x_ALL = [KMB_249X_EAST, KMB_249X_WEST];
 // 25*
@@ -283,19 +283,20 @@ var KMB_278X_SOUTH = new Line('278X', lineType_KMB, '上水', '荃灣（如心�
 // All 27*
 var KMB_NUM_27x_ALL = [KMB_270A_NORTH, KMB_270A_SOUTH, KMB_273, KMB_273A, KMB_273D, KMB_278X_NORTH, KMB_278X_SOUTH];
 // 28*
-var KMB_280X_NORTH = new Line("280X", lineType_KMB, "尖東麼地道", "穗禾苑", [MTR_tml_easttsimshatsui, MTR_tml_austin, EaglesNestTunnel, TsingShaInterchange, ShatinHeightsTunnel, ShatinTownCenter, YuenWo, FoTanTsuen], 20);
-var KMB_280X_SOUTH = new Line("280X", lineType_KMB, "穗禾苑", "尖東麼地道", [FoTanTsuen, YuenWo, ShatinTownHall, ShatinHeightsTunnel, TsingShaInterchange, EaglesNestTunnel, NgaCheungRoad_WHTX, MTR_twl_tsimshatsui], 20);
+var KMB_280X_NORTH = new Line("280X", lineType_KMB, "尖東麼地道", "穗禾苑", [MTR_tml_easttsimshatsui, MTR_tml_austin, EaglesNestTunnel, TsingShaInterchange, ShatinHeightsTunnel, ShatinTownCenter, YuenWo, FoTanTsuen], 20).setNotes("經青沙公路");
+var KMB_280X_SOUTH = new Line("280X", lineType_KMB, "穗禾苑", "尖東麼地道", [FoTanTsuen, YuenWo, ShatinTownHall, ShatinHeightsTunnel, TsingShaInterchange, EaglesNestTunnel, NgaCheungRoad_WHTX, MTR_twl_tsimshatsui], 20).setNotes("經青沙公路");
 var KMB_281A_NORTH = new Line("281A", lineType_KMB, "九龍站", "沙田廣源", [MTR_tcl_kowloon, MTR_twl_tsimshatsui, MTR_twl_jordan, MTR_twl_yaumatei, MTR_twl_mongkok, MTR_twl_princeedward, MTR_erl_kowloontong, LionRockTunnel, LionRockTunnelHighway, MTR_mos_cityone]).setNotes("獅隧特快");
 var KMB_281A_SOUTH = new Line("281A", lineType_KMB, "沙田廣源", "九龍站", [MTR_mos_cityone, LionRockTunnelHighway, LionRockTunnel, MTR_erl_kowloontong, MTR_twl_princeedward, MTR_twl_mongkok, MTR_twl_yaumatei, MTR_twl_jordan, MTR_twl_tsimshatsui, MTR_tcl_kowloon]).setNotes("獅隧特快");
 var KMB_281M_NORTH = new Line("281M", lineType_KMB, "九龍塘站", "新田圍", [MTR_erl_kowloontong, LionRockTunnel, LionRockTunnel_Interchange, LionRockTunnelHighway, ST_LungHangEstate, MTR_tml_hinkeng, MTR_erl_taiwai, MTR_mos_chekungtemple, SunTinWai]);
 var KMB_281M_SOUTH = new Line("281M", lineType_KMB, "新田圍", "九龍塘站", [SunTinWai, MTR_mos_chekungtemple, MTR_erl_taiwai, MTR_tml_hinkeng, ST_LungHangEstate, LionRockTunnelHighway, LionRockTunnel_Interchange, LionRockTunnel, MTR_erl_kowloontong]);
 var KMB_282 = new Line("282", lineType_KMB, "沙田市中心", "新田圍", [ShatinTownCenter, MTR_mos_chekungtemple, SunTinWai, MTR_mos_chekungtemple, ShatinTownCenter]).markCircular();
 var KMB_284 = new Line("284", lineType_KMB, "沙田巿中心", "濱景花園", [ShatinTownCenter, BelairGardens, ShatinSeafood, BelairGardens, ShatinTownCenter], 9).markCircular();
-var KMB_287X = new Line("287X", lineType_KMB, "水泉澳", "佐敦", [ShuiChuenO, MTR_mos_shatinwai, JatMinEstate, MTR_mos_chekungtemple, MTR_mos_taiwai, ShatinHeightsTunnel, TsingShaInterchange, EaglesNestTunnel, WestKowloonHighway, MTR_tml_austin, MTR_twl_jordan, MTR_twl_yaumatei, MTR_twl_mongkok, MTR_tcl_olympic, WestKowloonHighway, EaglesNestTunnel, TsingShaInterchange, MTR_mos_taiwai, MTR_mos_chekungtemple, MTR_mos_shatinwai, ShuiChuenO], 13).markCircular();
+var KMB_286X = new Line('286X', lineType_KMB, '大圍顯徑邨', '深水埗', [MTR_tml_hinkeng, ST_LungHangEstate, MTR_erl_taiwai, ST_MeiLam_Inside, ShatinHeightsTunnel, TsingShaInterchange, EaglesNestTunnel, MTR_tcl_namcheong, MTR_twl_shamshuipo, MTR_twl_cheungshawan, MTR_twl_laichikok, MTR_twl_meifoo, EaglesNestTunnel, TsingShaInterchange, ST_MeiLam_Inside, MTR_erl_taiwai, ST_LungHangEstate, MTR_tml_hinkeng], 20).markCircular().setNotes('經青沙公路');
+var KMB_287X = new Line("287X", lineType_KMB, "水泉澳", "佐敦", [ShuiChuenO, MTR_mos_shatinwai, JatMinEstate, MTR_mos_chekungtemple, MTR_mos_taiwai, ShatinHeightsTunnel, TsingShaInterchange, EaglesNestTunnel, WestKowloonHighway, MTR_tml_austin, MTR_twl_jordan, MTR_twl_yaumatei, MTR_twl_mongkok, MTR_tcl_olympic, WestKowloonHighway, EaglesNestTunnel, TsingShaInterchange, MTR_mos_taiwai, MTR_mos_chekungtemple, MTR_mos_shatinwai, ShuiChuenO], 13).markCircular().setNotes("經青沙公路");
 var KMB_288 = new Line("288", lineType_KMB, "水泉澳", "沙田市中心", [MTR_mos_shatinwai, ShatinTownHall, MTR_mos_shatinwai]).markCircular();
 var KMB_289K = new Line("289K", lineType_KMB, "大學站", "富安花園", [MTR_erl_university, MTR_mos_hengon, ChevalierGarden, MTR_mos_hengon, MTR_erl_university], 15).markCircular();
 // All 28*
-var KMB_NUM_28x_ALL = [KMB_280X_NORTH, KMB_280X_SOUTH, KMB_281A_NORTH, KMB_281A_SOUTH, KMB_281M_NORTH, KMB_281M_SOUTH, KMB_282, KMB_284, KMB_287X, KMB_288, KMB_289K];
+var KMB_NUM_28x_ALL = [KMB_280X_NORTH, KMB_280X_SOUTH, KMB_281A_NORTH, KMB_281A_SOUTH, KMB_281M_NORTH, KMB_281M_SOUTH, KMB_282, KMB_284, KMB_286X, KMB_287X, KMB_288, KMB_289K];
 // All 2**
 var KMB_NUM_2xx_ALL = [].concat(KMB_NUM_21x_ALL, KMB_NUM_23x_ALL, KMB_NUM_24x_ALL, KMB_NUM_25x_ALL, KMB_NUM_26x_ALL, KMB_NUM_27x_ALL, KMB_NUM_28x_ALL);
 // Special Lines
@@ -366,9 +367,19 @@ var CTB_NUM_59x_ALL = [CTB_592_NORTH, CTB_592_SOUTH];
 // 5**
 var CTB_NUM_5xx_ALL = [].concat(CTB_NUM_59x_ALL);
 // Special
+// E2*
+var CTB_E21_EAST = new Line('E21', lineType_CTB, '機場博覽館', '大角咀 (維港灣)', [MTR_aex_asiaworldexpo, MTR_aex_airport, Airport_CathayPacificCity, MTR_tcl_tungchung, LantauLink_SiuHoWan, LantauLink_YamO, LantauLink_Interchange, LantauLink_TsingMaBridge, TY_TsingYiWest, TsuenWanRoad, LaiKingChokePoint, MTR_twl_meifoo, MTR_twl_laichikok, MTR_twl_cheungshawan, MTR_twl_shamshuipo, MTR_twl_princeedward, MTR_twl_mongkok, MTR_tcl_olympic], 20).setNotes('經國泰城');
+var CTB_E21_WEST = new Line('E21', lineType_CTB, '大角咀 (維港灣)', '機場博覽館', [MTR_tcl_olympic, MTR_twl_mongkok, MTR_twl_princeedward, MTR_twl_shamshuipo, MTR_twl_cheungshawan, MTR_twl_laichikok, MTR_tml_meifoo, LaiKingChokePoint, TsuenWanRoad, TY_TsingYiWest, LantauLink_TsingMaBridge, LantauLink_Interchange, LantauLink_YamO, LantauLink_SiuHoWan, MTR_tcl_tungchung, Airport_CathayPacificCity, MTR_aex_airport, MTR_aex_asiaworldexpo], 20).setNotes('經國泰城');
+// All E2*
+var CTB_NUM_E2x_ALL = [CTB_E21_EAST, CTB_E21_WEST];
+// All E**
+var CTB_NUM_Exx_ALL = [].concat(CTB_NUM_E2x_ALL);
+// W**
 var CTB_W1_NORTH = new Line('W1', lineType_CTB, '金鐘西', '高鐵西九龍站', [MTR_ill_admiralty, MTR_ill_central, MTR_ill_sheungwan, WestHarbourTunnel, MTR_hsr_westkowloon], 25).setNotes('西九特快');
 var CTB_W1_SOUTH = new Line('W1', lineType_CTB, '高鐵西九龍站', '金鐘西', [MTR_hsr_westkowloon, WestHarbourTunnel, MTR_ill_sheungwan, MTR_ill_central, MTR_ill_admiralty], 25).setNotes('西九特快');
-var CTB_NUM_SPECIAL_ALL = [CTB_W1_NORTH, CTB_W1_SOUTH];
+// All W**
+var CTB_NUM_Wxx_ALL = [CTB_W1_NORTH, CTB_W1_SOUTH];
+var CTB_NUM_SPECIAL_ALL = [].concat(CTB_NUM_Exx_ALL, CTB_NUM_Wxx_ALL);
 var CTB_HK18_ALL = [].concat(CTB_NUM_0xx_ALL, CTB_NUM_5xx_ALL, CTB_NUM_SPECIAL_ALL);
 /**
  * New World First Bus Section
