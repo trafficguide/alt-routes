@@ -8,8 +8,8 @@ function prepareHitsShield(hitShieldElm: HTMLImageElement)
 {
     // Constant strings for url formulation
     const shieldIO_Endpoint = "https://img.shields.io/badge/";
-    const shieldLabelWithHyphen = "Hits-";
-    const shieldMessage_Errored = "Oops...-"
+    const shieldLabelWithHyphen = "瀏覽量-";
+    const shieldMessage_Errored = "炒咗車...-"
 
     // Base URL
     let targetURL = "https://hitcounter.pythonanywhere.com/count";

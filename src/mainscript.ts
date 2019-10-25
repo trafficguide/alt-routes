@@ -209,7 +209,7 @@ function conductSearch(
                     " 轉乘 " +
                     L2.getHTMLShortID() +
                     "<br>";
-                tempString += "可獲以下效果：" + interchange.directlyGetEffectReadout();
+                tempString += "可獲效果：" + interchange.directlyGetEffectReadout();
                 effectStrings.push(tempString);
             }
         }

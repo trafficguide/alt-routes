@@ -39,6 +39,15 @@ function getAllInterchangeRules() {
         cachedInterchangeRules.push(new Interchange([WILDCARD_ANYLINE], [KMB_263_WEST, KMB_263A_AFTERNOON], ShingMunTunnel_Interchange_West).setEffect(new XEffect_Fixed(6.7)));
         // Rule 4: Yuen Long require the most additional charge.
         cachedInterchangeRules.push(new Interchange([WILDCARD_ANYLINE], [KMB_269D_WEST], ShingMunTunnel_Interchange_West).setEffect(new XEffect_Fixed(8.3)));
+        // Tsing Sha Interchange Scheme
+        // South-bound rules
+        // Basic rule: pay the difference of fares, if there is any.
+        // Derived rule 1: Pay up to $7.1 for 286X and 287X
+        cachedInterchangeRules.push(new Interchange([KMB_249X_WEST, KMB_280X_SOUTH, KMB_286X, KMB_287X], [KMB_286X, KMB_287X], TsingShaInterchange).setEffect(new XEffect_Ceiling(7.1)));
+        // Derived rule 2: Pay up to $8.9 for 280X
+        cachedInterchangeRules.push(new Interchange([KMB_249X_WEST, KMB_280X_SOUTH, KMB_286X, KMB_287X], [KMB_280X_SOUTH], TsingShaInterchange).setEffect(new XEffect_Ceiling(8.9)));
+        // Derived rule 3: Pay up to $9.1 for 249X
+        cachedInterchangeRules.push(new Interchange([KMB_249X_WEST, KMB_280X_SOUTH, KMB_286X, KMB_287X], [KMB_249X_WEST], TsingShaInterchange).setEffect(new XEffect_Ceiling(9.1)));
     }
     return cachedInterchangeRules;
 }

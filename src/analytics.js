@@ -7,8 +7,8 @@
 function prepareHitsShield(hitShieldElm) {
     // Constant strings for url formulation
     var shieldIO_Endpoint = "https://img.shields.io/badge/";
-    var shieldLabelWithHyphen = "Hits-";
-    var shieldMessage_Errored = "Oops...-";
+    var shieldLabelWithHyphen = "瀏覽量-";
+    var shieldMessage_Errored = "炒咗車...-";
     // Base URL
     var targetURL = "https://hitcounter.pythonanywhere.com/count";
     // Append our URL like this as if we are sending an AJAX request.

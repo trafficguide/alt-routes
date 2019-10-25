@@ -89,7 +89,7 @@ var MTR_twl_princeedward = MTR_ktl_princeedward;
 var MTR_twl_mongkok = MTR_ktl_mongkok;
 var MTR_twl_yaumatei = MTR_ktl_yaumatei;
 var MTR_twl_jordan = new Waypoint("twl_jor", "佐敦");
-var MTR_twl_tsimshatsui = new Waypoint("twl_tst", "尖沙咀");
+var MTR_twl_tsimshatsui = new Waypoint("twl_tst", "尖沙咀").addNeighbor(MTR_tml_easttsimshatsui);
 var MTR_twl_admiralty = MTR_erl_admiralty;
 var MTR_twl_central = new Waypoint("twl_cen", "中環");
 // 港島線

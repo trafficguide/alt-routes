@@ -85,16 +85,16 @@ const WALK_KLP_ALL = [].concat(WALK_KLP_MK_ALL, WALK_KLP_HMT_ALL, WALK_KLP_WKL_A
 // New Territories (East)
 
 // Shatin Matrix
-const WALK_NTE_ST_STW = new Line("瀝源橋", lineType_WALK, "沙田市中心", "乙明邨", [MTR_erl_shatin, JatMinEstate]);
-const WALK_NTE_STW_ST = new Line("瀝源橋", lineType_WALK, "乙明邨", "沙田市中心", [JatMinEstate, MTR_erl_shatin]);
+const WALK_NTE_ST_STW = new Line("瀝源橋", lineType_WALK, "沙田市中心", "乙明邨", [ShatinTownCenter, JatMinEstate]);
+const WALK_NTE_STW_ST = new Line("瀝源橋", lineType_WALK, "乙明邨", "沙田市中心", [JatMinEstate, ShatinTownCenter]);
 const WALK_NTE_ST_LY_SK = new Line("沙燕橋", lineType_WALK, "瀝源邨", "沙角邨", [YuenWo, MTR_mos_shatinwai]);
 const WALK_NTE_ST_SK_LY = new Line("沙燕橋", lineType_WALK, "沙角邨", "瀝源邨", [MTR_mos_shatinwai, YuenWo]);
 const WALK_NTE_ST_LY_Cen = new Line("", lineType_WALK, "瀝源邨/禾輋邨", "沙田市中心", [YuenWo, ShatinTownCenter]);
 const WALK_NTE_ST_Cen_LY = new Line("", lineType_WALK, "沙田市中心", "瀝源邨/禾輋邨", [ShatinTownCenter, YuenWo]);
 const WALK_NTE_ST_WC_Sea = new Line("翠榕橋", lineType_WALK, "禾輋邨", "沙田海鮮舫", [ShatinSeafood, YuenWo]);
 const WALK_NTE_ST_Sea_WC = new Line("翠榕橋", lineType_WALK, "沙田海鮮舫", "禾輋邨", [YuenWo, ShatinSeafood]);
-const WALK_NTE_ST_CS = new Line("", lineType_WALK, "沙田市中心", "秦石邨", [MTR_erl_shatin, MTR_mos_chekungtemple]);
-const WALK_NTE_CS_ST = new Line("", lineType_WALK, "秦石邨", "沙田市中心", [MTR_mos_chekungtemple, MTR_erl_shatin]);
+const WALK_NTE_ST_CS = new Line("獅子橋", lineType_WALK, "沙田市中心", "秦石邨", [ShatinTownCenter, MTR_mos_chekungtemple]);
+const WALK_NTE_CS_ST = new Line("獅子橋", lineType_WALK, "秦石邨", "沙田市中心", [MTR_mos_chekungtemple, ShatinTownCenter]);
 const WALK_NTE_CS_YM = new Line("", lineType_WALK, "秦石邨", "乙明邨", [MTR_mos_chekungtemple, MTR_mos_shatinwai]);
 const WALK_NTE_YM_CS = new Line("", lineType_WALK, "乙明邨", "秦石邨", [MTR_mos_shatinwai, MTR_mos_chekungtemple]);
 const WALK_NTE_CS_SC = new Line("", lineType_WALK, "秦石邨", "新翠邨", [MTR_mos_chekungtemple, MTR_mos_taiwai]);
@@ -409,8 +409,12 @@ const LWB_NUM_E4x_ALL = [LWB_E42_EAST, LWB_E42_WEST];
 // All E**
 const LWB_NUM_Exx_ALL = [].concat(LWB_NUM_E3x_ALL, LWB_NUM_E4x_ALL);
 
+// All S**
+const LWB_S64 = new Line('S64', lineType_LWB, '東涌逸東邨', '機場客運大樓', [MTR_tcl_tungchung, Airport_CathayPacificCity, MTR_aex_airport, Airport_CathayPacificCity, MTR_tcl_tungchung], 12).markCircular().setNotes('經機場貨運區及機場航膳');
+const LWB_NUM_Sxx_ALL = [LWB_S64];
+
 // All LWB
-const LWB_HK18_ALL = [].concat(LWB_NUM_Axx_ALL, LWB_NUM_Exx_ALL);
+const LWB_HK18_ALL = [].concat(LWB_NUM_Axx_ALL, LWB_NUM_Exx_ALL, LWB_NUM_Sxx_ALL);
 
 /**
  * Citibus Section

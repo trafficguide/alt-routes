@@ -71,6 +71,6 @@ class XEffect_Ceiling extends InterchangeEffect
      */
     constructor(fareBound: number)
     {
-        super("兩程共收 $" + fareBound);
+        super("兩程共收 $" + fareBound + " (或第二程免費)");
     }
 }
