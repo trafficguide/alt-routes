@@ -208,6 +208,10 @@ class Line
         {
             return "https://search.ushb.net/bus/LW/" + this.name;
         }
+        if (this.type == lineType_TRAM)
+        {
+            return "https://hktramways.com/tc/schedules-fares/";
+        }
 
         return this.url;
     }

@@ -104,11 +104,19 @@ var WALK_HK18_ALL = [].concat(WALK_HKI_ALL, WALK_KLP_ALL, WALK_NTE_ALL, WALK_NTW
  * Tram Section
  * Tram lines have no explicit name; they simply mark their destination, and off they go.
  */
-var TRAM_1_EAST = new Line("", lineType_TRAM, "上環西港城", "筲箕灣", [MTR_ill_sheungwan, MTR_ill_central, MTR_ill_admiralty, MTR_ill_wanchai, MTR_ill_causewaybay, MTR_ill_tinhau, MTR_ill_fortresshill, MTR_ill_northpoint, MTR_ill_quarrybay, MTR_ill_taikoo, MTR_ill_saiwanho, MTR_ill_saukeiwan]);
-var TRAM_1_WEST = new Line("", lineType_TRAM, "筲箕灣", "上環西港城", [MTR_ill_saukeiwan, MTR_ill_saiwanho, MTR_ill_taikoo, MTR_ill_quarrybay, MTR_ill_northpoint, MTR_ill_fortresshill, MTR_ill_tinhau, MTR_ill_causewaybay, MTR_ill_wanchai, MTR_ill_admiralty, MTR_ill_central, MTR_ill_sheungwan]);
-var TRAM_6_EAST = new Line("", lineType_TRAM, "堅尼地城", "筲箕灣", [MTR_ill_kennedytown, HKU_ShekTongTsui, ConnaughtRoadWest_Stop, MTR_ill_sheungwan, MTR_ill_central, MTR_ill_admiralty, MTR_ill_wanchai, MTR_ill_causewaybay, MTR_ill_tinhau, MTR_ill_fortresshill, MTR_ill_northpoint, MTR_ill_quarrybay, MTR_ill_taikoo, MTR_ill_saiwanho, MTR_ill_saukeiwan]);
-var TRAM_6_WEST = new Line("", lineType_TRAM, "筲箕灣", "堅尼地城", [MTR_ill_saukeiwan, MTR_ill_saiwanho, MTR_ill_taikoo, MTR_ill_quarrybay, MTR_ill_northpoint, MTR_ill_fortresshill, MTR_ill_tinhau, MTR_ill_causewaybay, MTR_ill_wanchai, MTR_ill_admiralty, MTR_ill_central, MTR_ill_sheungwan, ConnaughtRoadWest_Stop, HKU_ShekTongTsui, MTR_ill_kennedytown]);
-var TRAM_ALL = [TRAM_1_EAST, TRAM_1_WEST, TRAM_6_EAST, TRAM_6_WEST];
+var TRAM_1_EAST = new Line("筲箕灣", lineType_TRAM, "上環西港城", "筲箕灣", [MTR_ill_sheungwan, MTR_ill_central, MTR_ill_admiralty, MTR_ill_wanchai, MTR_ill_causewaybay, MTR_ill_tinhau, MTR_ill_fortresshill, MTR_ill_northpoint, MTR_ill_quarrybay, MTR_ill_taikoo, MTR_ill_saiwanho, MTR_ill_saukeiwan]);
+var TRAM_1_WEST = new Line("西港城", lineType_TRAM, "筲箕灣", "上環西港城", [MTR_ill_saukeiwan, MTR_ill_saiwanho, MTR_ill_taikoo, MTR_ill_quarrybay, MTR_ill_northpoint, MTR_ill_fortresshill, MTR_ill_tinhau, MTR_ill_causewaybay, MTR_ill_wanchai, MTR_ill_admiralty, MTR_ill_central, MTR_ill_sheungwan]);
+var TRAM_2_EAST = new Line("筲箕灣", lineType_TRAM, "跑馬地", "筲箕灣", [HappyValley, MTR_ill_causewaybay, MTR_ill_tinhau, MTR_ill_fortresshill, MTR_ill_northpoint]);
+var TRAM_2_WEST = new Line("跑馬地", lineType_TRAM, "筲箕灣", "跑馬地", [MTR_ill_northpoint, MTR_ill_fortresshill, MTR_ill_tinhau, MTR_ill_causewaybay, HappyValley]);
+var TRAM_3_EAST = new Line("北角", lineType_TRAM, "石塘咀", "北角", [HKU_ShekTongTsui, MTR_ill_saiyingpun, MTR_ill_sheungwan, MTR_ill_central, MTR_ill_admiralty, MTR_ill_wanchai, MTR_ill_causewaybay, MTR_ill_tinhau, MTR_ill_fortresshill, MTR_ill_northpoint]);
+var TRAM_3_WEST = new Line("石塘咀", lineType_TRAM, "北角", "石塘咀", [MTR_ill_northpoint, MTR_ill_fortresshill, MTR_ill_tinhau, MTR_ill_causewaybay, MTR_ill_wanchai, MTR_ill_admiralty, MTR_ill_central, MTR_ill_sheungwan, MTR_ill_saiyingpun, HKU_ShekTongTsui]);
+var TRAM_4_EAST = new Line("銅鑼灣", lineType_TRAM, "石塘咀", "銅鑼灣", [HKU_ShekTongTsui, MTR_ill_saiyingpun, MTR_ill_sheungwan, MTR_ill_central, MTR_ill_admiralty, MTR_ill_wanchai, MTR_ill_causewaybay]);
+var TRAM_4_WEST = new Line("石塘咀", lineType_TRAM, "銅鑼灣", "石塘咀", [MTR_ill_causewaybay, MTR_ill_wanchai, MTR_ill_admiralty, MTR_ill_central, MTR_ill_sheungwan, MTR_ill_saiyingpun, HKU_ShekTongTsui]);
+var TRAM_5_EAST = new Line("跑馬地", lineType_TRAM, "堅尼地城", "跑馬地", [MTR_ill_kennedytown, HKU_ShekTongTsui, ConnaughtRoadWest_Stop, MTR_ill_sheungwan, MTR_ill_central, MTR_ill_admiralty, MTR_ill_wanchai, HappyValley]);
+var TRAM_5_WEST = new Line("堅尼地城", lineType_TRAM, "跑馬地", "堅尼地城", [HappyValley, MTR_ill_wanchai, MTR_ill_admiralty, MTR_ill_central, MTR_ill_sheungwan, ConnaughtRoadWest_Stop, HKU_ShekTongTsui, MTR_ill_kennedytown]);
+var TRAM_6_EAST = new Line("筲箕灣", lineType_TRAM, "堅尼地城", "筲箕灣", [MTR_ill_kennedytown, HKU_ShekTongTsui, ConnaughtRoadWest_Stop, MTR_ill_sheungwan, MTR_ill_central, MTR_ill_admiralty, MTR_ill_wanchai, MTR_ill_causewaybay, MTR_ill_tinhau, MTR_ill_fortresshill, MTR_ill_northpoint, MTR_ill_quarrybay, MTR_ill_taikoo, MTR_ill_saiwanho, MTR_ill_saukeiwan]);
+var TRAM_6_WEST = new Line("堅尼地城", lineType_TRAM, "筲箕灣", "堅尼地城", [MTR_ill_saukeiwan, MTR_ill_saiwanho, MTR_ill_taikoo, MTR_ill_quarrybay, MTR_ill_northpoint, MTR_ill_fortresshill, MTR_ill_tinhau, MTR_ill_causewaybay, MTR_ill_wanchai, MTR_ill_admiralty, MTR_ill_central, MTR_ill_sheungwan, ConnaughtRoadWest_Stop, HKU_ShekTongTsui, MTR_ill_kennedytown]);
+var TRAM_ALL = [TRAM_1_EAST, TRAM_1_WEST, TRAM_2_EAST, TRAM_2_WEST, TRAM_3_EAST, TRAM_3_WEST, TRAM_4_EAST, TRAM_4_WEST, TRAM_5_EAST, TRAM_5_WEST, TRAM_6_EAST, TRAM_6_WEST];
 /**
  * Ferry Section
  * Ferry lines travel on water, so it is technically impossible to say that they follow a certain path.
@@ -518,8 +526,8 @@ var CHT_NUM_18x_ALL = [CHT_182_NORTH, CHT_182_SOUTH];
 // All 1**
 var CHT_NUM_1xx_ALL = [].concat(CHT_NUM_10x_ALL, CHT_NUM_11x_ALL, CHT_NUM_17x_ALL, CHT_NUM_18x_ALL);
 // 30*
-var CHT_307_NORTH = new Line("307", lineType_HARBOUR, "中環渡輪碼頭", "大埔中心", [MTR_ill_sheungwan, MTR_ill_central, MTR_ill_admiralty, MTR_ill_wanchai, MTR_ill_tinhau, EasternCorridor, EastHarbourTunnel, EastHarbourTunnel_Interchange, KwunTongBypass, KowloonBayFlyover, OldTatesTunnel, OldTatesTunnel_Interchange, ToloHighway_Coastal, KwongFukEstate, KwongFukRoad]).setNotes("東走特快；東隧特快；大老山特快；大埔特快");
-var CHT_307_SOUTH = new Line("307", lineType_HARBOUR, "大埔中心", "中環渡輪碼頭", [WanTauKokLane, KwongFukEstate, ToloHighway_Coastal, OldTatesTunnel_Interchange, OldTatesTunnel, KowloonBayFlyover, KwunTongBypass, EastHarbourTunnel_Interchange, EastHarbourTunnel, EasternCorridor, MTR_ill_wanchai, MTR_ill_admiralty, MTR_ill_central, MTR_ill_sheungwan]).setNotes("大埔特快；大老山特快；東隧特快；東走特快");
+var CHT_307_NORTH = new Line("307", lineType_HARBOUR, "中環渡輪碼頭", "大埔中心", [MTR_ill_sheungwan, MTR_ill_central, MTR_ill_admiralty, MTR_ill_wanchai, MTR_ill_tinhau, EasternCorridor, EastHarbourTunnel, EastHarbourTunnel_Interchange, KwunTongBypass, KowloonBayFlyover, OldTatesTunnel, OldTatesTunnel_Interchange, ToloHighway_Coastal, KwongFukEstate, KwongFukRoad]).setNotes("特快來往大埔、大老山、東隧、東廊");
+var CHT_307_SOUTH = new Line("307", lineType_HARBOUR, "大埔中心", "中環渡輪碼頭", [WanTauKokLane, KwongFukEstate, ToloHighway_Coastal, OldTatesTunnel_Interchange, OldTatesTunnel, KowloonBayFlyover, KwunTongBypass, EastHarbourTunnel_Interchange, EastHarbourTunnel, EasternCorridor, MTR_ill_wanchai, MTR_ill_admiralty, MTR_ill_central, MTR_ill_sheungwan]).setNotes("特快來往大埔、大老山、東隧、東廊");
 // All 30*
 var CHT_NUM_30x_ALL = [CHT_307_NORTH, CHT_307_SOUTH];
 // All 3**

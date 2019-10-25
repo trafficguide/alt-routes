@@ -135,6 +135,9 @@ table a.purple {
 table a.blue {
   background: #0000ff;
 }
+table a.darkslategrey {
+  background: #2f4f4f;
+}
 table th {
   text-align: center;
 }
