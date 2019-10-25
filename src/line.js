@@ -36,7 +36,6 @@ var Line = /** @class */ (function () {
          * Should be true when the line sends a vehicle very quickly, e.g., below 10 minutes frequency.
          */
         this.flagRapidFreq = false;
-        this.travelCost_FerryOverride = -1;
         this.name = lineName;
         this.type = lineType;
         this.from = lineFrom;
@@ -176,6 +175,13 @@ var Line = /** @class */ (function () {
         */
         // URL on the line ID
         var url = this.calculateURL();
+        /*
+        let castedThis = this as unknown as FerryLine;
+        if (castedThis.type)
+        {
+            url = castedThis.calculateURL();
+        }
+        */
         var color = this.type.getColorClass();
         if (url.length > 0) {
             var appearanceClass = "class='" + color + "'";
@@ -236,7 +242,15 @@ var Line = /** @class */ (function () {
         return htmlString;
     };
     Line.prototype.getNotes = function () {
-        return this.notes;
+        var notes = "";
+        if (this.isCircular()) {
+            notes = "循環線";
+            if (this.notes) {
+                notes += "；";
+            }
+        }
+        notes += this.notes;
+        return notes;
     };
     /**
      * Returns the index of the waypoint, or the station which is a neighbour of the waypoint, of the given waypoint.
@@ -297,10 +311,6 @@ var Line = /** @class */ (function () {
             return intersectionCounter[i];
         }
         return null;
-    };
-    Line.prototype.markFerryTravelCost = function (travelCost) {
-        this.travelCost_FerryOverride = travelCost;
-        return this;
     };
     return Line;
 }());

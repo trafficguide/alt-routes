@@ -132,6 +132,9 @@ table a.coral {
 table a.purple {
   background: #3949ab;
 }
+table a.blue {
+  background: #0000ff;
+}
 table th {
   text-align: center;
 }

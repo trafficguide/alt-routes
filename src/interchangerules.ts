@@ -25,7 +25,7 @@ function getAllInterchangeRules()
         cachedInterchangeRules = new Array<Interchange>();
 
         // 72 <-> 81
-        cachedInterchangeRules.push(new Interchange([KMB_72_SOUTH], [KMB_81_SOUTH], LekYuenEstate).setEffect(new XEffect_Reduction(6.7)));
+        cachedInterchangeRules.push(new Interchange([KMB_72_SOUTH], [KMB_81_SOUTH], ST_LekYuenEstate).setEffect(new XEffect_Reduction(6.7)));
         cachedInterchangeRules.push(new Interchange([KMB_81_NORTH], [KMB_72_NORTH], ShatinTownCenter).setEffect(new XEffect_Reduction(8.8)));
 
         // Shatin Center Interchange Scheme

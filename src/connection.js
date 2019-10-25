@@ -26,9 +26,6 @@ var Connection = /** @class */ (function () {
      * 3. Type of travel (walking receives scaling of 2)
      */
     Connection.prototype.calculateConnectionCost = function () {
-        if (this.line.type == lineType_FERRY) {
-            return this.line.travelCost_FerryOverride;
-        }
         var connectionCost = 0;
         // NOTICE: NEW ALGORITHM
         // Instead of iterating every stop and check if the "interchange rule" applies,

@@ -40,11 +40,6 @@ class Connection
      */
     calculateConnectionCost(): number
     {
-        if (this.line.type == lineType_FERRY)
-        {
-            return this.line.travelCost_FerryOverride;
-        }
-
         let connectionCost = 0;
         // NOTICE: NEW ALGORITHM
         // Instead of iterating every stop and check if the "interchange rule" applies,
