@@ -332,6 +332,8 @@ const KMB_251B = new Line('251B', lineType_KMB, '八鄉路', '上村', [TaiLamTu
 // All 25*
 const KMB_NUM_25x_ALL = [KMB_251A, KMB_251B];
 // 26*
+const KMB_260X_EAST = new Line('260X', lineType_KMB, '寶田', '紅磡站', [KCR_lrt_3_tinking, KCR_lrt_2_taihing, KCR_lrt_2_primeview, TM_TuenMunTownCenter, TuenMunHighway_SoKwunWat, TuenMunHighway_InterchangeEast, TuenMunHighway_TsingLungTau, TY_TingKauBridge, TY_CheungTsingTunnel, LaiKingChokePoint, WestKowloonHighway, MTR_tml_austin, MTR_tml_easttsimshatsui, MTR_tml_hunghom], 13).setNotes('特快線；經建生');
+const KMB_260X_WEST = new Line('260X', lineType_KMB, '紅磡站', '寶田', [MTR_tml_hunghom, MTR_tml_easttsimshatsui, MTR_twl_tsimshatsui, MTR_twl_jordan, MTR_tml_austin, WestKowloonHighway, TY_CheungTsingTunnel, TY_TingKauBridge, TuenMunHighway_TsingLungTau, TuenMunHighway_InterchangeWest, TuenMunHighway_SoKwunWat, TM_TuenMunTownCenter, KCR_lrt_2_primeview, KCR_lrt_2_taihing, KCR_lrt_3_tinking], 13).setNotes('特快線；經建生');
 const KMB_263_EAST = new Line("263", lineType_KMB, "屯門站", "沙田站", [MTR_tml_tuenmun, TM_TuenMunTownCenter, KCR_lrt_1_samshing, TuenMunHighway_SoKwunWat, TuenMunHighway_InterchangeEast, TuenMunHighway_TsingLungTau, TuenMunHighway_YauKomTau, TW_CheungPeiShanRoad, ShingMunTunnel_Interchange_East, ShingMunTunnel, ShingMunTunnelHighway, MTR_erl_shatin], 12).setNotes("經豐景圍、安定、市中心");
 const KMB_263_WEST = new Line("263", lineType_KMB, "沙田站", "屯門站", [MTR_erl_shatin, ShingMunTunnelHighway, ShingMunTunnel, ShingMunTunnel_Interchange_West, TW_CheungPeiShanRoad, TuenMunHighway_YauKomTau, TuenMunHighway_TsingLungTau, TuenMunHighway_InterchangeWest, TuenMunHighway_SoKwunWat, KCR_lrt_1_samshing, TM_TuenMunTownCenter, MTR_tml_tuenmun], 12).setNotes("經豐景圍、安定、市中心");
 const KMB_263A_MORNING = new Line('263A', lineType_KMB, '屯門站', '香港科學園第三期', [MTR_tml_tuenmun, KCR_lrt_1_samshing, TuenMunHighway_SoKwunWat, TuenMunHighway_InterchangeEast, TuenMunHighway_TsingLungTau, TuenMunHighway_YauKomTau, TW_CheungPeiShanRoad, ShingMunTunnel, ShingMunTunnelHighway, TaiPoRoad_Shatin, ST_ShatinSeafood, MTR_erl_university, SciencePark], 1440).markCommuter().setNotes('單班車0725開出；經濱景花園、大學站，不停城門隧道轉車站');
@@ -343,7 +345,7 @@ const KMB_269C_WEST = new Line('269C', lineType_KMB, '觀塘碼頭', '天水圍�
 const KMB_269D_EAST = new Line('269D', lineType_KMB, '天富', '瀝源', [KCR_lrt_4_tinwing, KCR_lrt_5A_tinyat, KCR_lrt_4_tinshui, MTR_tml_tinshuiwai, LongTinRoad, KCR_lrt_5_fungninroad, MTR_tml_yuenlong, TsingLongHighway, TaiLamTunnel_Interchange, TaiLamTunnel, TuenMunHighway_YauKomTau, TW_CheungPeiShanRoad, ShingMunTunnel_Interchange_East, ShingMunTunnel, ShingMunTunnelHighway, ShatinTownCenter, ST_YuenWo], 15).setNotes('經元朗');
 const KMB_269D_WEST = new Line('269D', lineType_KMB, '瀝源', '天富', [ST_YuenWo, ShatinTownCenter, ShingMunTunnelHighway, ShingMunTunnel, ShingMunTunnel_Interchange_West, TW_CheungPeiShanRoad, TuenMunHighway_YauKomTau, TaiLamTunnel, TaiLamTunnel_Interchange, TsingLongHighway, MTR_tml_yuenlong, KCR_lrt_5_fungninroad, LongTinRoad, MTR_tml_tinshuiwai, KCR_lrt_4_tinshui, KCR_lrt_5A_tinyat, KCR_lrt_4_tinwing], 15).setNotes('經元朗');
 // All 26*
-const KMB_NUM_26x_ALL = [KMB_263_EAST, KMB_263_WEST, KMB_263A_MORNING, KMB_263A_AFTERNOON, KMB_269B_NORTH, KMB_269B_SOUTH, KMB_269C_EAST, KMB_269C_WEST, KMB_269D_EAST, KMB_269D_WEST];
+const KMB_NUM_26x_ALL = [KMB_260X_EAST, KMB_260X_WEST, KMB_263_EAST, KMB_263_WEST, KMB_263A_MORNING, KMB_263A_AFTERNOON, KMB_269B_NORTH, KMB_269B_SOUTH, KMB_269C_EAST, KMB_269C_WEST, KMB_269D_EAST, KMB_269D_WEST];
 
 // 27*
 const KMB_270A_NORTH = new Line("270A", lineType_KMB, "尖東麼地道", "上水", [MTR_tml_easttsimshatsui, MTR_twl_tsimshatsui, MTR_twl_jordan, MTR_twl_yaumatei, KowloonHospital, MTR_erl_kowloontong, LionRockTunnel, LionRockTunnel_Interchange, TaiPoRoad_Shatin, ToloHighway_TaiPo, FanlingHighway_LamTsuen, FL_WahMing, MTR_erl_fanling, MTR_erl_sheungshui]);
@@ -660,6 +662,11 @@ const CHT_905_NORTH = new Line('905', lineType_HARBOUR, '灣仔北', '荔枝角'
 const CHT_905_SOUTH = new Line('905', lineType_HARBOUR, '荔枝角', '灣仔北', [MTR_twl_meifoo, MTR_twl_laichikok, MTR_twl_cheungshawan, MTR_twl_shamshuipo, MTR_twl_princeedward, MTR_twl_mongkok, MTR_tcl_olympic, WestHarbourTunnel_Interchange, WestHarbourTunnel, HKU_ShekTongTsui, MTR_ill_saiyingpun, MTR_ill_sheungwan, MTR_ill_central, MTR_ill_admiralty, MTR_erl_exhibition, WC_FerryPier], 10);
 // All 90*
 const CHT_NUM_90x_ALL = [CHT_904_NORTH, CHT_904_SOUTH, CHT_905_NORTH, CHT_905_SOUTH];
+// 93*
+const CHT_930_NORTH = new Line('930', lineType_HARBOUR, '灣仔(北)', '荃灣西站', [WC_FerryPier, MTR_erl_exhibition, MTR_ill_wanchai, MTR_ill_admiralty, MTR_ill_central, MTR_ill_sheungwan, WestHarbourTunnel, WestHarbourTunnel_Interchange, WestKowloonHighway, LaiKingChokePoint, MTR_twl_kwaifong, MTR_twl_kwaihing, TW_KwaiChungEstate, MTR_tml_tsuenwanwest], 15).setNotes('部分班次以愉景新城為尾站；經金鐘、中環、上環、西隧、葵芳、葵涌邨、大窩口邨、沙咀道');
+const CHT_930_SOUTH = new Line('930', lineType_HARBOUR, '荃灣西站', '灣仔(北)', [MTR_tml_tsuenwanwest, TW_KwaiChungEstate, MTR_twl_kwaihing, MTR_twl_kwaifong, LaiKingChokePoint, WestKowloonHighway, WestHarbourTunnel_Interchange, WestHarbourTunnel, MTR_ill_sheungwan, MTR_ill_central, MTR_ill_admiralty, MTR_ill_wanchai, MTR_erl_exhibition, WC_FerryPier], 15).setNotes('經楊屋道街市、大窩口邨、葵涌邨、葵芳、西隧、港澳碼頭、怡和大廈、金鐘、灣仔');
+// All 93*
+const CHT_NUM_93x_ALL = [CHT_930_NORTH, CHT_930_SOUTH];
 // 96*
 const CHT_960_NORTH = new Line('960', lineType_HARBOUR, '灣仔北', '屯門建生邨', [WC_FerryPier, MTR_ill_wanchai, MTR_ill_admiralty, MTR_ill_central, MTR_ill_sheungwan, WestHarbourTunnel, WestHarbourTunnel_Interchange, WestKowloonHighway, LaiKingChokePoint, TY_CheungTsingTunnel, TY_TingKauBridge, TuenMunHighway_TsingLungTau, TuenMunHighway_InterchangeWest, TuenMunHighway_SoKwunWat, TM_TuenMunTownCenter, KCR_lrt_2_primeview, KCR_lrt_2_taihing, KCR_lrt_3_tinking], 15).setNotes('經屯門公路、石排站');
 const CHT_960_SOUTH = new Line('960', lineType_HARBOUR, '屯門建生邨', '灣仔北', [KCR_lrt_3_tinking, KCR_lrt_2_taihing, KCR_lrt_2_primeview, TM_TuenMunTownCenter, TuenMunHighway_SoKwunWat, TuenMunHighway_InterchangeEast, TuenMunHighway_TsingLungTau, TY_TingKauBridge, TY_CheungTsingTunnel, LaiKingChokePoint, WestKowloonHighway, WestHarbourTunnel_Interchange, WestHarbourTunnel, MTR_ill_sheungwan, MTR_ill_central, MTR_ill_admiralty, MTR_ill_wanchai, MTR_erl_exhibition, WC_FerryPier], 15).setNotes('經屯門公路、石排站');
@@ -679,7 +686,7 @@ const KMB_978_SOUTH = new Line('978', lineType_KMB, '華明總站', '灣仔北',
 const CHT_NUM_97x_ALL = [CHT_970_NORTH, CHT_970_SOUTH, CHT_970X_NORTH, CHT_970X_SOUTH, KMB_978_NORTH, KMB_978_SOUTH];
 
 // All 9**
-const CHT_NUM_9xx_ALL = [].concat(CHT_NUM_90x_ALL, CHT_NUM_96x_ALL, CHT_NUM_97x_ALL);
+const CHT_NUM_9xx_ALL = [].concat(CHT_NUM_90x_ALL, CHT_NUM_93x_ALL, CHT_NUM_96x_ALL, CHT_NUM_97x_ALL);
 
 // All Cross-Harbour Bus
 const CHT_HK18_ALL = [].concat(CHT_NUM_1xx_ALL, CHT_NUM_3xx_ALL, CHT_NUM_6xx_ALL, CHT_NUM_9xx_ALL);
