@@ -235,14 +235,6 @@ function conductSearch(
         if (connections.length == 1)
         {
             let connection = connections[0];
-            if (connection.line.isCircular())
-            {
-                resultTableHTML += "循環線";
-                if (connection.line.getNotes())
-                {
-                    resultTableHTML += "；";
-                }
-            }
             resultTableHTML += connection.line.getNotes();
         }
         else

@@ -221,6 +221,11 @@ class Line
         return this.type == lineType_WALK;
     }
 
+    isMinibus(): boolean
+    {
+        return this.isGreenMinibus();
+    }
+
     isGreenMinibus(): boolean
     {
         return this.type == lineType_GMB_HKI || this.type == lineType_GMB_KL || this.type == lineType_GMB_NT;
@@ -315,6 +320,11 @@ class Line
         return htmlString;
     }
 
+    /**
+     * Returns the appropriate notes for this line.
+     * 
+     * Prepending texts such as "循環線" are already included.
+     */
     getNotes(): string
     {
         let notes = "";

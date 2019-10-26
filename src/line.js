@@ -161,6 +161,9 @@ var Line = /** @class */ (function () {
     Line.prototype.isWalking = function () {
         return this.type == lineType_WALK;
     };
+    Line.prototype.isMinibus = function () {
+        return this.isGreenMinibus();
+    };
     Line.prototype.isGreenMinibus = function () {
         return this.type == lineType_GMB_HKI || this.type == lineType_GMB_KL || this.type == lineType_GMB_NT;
     };
@@ -244,6 +247,11 @@ var Line = /** @class */ (function () {
         htmlString += this.to;
         return htmlString;
     };
+    /**
+     * Returns the appropriate notes for this line.
+     *
+     * Prepending texts such as "循環線" are already included.
+     */
     Line.prototype.getNotes = function () {
         var notes = "";
         if (this.isCircular()) {

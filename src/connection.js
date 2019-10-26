@@ -27,11 +27,23 @@ var Connection = /** @class */ (function () {
      */
     Connection.prototype.calculateConnectionCost = function () {
         var connectionCost = 0;
+        var line = this.getLine();
         // NOTICE: NEW ALGORITHM
         // Instead of iterating every stop and check if the "interchange rule" applies,
         // we now stipulate that all interchanges with concessions will reduce total cost by 1.
         // Total path cost is, obviously, still bounded by the non-negative rule.
         connectionCost = this.endIndex - this.startIndex;
+        // Minibuses are agile, and so gets a cost down-scaling
+        if (line.isMinibus()) {
+            if (line.isGreenMinibus()) {
+                // Green minibuses are OK agile...
+                connectionCost *= 0.75;
+            }
+            else {
+                // While red minibuses are even more agile...
+                connectionCost *= 0.6;
+            }
+        }
         // Also adjust cost by vehicle frequency.
         connectionCost += this.getLine().getTimeCostAdjustment();
         /*
@@ -53,8 +65,9 @@ var Connection = /** @class */ (function () {
         if (this.line.type == lineType_WALK) {
             connectionCost *= 2;
         }
-        if (connectionCost <= 0) {
-            connectionCost = 1;
+        // Modified to be more consistent
+        if (connectionCost <= 0.1) {
+            connectionCost = 0.1;
         }
         return connectionCost;
     };
