@@ -26,10 +26,10 @@ function getAllInterchangeRules()
 
         // 72 <-> 81
         cachedInterchangeRules.push(new Interchange([KMB_72_SOUTH], [KMB_81_SOUTH], ST_LekYuenEstate).setEffect(new XEffect_Reduction(6.7)));
-        cachedInterchangeRules.push(new Interchange([KMB_81_NORTH], [KMB_72_NORTH], ShatinTownCenter).setEffect(new XEffect_Reduction(8.8)));
+        cachedInterchangeRules.push(new Interchange([KMB_81_NORTH], [KMB_72_NORTH], ST_ShatinTownCenter).setEffect(new XEffect_Reduction(8.8)));
 
         // Shatin Center Interchange Scheme
-        cachedInterchangeRules.push(new Interchange([KMB_81K_SOUTH, KMB_88K_SOUTH], [KMB_47A_EAST, KMB_47A_WEST, KMB_48X_EAST, KMB_48X_WEST, KMB_49X_EAST, KMB_49X_WEST, KMB_288], ShatinTownCenter).setEffect(new XEffect_Reduction(4.2)));
+        cachedInterchangeRules.push(new Interchange([KMB_81K_SOUTH, KMB_88K_SOUTH], [KMB_47A_EAST, KMB_47A_WEST, KMB_48X_EAST, KMB_48X_WEST, KMB_49X_EAST, KMB_49X_WEST, KMB_288], ST_ShatinTownCenter).setEffect(new XEffect_Reduction(4.2)));
 
         // Lion Rock Interchange Scheme
         cachedInterchangeRules.push(new Interchange(XScheme_LionRock, XScheme_LionRock, LionRockTunnel_Interchange).setEffect(new XEffect_Reduction(4.2)));
