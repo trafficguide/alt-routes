@@ -43,7 +43,6 @@ class Line
      * Should be true when the line sends a vehicle very quickly, e.g., below 10 minutes frequency.
      */
     flagRapidFreq: boolean = false;
-    travelCost_FerryOverride: number = -1;
 
     constructor(lineName: string, lineType: LineType, lineFrom: string, lineTo: string, lineStops: Array<Waypoint>, overallFreq: number = 15)
     {
@@ -209,6 +208,10 @@ class Line
         {
             return "https://search.ushb.net/bus/LW/" + this.name;
         }
+        if (this.type == lineType_TRAM)
+        {
+            return "https://hktramways.com/tc/schedules-fares/";
+        }
 
         return this.url;
     }
@@ -216,6 +219,11 @@ class Line
     isWalking(): boolean
     {
         return this.type == lineType_WALK;
+    }
+
+    isMinibus(): boolean
+    {
+        return this.isGreenMinibus();
     }
 
     isGreenMinibus(): boolean
@@ -238,6 +246,13 @@ class Line
         */
         // URL on the line ID
         let url = this.calculateURL();
+        /*
+        let castedThis = this as unknown as FerryLine;
+        if (castedThis.type)
+        {
+            url = castedThis.calculateURL();
+        }
+        */
         let color = this.type.getColorClass();
         if (url.length > 0)
         {
@@ -305,9 +320,25 @@ class Line
         return htmlString;
     }
 
+    /**
+     * Returns the appropriate notes for this line.
+     * 
+     * Prepending texts such as "循環線" are already included.
+     */
     getNotes(): string
     {
-        return this.notes;
+        let notes = "";
+        if (this.isCircular())
+        {
+            notes = "循環線";
+            if (this.notes)
+            {
+                notes += "；";
+            }
+        }
+        notes += this.notes;
+
+        return notes;
     }
 
     /**
@@ -391,11 +422,5 @@ class Line
             return intersectionCounter[i];
         }
         return null;
-    }
-
-    markFerryTravelCost(travelCost: number): Line
-    {
-        this.travelCost_FerryOverride = travelCost;
-        return this;
     }
 }

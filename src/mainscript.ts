@@ -209,7 +209,7 @@ function conductSearch(
                     " 轉乘 " +
                     L2.getHTMLShortID() +
                     "<br>";
-                tempString += "可獲以下效果：" + interchange.directlyGetEffectReadout();
+                tempString += "可獲效果：" + interchange.directlyGetEffectReadout();
                 effectStrings.push(tempString);
             }
         }
@@ -235,14 +235,6 @@ function conductSearch(
         if (connections.length == 1)
         {
             let connection = connections[0];
-            if (connection.line.isCircular())
-            {
-                resultTableHTML += "循環線";
-                if (connection.line.getNotes())
-                {
-                    resultTableHTML += "；";
-                }
-            }
             resultTableHTML += connection.line.getNotes();
         }
         else

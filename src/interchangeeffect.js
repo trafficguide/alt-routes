@@ -73,7 +73,7 @@ var XEffect_Ceiling = /** @class */ (function (_super) {
      * @param fareBound The ceiling of combined fares of 1st and 2nd lines.
      */
     function XEffect_Ceiling(fareBound) {
-        return _super.call(this, "兩程共收 $" + fareBound) || this;
+        return _super.call(this, "兩程共收 $" + fareBound + " (或第二程免費)") || this;
     }
     return XEffect_Ceiling;
 }(InterchangeEffect));

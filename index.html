@@ -24,6 +24,7 @@
         <!-- From basic to complex -->
         <script src="src/waypoint.js"></script>
         <script src="src/line.js"></script>
+        <script src="src/ferryline.js"></script>
         <script src="src/connection.js"></script>
         <script src="src/path.js"></script>
         <!-- Library-styled scripts -->
@@ -180,7 +181,11 @@
         <!-- Changed from h1 to h4 to adapt to the new Materialize CSS -->
         <h4>探路：港鐵替代路線搜尋器</h4>
         <p>
-            為港鐵跣底嗰陣買定個保險。<b>一經載入，毋須上網，輕鬆離線搜尋。</b><br>
+            為港鐵跣底嗰陣買定個保險。<b>一經載入，毋須上網，輕鬆離線搜尋。</b>
+            <!--
+            <a class="black-text link" href="">Temporary English version</a>
+            -->
+            <br>
             資料庫持續擴充中，資料亦會儲齊一堆才更新(好似茶樓炒飯咁)。<br>
             資料不齊全會令搜尋器搜出不合理結果。如因資料不全，而未能顯示乘車資訊，或展示奇怪資訊，請見諒！<br>
             <!-- Shields.IO badges -->
@@ -191,7 +196,7 @@
             <a href="https://hitcounter.pythonanywhere.com/" target="_blank"><img alt="Hitcounter Link" src="https://img.shields.io/badge/Uses-Hit Counter-blue"></a>
             <!-- The original page hits is back, but I am leaning to change its appeareance using shields.io; scripts are already set up. -->
             <!-- As a matter of documentation, we previously used this link: https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Ftrafficguide.github.io%2Falt-routes%2F -->
-            <img id="hit_shield" alt="Hit Count Info" src="https://img.shields.io/badge/Hits-Loading...-lightgrey">
+            <img id="hit_shield" alt="Hit Count Info" src="https://img.shields.io/badge/瀏覽量-載入中...-lightgrey">
             <a href="https://github.com/trafficguide/alt-routes/graphs/contributors" target="_blank"><img alt="GitHub Repo Contributors" src="https://img.shields.io/github/contributors/trafficguide/alt-routes"></a>
             <a href="https://github.com/trafficguide/alt-routes/issues" target="_blank"><img alt="GitHub Repo Issues Page" src="https://img.shields.io/github/issues/trafficguide/alt-routes"></a>
             <a href="https://github.com/trafficguide/alt-routes/blob/master/LICENSE" target="_blank"><img alt="GitHub Repo License" src="https://img.shields.io/github/license/trafficguide/alt-routes"></a>
@@ -201,12 +206,12 @@
             <!-- Call-for-action badges asking for more info -->
             <img alt="Info: Green Minibus" src="https://img.shields.io/badge/現正徵求-綠巴路線資料-orange">
             <img alt="Info: Red Minibus" src="https://img.shields.io/badge/現正徵求-紅巴路線資料-orange">
+            <img alt="Info: Red Minibus" src="https://img.shields.io/badge/現正徵求-渡輪街渡資料-orange">
         </p>
         <!-- Cached transit maps -->
         <p>
-            <a class="waves-effect waves-light btn orange darken-3" onclick="chart_Show()"><i class="material-icons left">map</i>緊急召喚乘車大圖</a>
-            <a class="waves-effect waves-light btn orange darken-3" onclick="chart_Hide()"><i class="material-icons left">unfold_less</i>收起乘車大圖</a>
-            
+            <a class="waves-effect waves-light btn orange darken-3" onclick="chart_Show()"><i class="material-icons left">map</i>展示乘車大圖</a>
+            <a class="waves-effect waves-light btn orange darken-3" onclick="chart_Hide()"><i class="material-icons left">unfold_less</i>收起大圖</a>
             <br>
             <img id="chart_normal" alt="Big pic: Normal" src="img/Instant_NormalMode.jpg" style="display: none">
             <img id="chart_night" alt="Big pic: Night" src="img/Instant_NightMode.jpg" style="display: none">
@@ -215,6 +220,13 @@
             <!-- Other divs -->
             <div id="versionInfo"></div>
             <div id="trafficInfo"></div>
+            <div>
+                <b>路線資料齊全認可</b>：<br>
+                <img alt="Shing Mun Tunnel" src="https://img.shields.io/badge/城門隧道-只有全日路線-yellow">
+                <img alt="Tsing Sha Highway" src="https://img.shields.io/badge/青沙公路-只有全日路線-yellow">
+                <img alt="Tram Lines" src="https://img.shields.io/badge/電車-全部路線齊備-brightgreen">
+            </div>
+            
             <a class="black-text link" href="https://docs.google.com/forms/d/e/1FAIpQLSeeID8c0JpELbUfUQMyG1d7OLSJ_v5IBQzu00nYJwcDw-y2Ew/viewform" target="_blank">意見反映</a> | <a class="black-text link" href="https://docs.google.com/spreadsheets/d/1NTAl6hq-Mh4KsR8vFxvFazFxYB0iYS-3oAyuSb7seDU/edit?usp=sharing" target="_blank">協助輸入路線資料</a>
             <!--
                 It was found that the Google My Maps function does not work very well...
@@ -288,7 +300,7 @@
         <!-- Buttons to actually signal the search -->
         <p>
             <!-- Buttons -->
-            <a class="waves-effect waves-light btn orange darken-3" onclick="signal_BeginSearch()"><i class="material-icons left">search</i>查找</a>
+            <a class="waves-effect waves-light btn orange darken-3" onclick="signal_BeginSearch()"><i class="material-icons left">search</i>搜尋</a>
             <a class="waves-effect waves-light btn orange darken-3" onclick="swapFromAndTo()"><i class="material-icons left">import_export</i>互換</a>
 
             <!-- <button type="button" onclick="signal_BeginSearch()">查找</button>

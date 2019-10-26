@@ -36,7 +36,6 @@ var Line = /** @class */ (function () {
          * Should be true when the line sends a vehicle very quickly, e.g., below 10 minutes frequency.
          */
         this.flagRapidFreq = false;
-        this.travelCost_FerryOverride = -1;
         this.name = lineName;
         this.type = lineType;
         this.from = lineFrom;
@@ -154,10 +153,16 @@ var Line = /** @class */ (function () {
         if (this.type == lineType_LWB) {
             return "https://search.ushb.net/bus/LW/" + this.name;
         }
+        if (this.type == lineType_TRAM) {
+            return "https://hktramways.com/tc/schedules-fares/";
+        }
         return this.url;
     };
     Line.prototype.isWalking = function () {
         return this.type == lineType_WALK;
+    };
+    Line.prototype.isMinibus = function () {
+        return this.isGreenMinibus();
     };
     Line.prototype.isGreenMinibus = function () {
         return this.type == lineType_GMB_HKI || this.type == lineType_GMB_KL || this.type == lineType_GMB_NT;
@@ -176,6 +181,13 @@ var Line = /** @class */ (function () {
         */
         // URL on the line ID
         var url = this.calculateURL();
+        /*
+        let castedThis = this as unknown as FerryLine;
+        if (castedThis.type)
+        {
+            url = castedThis.calculateURL();
+        }
+        */
         var color = this.type.getColorClass();
         if (url.length > 0) {
             var appearanceClass = "class='" + color + "'";
@@ -235,8 +247,21 @@ var Line = /** @class */ (function () {
         htmlString += this.to;
         return htmlString;
     };
+    /**
+     * Returns the appropriate notes for this line.
+     *
+     * Prepending texts such as "循環線" are already included.
+     */
     Line.prototype.getNotes = function () {
-        return this.notes;
+        var notes = "";
+        if (this.isCircular()) {
+            notes = "循環線";
+            if (this.notes) {
+                notes += "；";
+            }
+        }
+        notes += this.notes;
+        return notes;
     };
     /**
      * Returns the index of the waypoint, or the station which is a neighbour of the waypoint, of the given waypoint.
@@ -297,10 +322,6 @@ var Line = /** @class */ (function () {
             return intersectionCounter[i];
         }
         return null;
-    };
-    Line.prototype.markFerryTravelCost = function (travelCost) {
-        this.travelCost_FerryOverride = travelCost;
-        return this;
     };
     return Line;
 }());
