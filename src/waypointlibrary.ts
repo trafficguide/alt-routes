@@ -431,7 +431,7 @@ const MTR_TMLE_ALL = MTR_MOS_ALL.concat(MTR_tml_hinkeng, MTR_tml_diamondhill, MT
 /**
  * All Tuen Ma Line // West Rail Line stations
  */
-const MTR_TMLW_ALL = [MTR_tml_tuenmun, MTR_tml_siuhong, MTR_tml_hungshuikiu, MTR_tml_tinshuiwai, MTR_tml_longping, MTR_tml_yuenlong, MTR_tml_kamsheungroad, MTR_tml_tsuenwanwest, MTR_tml_meifoo, MTR_tml_namcheong, MTR_tml_austin, MTR_tml_easttsimshatsui, MTR_tml_hunghom];
+const MTR_TMLW_ALL = [KCR_lrt_1_tuenmunferrypier, MTR_tml_tuenmun, MTR_tml_siuhong, MTR_tml_hungshuikiu, MTR_tml_tinshuiwai, MTR_tml_longping, MTR_tml_yuenlong, MTR_tml_kamsheungroad, MTR_tml_tsuenwanwest, MTR_tml_meifoo, MTR_tml_namcheong, MTR_tml_austin, MTR_tml_easttsimshatsui, MTR_tml_hunghom];
 /**
  * All Kwun Tong Line stations
  */
