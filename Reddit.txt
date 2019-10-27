@@ -1,0 +1,29 @@
+[開發中 不完美 可接受] 探路：港鐵替代路線搜尋器
+
+[WIP Imperfect Acceptable] Pathfinder: Alternative Routes of MTR
+
+Link: https://trafficguide.github.io/alt-routes/
+
+話說831果幾排啲人開始認真討論罷铁，同樣地都多咗人問可以點罷铁。為咗令更多人能夠體會巴士嘅重要性，同時亦都希望將問「點搭車」嘅工序自動化，小弟喺九月頭就開始落手落腳做呢個搜尋器。家陣雖然未做完，但係都叫係事業有成，拎出嚟比大家玩吓。
+
+我呢個搜尋器有以下五大特色：
+
+- 簡便
+- 慳位
+- 冇廣告
+- 唔使上網
+- 出得嘅資料一定準確
+
+關於第五特色，我真係要講返兩句...
+
+喺831之後果幾日，我自己都開始諗緊點樣罷铁，同埋係咪可以/有冇需要整返個搜尋器。於是，我就走咗去問Moovit, Citymapper, PokeGuide同埋Google Maps同一條問題：
+
+如果我唔搭铁，咁我可以點樣由太和去顯徑?
+
+
+Tai Wo to Hin Keng
+(Test conducted when 72A has ended)
+Pokeguide: 72 walk
+Citymapper: 72 walk
+Moovit: shing mun return
+Google Maps: 72 walk

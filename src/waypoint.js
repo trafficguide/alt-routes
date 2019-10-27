@@ -68,6 +68,11 @@ var Waypoint = /** @class */ (function () {
         }
         return this;
     };
+    Waypoint.prototype.addNeighbors = function (others) {
+        for (var i = 0; i < others.length; i++) {
+            this.addNeighbor(others[i]);
+        }
+    };
     Waypoint.prototype.setTraverseCost = function (newCost) {
         this.traverseCost = newCost;
         return this;

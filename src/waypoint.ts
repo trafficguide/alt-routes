@@ -99,6 +99,14 @@ class Waypoint
         return this;
     }
 
+    addNeighbors(others: Array<Waypoint>)
+    {
+        for (let i = 0; i < others.length; i++)
+        {
+            this.addNeighbor(others[i]);
+        }
+    }
+
     setTraverseCost(newCost: number): Waypoint
     {
         this.traverseCost = newCost;
