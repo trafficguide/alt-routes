@@ -208,7 +208,7 @@ var FL_WahMing = new Waypoint("fl_wahming", "華明").markAttributes("s");
 var WanTauKokLane = new Waypoint("wtklane", "運頭角里").markAttributes("x");
 var KwongFukRoad = new Waypoint("kwongfukroad", "廣福路").markAttributes("x");
 // It is a normal station, yet also an interchange station.
-var KwongFukEstate = new Waypoint("kwongfukestate", "廣福邨").markAttributes("s").addNeighbor(MTR_erl_taipomarket);
+var TP_KwongFukEstate = new Waypoint("kwongfukestate", "廣福邨").markAttributes("s").addNeighbor(MTR_erl_taipomarket);
 var TW_LeiMukShueEstate = new Waypoint("leimukshue", "梨木樹邨/石圍角");
 var TW_NinaTowers = new Waypoint("nina", "如心廣場").addNeighbor(MTR_tml_tsuenwanwest);
 var TW_ChungOnStreet = new Waypoint("chungonstreet", "眾安街").addNeighbor(MTR_twl_tsuenwan);

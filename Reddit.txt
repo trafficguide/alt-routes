@@ -11,19 +11,52 @@ Link: https://trafficguide.github.io/alt-routes/
 - 簡便
 - 慳位
 - 冇廣告
-- 唔使上網
-- 出得嘅資料一定準確
+- load完之後唔使上網
+- 真正做到同小巴mix and match (呢個位好需要大家幫手！)
 
 關於第五特色，我真係要講返兩句...
 
-喺831之後果幾日，我自己都開始諗緊點樣罷铁，同埋係咪可以/有冇需要整返個搜尋器。於是，我就走咗去問Moovit, Citymapper, PokeGuide同埋Google Maps同一條問題：
+喺831之後果幾日，我自己都開始諗緊點樣罷铁，同埋係咪可以/有冇需要整返個搜尋器。於是，我就走咗去問Citymapper, Moovit, PokeGuide, 同埋Google Maps同一條問題：
 
-如果我唔搭铁，咁我可以點樣由太和去顯徑?
+如果我唔搭铁，咁我可以點樣由大埔廣福去(未開嘅)顯徑站?
+
+個結果都幾令我失望。
+
+- Citymapper Bus Only出唔到小巴 (小巴 minibus is still 巴士 bus OK?)
+- Moovit 都係出唔到小巴，同埋佢會叫我喺城門隧道搭回頭車，或者出咗九龍又入返沙田
+- PokeGuide 出到小巴，但係唔係出哂全部有小巴嘅結果
+- Google Maps 會根據現在時間出結果，完全唔consistent
+
+其實搵嚟搵去，都係冇一個出到呢個結果：搭72A去到大圍轉803K。
+
+簡單啲嚟講，就係搜尋結果唔全面。
+
+我自己覺得，最理想嘅交通app應該係出哂所有結果，然後俾人自己揀嘅。同埋呢啲service全部都要上網，一斷網就全部收哂皮，真係唔掂囉。
+
+於是，我就決定，一於自己整返個可以離線使用，又可以出到所有result(主要係出埋小巴)嘅交通app。
+
+當然，我呢個搜尋器都只係輔助性質，所以都會link返出面嘅網站，包括有「USHB特區交通網」同埋「16seats.net」。
+
+我冇連登account，覺得呢個app有用嘅連登巴絲們請幫推！
+
+同埋呢度想搵一兩位programming巴絲幫手入資料！有興趣嘅GitHub聯絡！
+
+大家加油！
 
 
-Tai Wo to Hin Keng
-(Test conducted when 72A has ended)
-Pokeguide: 72 walk
-Citymapper: 72 walk
-Moovit: shing mun return
-Google Maps: 72 walk
+
+喂，我依家剩係想知有乜possible嘅選擇啫，啲app又唔俾晒啲結果，出啲唔出啲咁，好唔掂囉。最理想嘅app應該係出哂所有結果，然後俾人自己揀架嘛。
+
+我唔要被指示去唔搭小巴啊！
+
+同埋呢啲service全部都要上網，一斷網就全部收哂皮，真係唔掂喎。
+
+於是，我就決定，一於自己整返個可以離線使用，又可以出到所有result(主要係出埋小巴)嘅交通app。
+
+當然，我呢個搜尋器都只係輔助性質，所以都會link返出面嘅網站，包括有「USHB特區交通網」同埋「16seats.net」。
+
+我冇連登account，覺得呢個app有用嘅連登巴絲們請幫推！
+
+同埋呢度想搵一兩位programming巴絲幫手入資料！有興趣嘅GitHub聯絡！
+
+大家撐着啊！
