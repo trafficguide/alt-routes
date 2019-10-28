@@ -11,7 +11,7 @@ let shouldConduct_3X = false;
  */
 function getTableHeading()
 {
-    return "<table><tr><th style='width: 10%; min-width:70px'>(未開通)</th><th style='width: 35%; min-width: 245px'>路線</th><th style='width: 35%; min-width: 245px'>轉乘優惠</th><th style='width: 20%; min-width: 140px'>備註</th></tr>";
+    return "<table><tr><th style='width: 10%; min-width:70px'>(測試中)</th><th style='width: 35%; min-width: 245px'>路線</th><th style='width: 35%; min-width: 245px'>轉乘優惠</th><th style='width: 20%; min-width: 140px'>備註</th></tr>";
 }
 
 function getTableClosing()
@@ -172,9 +172,37 @@ function conductSearch(
         resultTableHTML += "<tr>";
 
         // 0. Print Live countdown
+        /*
         resultTableHTML += "<td>";
         resultTableHTML += "-1 分鐘";
         resultTableHTML += "</td>";
+        */
+
+        // UPDATE
+        // 0. Print bus line available status
+        let lineStateFormattedText = "";
+        switch (i % 4)
+        {
+            case 1:
+                lineStateFormattedText = "<div style='color: grey' onclick='alert(1)'>我就嚟醒</div>";
+            break;
+            case 2:
+                lineStateFormattedText = "<div style='color: green' onclick='alert(2)'>我過緊嚟</div>";
+            break;
+            case 3:
+                // In fact is amber color
+                // lineStateFormattedText = "<div style='color: #ffbf00'>我就收皮</div>";
+                lineStateFormattedText = "<div style='color: #ff8800' onclick='alert(3)'>我就收皮</div>";
+                // lineStateFormattedText = "<div style='color: orange'>我就收皮</div>";
+            break;
+            default:
+                lineStateFormattedText = "<div style='color: red' onclick='alert(0)'>我收咗皮</div>";
+            break;
+        }
+
+        resultTableHTML += "<td><u>";
+        resultTableHTML += lineStateFormattedText;
+        resultTableHTML += "</u></td>";
 
         // 1. Print line information.
         resultTableHTML += "<td>";
