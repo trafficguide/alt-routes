@@ -14,6 +14,9 @@ var MTR_erl_mongkokeast = new Waypoint("erl_mke", "旺角東");
 var MTR_erl_hunghom = new Waypoint("erl_hh", "紅磡");
 var MTR_erl_exhibition = new Waypoint("erl_exh", "會展");
 var MTR_erl_admiralty = new Waypoint("erl_adm", "金鐘");
+// Cross-boundary stops are not included in the app, but exist internally as waypoints
+var MTR_erl_lowu = new Waypoint("erl_lw", "羅湖");
+var MTR_erl_lokmachau = new Waypoint("erl_lmc", "落馬洲");
 // The entirety of Tuen Ma Line is so long that it's better to just split it into two logical parts.
 // 屯馬東
 var MTR_tml_wukaisha = new Waypoint("tml_wks", "烏溪沙");
@@ -110,6 +113,7 @@ var MTR_ill_saiwanho = new Waypoint("ill_swh", "西灣河");
 var MTR_ill_saukeiwan = new Waypoint("ill_skw", "筲箕灣");
 var MTR_ill_hengfachuen = new Waypoint("ill_hfc", "杏花邨");
 var MTR_ill_chaiwan = new Waypoint("ill_cw", "柴灣");
+var MTR_ill_siusaiwan = new Waypoint("ill_ssw", "小西灣");
 // 將軍澳線
 var MTR_tko_polam = new Waypoint("tko_pl", "寶琳");
 var MTR_tko_hanghau = new Waypoint("tko_hh", "坑口");
@@ -198,13 +202,13 @@ var MOS_LeeOnEstate = new Waypoint("mos_leeon", "利安").addNeighbor(MTR_mos_wu
 var ST_BelairGardens = new Waypoint("st_belairgardens", "富豪花園");
 var ST_YuenWo = new Waypoint("st_yuenwo", "瀝源邨/禾輋邨");
 var ST_LekYuenEstate = new Waypoint("st_lekyuen", "瀝源邨");
-var HengHongStreet = new Waypoint("henghong", "恆康街").addNeighbor(MTR_mos_hengon);
+var MOS_HengHongStreet = new Waypoint("henghong", "恆康街").addNeighbor(MTR_mos_hengon);
 var MaOnShanRoad = new Waypoint("mosroad", "馬鞍山路");
 var FL_WahMing = new Waypoint("fl_wahming", "華明").markAttributes("s");
 var WanTauKokLane = new Waypoint("wtklane", "運頭角里").markAttributes("x");
 var KwongFukRoad = new Waypoint("kwongfukroad", "廣福路").markAttributes("x");
 // It is a normal station, yet also an interchange station.
-var KwongFukEstate = new Waypoint("kwongfukestate", "廣福邨").markAttributes("s").addNeighbor(MTR_erl_taipomarket);
+var TP_KwongFukEstate = new Waypoint("kwongfukestate", "廣福邨").markAttributes("s").addNeighbor(MTR_erl_taipomarket);
 var TW_LeiMukShueEstate = new Waypoint("leimukshue", "梨木樹邨/石圍角");
 var TW_NinaTowers = new Waypoint("nina", "如心廣場").addNeighbor(MTR_tml_tsuenwanwest);
 var TW_ChungOnStreet = new Waypoint("chungonstreet", "眾安街").addNeighbor(MTR_twl_tsuenwan);
@@ -212,11 +216,11 @@ var ShingMunTunnel_Interchange_East = new Waypoint("smt_x_east", "城隧轉車�
 var ShingMunTunnel_Interchange_West = new Waypoint("smt_x_west", "城隧轉車站").markAttributes("x");
 var ShingMunTunnel = new Waypoint("smtActual", "城門隧道").markAttributes("i");
 var ShingMunTunnelHighway = new Waypoint("smt_highway", "").markAttributes("i");
-var ShatinTownCenter = new Waypoint("stcenter", "沙田市中心").addNeighbor(MTR_erl_shatin);
-var ShatinTownHall = new Waypoint("sttownhall", "沙田大會堂").addNeighbor(MTR_erl_shatin).addNeighbor(ShatinTownCenter);
+var ST_ShatinTownCenter = new Waypoint("stcenter", "沙田市中心").addNeighbor(MTR_erl_shatin);
+var ShatinTownHall = new Waypoint("sttownhall", "沙田大會堂").addNeighbor(MTR_erl_shatin).addNeighbor(ST_ShatinTownCenter);
 var FoTanTsuen = new Waypoint("fotanvillage", "火炭村").addNeighbor(MTR_erl_fotan);
-var ChevalierGarden = new Waypoint("chevalier", "富安花園").addNeighbor(MTR_mos_taishuihang);
-var KamYingCourt = new Waypoint("kamyingcourt", "錦英苑").addNeighbor(MOS_LeeOnEstate);
+var MOS_ChevalierGarden = new Waypoint("chevalier", "富安花園").addNeighbor(MTR_mos_taishuihang);
+var MOS_KamYingCourt = new Waypoint("kamyingcourt", "錦英苑").addNeighbor(MOS_LeeOnEstate);
 var ToloHighway_TaiPo = new Waypoint("tlh_taipo", "吐露港公路 (大埔)").markAttributes("i");
 var FanlingHighway_Interchange = new Waypoint("flh_interchange", "粉嶺公路轉車站").markAttributes("i");
 var EastHarbourTunnel = new Waypoint("eht", "東區海底隧道").markAttributes("i");
@@ -337,24 +341,39 @@ var KSR_KamTinCore = new Waypoint("", "錦田市中心");
 var KSR_ShekKongMilitary = new Waypoint("", "");
 var KSR_YuenKongTsuen = new Waypoint("", "錦田元");
 var ConnaughtRoadFlyover = new Waypoint("", "").markAttributes("i");
-var CW_SiuSaiWan = new Waypoint("", "小西灣");
 var TM_TuenMunTownCenter = new Waypoint("", "屯門市中心").addNeighbor(MTR_tml_tuenmun).addNeighbor(KCR_lrt_2_puito);
 var TY_CheungTsingEstate = new Waypoint("", "長青邨");
 var TY_SouthBridge = new Waypoint("", "").markAttributes("i");
 var ST_MeiLam_Inside = new Waypoint("", "");
 var HMT_HoManTinEstate = new Waypoint("", "");
+var CEN_FerryPier = new Waypoint("", "");
+var FL_LuenWoMarket = new Waypoint("", "");
+var FL_TinPing = new Waypoint("", "");
+var TW_Citywalk = new Waypoint("", "").addNeighbor(TW_NinaTowers);
+var KT_ShunLeeEstate = new Waypoint("", "");
+var KT_KwongTin = new Waypoint("", "");
+var HMT_OiManEstate = new Waypoint("", "");
+// An awkward waypoint that is exactly in between two close ehough MTR stations.
+var ST_SiuLekYuenPlayground = new Waypoint("", "").addNeighbor(MTR_mos_cityone).addNeighbor(MTR_mos_shekmun);
+var TW_ShekLei = new Waypoint("", "");
+var CPRoad_KwaiChung = new Waypoint("", "");
+var TW_LowerLaiKing = new Waypoint("", "");
+var KT_PoTatEstate = new Waypoint("", "");
+var KT_SauMauPing_NonStop = new Waypoint("", "").markAttributes("i");
+var NgongShuenChauBridge = new Waypoint("", "").markAttributes("i");
+var NP_FerryPier = new Waypoint("", "").addNeighbor(MTR_ill_northpoint);
+var CPR_GoldenBeach = new Waypoint("", "");
+var CPR_SiuLam = new Waypoint("", "");
 // Code assist-generated by Excel
 var TsuiLam = new Waypoint("hk18_tl", "翠林").markAttributes("");
 var LantauLinkTollPlaza = new Waypoint("hk18_lltp", "青馬收費廣場").markAttributes("i");
 var HKUST = new Waypoint("hk18_ust", "香港科技大學").markAttributes("");
-var DiscoveryPark = new Waypoint("hk18_dp", "愉景新城").markAttributes("");
 var TsingLunTau = new Waypoint("hk18_tlt", "青龍頭").markAttributes("");
 var ShekWaiKok = new Waypoint("hk18_swk", "石圍角").markAttributes("");
 var Bayview = new Waypoint("hk18_bv", "灣景花園").markAttributes("");
 var RiveraGarden = new Waypoint("hk18_rg", "海濱花園").markAttributes("");
 var LeiMukShue = new Waypoint("hk18_lms", "梨木樹").markAttributes("");
 var TaiMoShan = new Waypoint("hk18_tms", "大帽山").markAttributes("");
-var TsuenKingCircuit = new Waypoint("hk18_tkc", "荃景圍").markAttributes("");
 var CheungChing = new Waypoint("hk18_cc", "長青").markAttributes("");
 var ShekLei = new Waypoint("hk18_ktsl", "石籬").markAttributes("");
 var CheungHang = new Waypoint("hk18_ch", "長亨").markAttributes("");
@@ -364,7 +383,6 @@ var ContainerTerminal = new Waypoint("hk18_ct", "貨櫃碼頭").markAttributes("
 var YauOi = new Waypoint("hk18_yo", "友愛").markAttributes("");
 var SiuLam = new Waypoint("hk18_sl", "小欖").markAttributes("");
 var ButterflyEstate = new Waypoint("hk18_be", "蝴蝶邨").markAttributes("");
-var LeungKing = new Waypoint("hk18_lk", "良景").markAttributes("");
 var SanHui = new Waypoint("hk18_sh", "新墟").markAttributes("");
 var ShapPatHeung = new Waypoint("hk18_sph", "十八鄉").markAttributes("");
 var PingShan = new Waypoint("hk18_ps", "屏山").markAttributes("");
@@ -391,7 +409,7 @@ var MTR_TMLE_ALL = MTR_MOS_ALL.concat(MTR_tml_hinkeng, MTR_tml_diamondhill, MTR_
 /**
  * All Tuen Ma Line // West Rail Line stations
  */
-var MTR_TMLW_ALL = [MTR_tml_tuenmun, MTR_tml_siuhong, MTR_tml_hungshuikiu, MTR_tml_tinshuiwai, MTR_tml_longping, MTR_tml_yuenlong, MTR_tml_kamsheungroad, MTR_tml_tsuenwanwest, MTR_tml_meifoo, MTR_tml_namcheong, MTR_tml_austin, MTR_tml_easttsimshatsui, MTR_tml_hunghom];
+var MTR_TMLW_ALL = [KCR_lrt_1_tuenmunferrypier, MTR_tml_tuenmun, MTR_tml_siuhong, MTR_tml_hungshuikiu, MTR_tml_tinshuiwai, MTR_tml_longping, MTR_tml_yuenlong, MTR_tml_kamsheungroad, MTR_tml_tsuenwanwest, MTR_tml_meifoo, MTR_tml_namcheong, MTR_tml_austin, MTR_tml_easttsimshatsui, MTR_tml_hunghom];
 /**
  * All Kwun Tong Line stations
  */
@@ -403,7 +421,7 @@ var MTR_TWL_ALL = [MTR_twl_tsuenking, MTR_twl_tsuenwan, MTR_twl_taiwohau, MTR_tw
 /**
  * All Island Line stations
  */
-var MTR_ILL_ALL = [MTR_ill_kennedytown, MTR_ill_hku, MTR_ill_saiyingpun, MTR_ill_sheungwan, MTR_ill_central, MTR_ill_admiralty, MTR_ill_wanchai, MTR_ill_causewaybay, MTR_ill_tinhau, MTR_ill_fortresshill, MTR_ill_northpoint, MTR_ill_quarrybay, MTR_ill_taikoo, MTR_ill_saiwanho, MTR_ill_saukeiwan, MTR_ill_hengfachuen, MTR_ill_chaiwan];
+var MTR_ILL_ALL = [MTR_ill_kennedytown, MTR_ill_hku, MTR_ill_saiyingpun, MTR_ill_sheungwan, MTR_ill_central, MTR_ill_admiralty, MTR_ill_wanchai, MTR_ill_causewaybay, MTR_ill_tinhau, MTR_ill_fortresshill, MTR_ill_northpoint, MTR_ill_quarrybay, MTR_ill_taikoo, MTR_ill_saiwanho, MTR_ill_saukeiwan, MTR_ill_hengfachuen, MTR_ill_chaiwan, MTR_ill_siusaiwan];
 /**
  * All Tung Chung Line stations
  */
