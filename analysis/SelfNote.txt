@@ -1,0 +1,21 @@
+KML files are like XML files, and they should be readable by XML DOMs.
+
+Meanwhile, KMZ files are basically WTF files: files that cannot be read without a WTF emotion.
+
+So the generation procedure can be like this:
+
+Stack A:
+1. Obtain the list of bus stops
+2. The bus stops all have their coordinates in the HK1980 standard. Convert all coordinates to WCS84 standard, which is used in GPS systems (and Google Map!)
+3. Save the converted coordinates to somewhere safe.
+
+Stack B:
+1. There are many neighbourhoods in HK (I call them "hoods"). Map them out using Google Maps.
+2. Export the map data into the KML format.
+3. Generate "hood definitions" which contains the "hood bounding points"
+
+Stack C:
+1. Using the "Point in Polygon" algorithms available, map every bus stop from Stack A to a hood in Stack B. (In other words, contruct a function.)
+2. Generate a "hoods traveled" list for each bus route using the mapping generated in Step 1. (In other words, construct a list of y = f(x) where f is the function defined in Step 1 and x is the bus stop of the bus route.)
+3. Simplify the "hoods" list.
+4. Together with other metadata, generate a full expression of Bus Line Definition in valid TypeScript syntax.

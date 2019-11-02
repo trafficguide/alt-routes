@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>探路 Pathfinder</title>
+        <meta charset="UTF-16">
+        <meta name="description" content="為港鐵跣底嗰陣買定個保險。一經載入，毋須上網，輕鬆離線查找。" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--Import Google Icon Font-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!--Import materialize.css-->
+        <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+        <link type="text/css" rel="stylesheet" href="css/common.css" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        
+        <style>
+            *
+            {
+                font-family: Microsoft JhengHei, Microsoft YaHei, STXihei
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h4>【探路】分區畫圖須知</h4>
+            <p>
+                <a class="black-text link" href="index.html">【探路】主頁</a>
+            </p>
+            <p>
+                【探路】背後點樣揾到搭車方法，其實都係建基於內部虹劃分咗嘅「分區」。只要搵到兩條路線之間都經過同一個「分區」，咁就已經係一個轉車組合喇。
+            </p>
+            <p>
+                之前【探路】嘅分區都係手動做嘅，只不過呢個工序費時失事，一時就唔記得咗分咗乜區，一時就記錯咗分區嘅邊界，如果要用呢個模式做大佢就真係車毀人亡。
+            </p>
+            <p>
+                所以，喺呢度，我想邀請住喺港九十八區嘅各位幫幫手，入去Google My Maps，以大家對自己區嘅地理認知，幫手將全香港分做細啲嘅「分區」，令到我之後可以更順暢咁引入更多功能。
+            </p>
+            <p>
+                Link: <a class="black-text link" href="https://drive.google.com/open?id=1QknSh3gFDDT9wo-kpQpLMXHZU8xN4-jo">【探路】分區圖</a> (<b>注意</b>：基於Google My Maps嘅限制，你必須登入Google，方可修改地圖。)
+            </p>
+            <p>
+                分區應盡量依照以下原則：
+            </p>
+            <ol>
+                <li>優先以地鐵站為分區；始終，【探路】嘅main target係地鐵</li>
+                <li>以地標為分區；例如可以用公屋/私樓做分區</li>
+                <li>分區不應太細緻，要適可而止，否則同GPS定位冇分別</li>
+                <li>如果位置尷尬，唔知應該分做邊一區，果個位置可以留空</li>
+                <li>公路/隧道轉車站自成一區</li>
+                <li>高速公路唔分區，但高速公路上面有站嘅例外 (例如黃大仙)</li>
+                <li>鄉村地方分區可以大啲 (例如大埔滘、八鄉等等)</li>
+            </ol>
+            <p>
+                再次感謝你嘅支持！
+            </p>
+        </div>
+
+        <!--JavaScript at end of body for optimized loading-->
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function() {
+            //$('select').formSelect();
+        });
+        </script>
+    </body>
+</html>
