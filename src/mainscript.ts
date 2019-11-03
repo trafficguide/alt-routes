@@ -11,7 +11,7 @@ let shouldConduct_3X = false;
  */
 function getTableHeading()
 {
-    return "<table><tr><th style='width: 10%; min-width:70px'>(測試中)</th><th style='width: 35%; min-width: 245px'>路線</th><th style='width: 35%; min-width: 245px'>轉乘優惠</th><th style='width: 20%; min-width: 140px'>備註</th></tr>";
+    return "<table><tr><th style='width: 10%; min-width:70px'>車程系數</th><th style='width: 35%; min-width: 245px'>路線</th><th style='width: 35%; min-width: 245px'>轉乘優惠</th><th style='width: 20%; min-width: 140px'>備註</th></tr>";
 }
 
 function getTableClosing()
@@ -180,6 +180,7 @@ function conductSearch(
 
         // UPDATE
         // 0. Print bus line available status
+        /*
         let lineStateFormattedText = "";
         switch (i % 4)
         {
@@ -203,6 +204,14 @@ function conductSearch(
         resultTableHTML += "<td><u>";
         resultTableHTML += lineStateFormattedText;
         resultTableHTML += "</u></td>";
+        */
+
+        // UPDATE 2
+        // I've leaning back to show the internal time cost score.
+        // Simple rounding for now.
+        resultTableHTML += "<td>";
+        resultTableHTML += path.getTotalAdjustedCost();
+        resultTableHTML += "</td>";
 
         // 1. Print line information.
         resultTableHTML += "<td>";

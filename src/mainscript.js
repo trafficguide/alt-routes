@@ -9,7 +9,7 @@ var shouldConduct_3X = false;
  * 20%, 140px
  */
 function getTableHeading() {
-    return "<table><tr><th style='width: 10%; min-width:70px'>(測試中)</th><th style='width: 35%; min-width: 245px'>路線</th><th style='width: 35%; min-width: 245px'>轉乘優惠</th><th style='width: 20%; min-width: 140px'>備註</th></tr>";
+    return "<table><tr><th style='width: 10%; min-width:70px'>車程系數</th><th style='width: 35%; min-width: 245px'>路線</th><th style='width: 35%; min-width: 245px'>轉乘優惠</th><th style='width: 20%; min-width: 140px'>備註</th></tr>";
 }
 function getTableClosing() {
     return "</table>";
@@ -138,27 +138,37 @@ function conductSearch(fromSelector, toSelector, generalFeedbackElm, searchModeF
         */
         // UPDATE
         // 0. Print bus line available status
-        var lineStateFormattedText = "";
-        switch (i % 4) {
+        /*
+        let lineStateFormattedText = "";
+        switch (i % 4)
+        {
             case 1:
                 lineStateFormattedText = "<div style='color: grey' onclick='alert(1)'>我就嚟醒</div>";
-                break;
+            break;
             case 2:
                 lineStateFormattedText = "<div style='color: green' onclick='alert(2)'>我過緊嚟</div>";
-                break;
+            break;
             case 3:
                 // In fact is amber color
                 // lineStateFormattedText = "<div style='color: #ffbf00'>我就收皮</div>";
                 lineStateFormattedText = "<div style='color: #ff8800' onclick='alert(3)'>我就收皮</div>";
                 // lineStateFormattedText = "<div style='color: orange'>我就收皮</div>";
-                break;
+            break;
             default:
                 lineStateFormattedText = "<div style='color: red' onclick='alert(0)'>我收咗皮</div>";
-                break;
+            break;
         }
+
         resultTableHTML += "<td><u>";
         resultTableHTML += lineStateFormattedText;
         resultTableHTML += "</u></td>";
+        */
+        // UPDATE 2
+        // I've leaning back to show the internal time cost score.
+        // Simple rounding for now.
+        resultTableHTML += "<td>";
+        resultTableHTML += path.getTotalAdjustedCost();
+        resultTableHTML += "</td>";
         // 1. Print line information.
         resultTableHTML += "<td>";
         for (var j = 0; j < connections.length; j++) {
