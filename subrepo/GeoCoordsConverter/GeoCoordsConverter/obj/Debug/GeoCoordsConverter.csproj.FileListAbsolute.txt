@@ -1,0 +1,12 @@
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\GeoCoordsConverter\GeoCoordsConverter\bin\Debug\GeoCoordsConverter.exe.config
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\GeoCoordsConverter\GeoCoordsConverter\bin\Debug\GeoCoordsConverter.exe
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\GeoCoordsConverter\GeoCoordsConverter\bin\Debug\GeoCoordsConverter.pdb
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\GeoCoordsConverter\GeoCoordsConverter\obj\Debug\GeoCoordsConverter.csprojAssemblyReference.cache
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\GeoCoordsConverter\GeoCoordsConverter\obj\Debug\GeoCoordsConverter.csproj.CoreCompileInputs.cache
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\GeoCoordsConverter\GeoCoordsConverter\obj\Debug\GeoCoordsConverter.exe
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\GeoCoordsConverter\GeoCoordsConverter\obj\Debug\GeoCoordsConverter.pdb
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\GeoCoordsConverter\GeoCoordsConverter\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\GeoCoordsConverter\GeoCoordsConverter\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\GeoCoordsConverter\GeoCoordsConverter\obj\Debug\GeoCoordsConverter.csproj.CopyComplete
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\GeoCoordsConverter\GeoCoordsConverter\bin\Debug\GeoConvertLib.dll
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\GeoCoordsConverter\GeoCoordsConverter\bin\Debug\GeoConvertLib.pdb
