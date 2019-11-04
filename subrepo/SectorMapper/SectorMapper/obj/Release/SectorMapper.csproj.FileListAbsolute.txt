@@ -1,0 +1,6 @@
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\SectorMapper\SectorMapper\obj\Release\SectorMapper.csproj.CoreCompileInputs.cache
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\SectorMapper\SectorMapper\obj\Release\SectorMapper.csproj.CopyComplete
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\SectorMapper\SectorMapper\obj\Release\SectorMapper.dll
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\SectorMapper\SectorMapper\obj\Release\SectorMapper.pdb
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\SectorMapper\SectorMapper.dll
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\SectorMapper\SectorMapper.pdb

@@ -27,5 +27,16 @@ namespace GeoConvertLib
         {
             return "Latitude: " + Latitude + "; Longitude: " + Longitude;
         }
+
+        public static bool operator ==(GCS_WCS84 p1, GCS_WCS84 p2)
+        {
+            return p1.Latitude == p2.Latitude && p1.Longitude == p2.Longitude;
+        }
+
+        public static bool operator !=(GCS_WCS84 p1, GCS_WCS84 p2)
+        {
+            // We are playing DeMorgan here.
+            return p1.Latitude != p2.Latitude || p1.Longitude != p2.Longitude;
+        }
     }
 }

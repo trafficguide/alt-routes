@@ -1,0 +1,11 @@
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\SectorMapper\SectorMapper\bin\Debug\SectorMapper.dll
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\SectorMapper\SectorMapper\bin\Debug\SectorMapper.pdb
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\SectorMapper\SectorMapper\bin\Debug\GeoConvertLib.dll
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\SectorMapper\SectorMapper\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\SectorMapper\SectorMapper\bin\Debug\GeoConvertLib.pdb
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\SectorMapper\SectorMapper\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\SectorMapper\SectorMapper\obj\Debug\SectorMapper.csprojAssemblyReference.cache
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\SectorMapper\SectorMapper\obj\Debug\SectorMapper.csproj.CoreCompileInputs.cache
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\SectorMapper\SectorMapper\obj\Debug\SectorMapper.csproj.CopyComplete
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\SectorMapper\SectorMapper\obj\Debug\SectorMapper.dll
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\SectorMapper\SectorMapper\obj\Debug\SectorMapper.pdb

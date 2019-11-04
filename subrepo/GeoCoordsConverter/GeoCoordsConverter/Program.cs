@@ -1,5 +1,6 @@
 ﻿using GeoConvertLib;
 using GeoConvertLib.ConverterDialing;
+using SectorMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace GeoCoordsConverter
 
         static void Main(string[] args)
         {
-            FeatureTest();
+            FeatureTest2();
 
             /*
             ConverterDialer dialer = new ConverterDialer(client);
@@ -33,6 +34,7 @@ namespace GeoCoordsConverter
             Console.WriteLine(result.ToString());
             Console.WriteLine("Job complete.");
             */
+            Console.WriteLine("All test compelte.");
             Console.ReadKey();
         }
 
@@ -54,6 +56,14 @@ namespace GeoCoordsConverter
             }
 
             Console.WriteLine("All done.");
+        }
+
+        static void FeatureTest2()
+        {
+            // Define a rectangle
+            GeoSector sector = new GeoSector("test", new List<GCS_WCS84>() { new GCS_WCS84(0, 0), new GCS_WCS84(0, 1), new GCS_WCS84(1, 1), new GCS_WCS84(1, 0)});
+            GCS_WCS84 test = new GCS_WCS84(1, 1);
+            Console.WriteLine("test point withing sector? " + sector.PointIsInSector(test));
         }
 
         static async void PrintResponse()
