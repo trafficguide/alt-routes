@@ -44,8 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusStop.cs" />
     <Compile Include="GeoSector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SectorNetwork.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

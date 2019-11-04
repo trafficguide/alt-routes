@@ -1,0 +1,6 @@
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\GoogleKMLReading\GoogleKMLReading\obj\Release\GoogleKMLReading.csprojAssemblyReference.cache
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\GoogleKMLReading\GoogleKMLReading\obj\Release\GoogleKMLReading.csproj.CoreCompileInputs.cache
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\GoogleKMLReading\GoogleKMLReading\obj\Release\GoogleKMLReading.dll
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\GoogleKMLReading\GoogleKMLReading\obj\Release\GoogleKMLReading.pdb
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\GoogleKMLReading\GoogleKMLReading.dll
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\GoogleKMLReading\GoogleKMLReading.pdb

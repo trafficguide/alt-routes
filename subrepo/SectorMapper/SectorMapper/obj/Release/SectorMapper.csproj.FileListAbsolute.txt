@@ -4,3 +4,4 @@ C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\SectorMapper\SectorMap
 C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\SectorMapper\SectorMapper\obj\Release\SectorMapper.pdb
 C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\SectorMapper\SectorMapper.dll
 C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\SectorMapper\SectorMapper.pdb
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\SectorMapper\SectorMapper\obj\Release\SectorMapper.csprojAssemblyReference.cache

@@ -38,5 +38,20 @@ namespace GeoConvertLib
             // We are playing DeMorgan here.
             return p1.Latitude != p2.Latitude || p1.Longitude != p2.Longitude;
         }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            GCS_WCS84 other = obj as GCS_WCS84;
+            if (other == null)
+            {
+                return false;
+            }
+            return other.GetHashCode() == GetHashCode() || other == this;
+        }
     }
 }

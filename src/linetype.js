@@ -24,13 +24,13 @@ var LineType = /** @class */ (function () {
 }());
 var lineType_KMB = new LineType("kmb", "九巴", "black");
 var lineType_CTB = new LineType("ctb", "城巴", "coral");
-var lineType_NWFB = new LineType("nwfb", "新巴", "mediumseagreen");
+var lineType_NWFB = new LineType("nwfb", "新巴", "purple");
 var lineType_LWB = new LineType("lwb", "龍運", "orange");
 var lineType_NLB = new LineType("nlb", "新大嶼");
 var lineType_GMB_HKI = new LineType("gmb", "綠巴", "green");
 var lineType_GMB_KL = new LineType("gmb", "綠巴", "green");
 var lineType_GMB_NT = new LineType("gmb", "綠巴", "green");
-var lineType_HARBOUR = new LineType("cht", "過海", "purple");
+var lineType_HARBOUR = new LineType("cht", "過海", "blue");
 var lineType_WALK = new LineType("walk", "步行");
 var lineType_TRAM = new LineType("tram", "電車", "darkslategrey");
-var lineType_FERRY = new LineType("ferry", "渡輪/街渡", "blue");
+var lineType_FERRY = new LineType("ferry", "渡輪/街渡", "darkblue");
