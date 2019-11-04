@@ -1,0 +1,7 @@
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\GeoConvertLib\GeoConvertLib\obj\Release\GeoConvertLib.csprojAssemblyReference.cache
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\GeoConvertLib\GeoConvertLib\obj\Release\GeoConvertLib.csproj.CoreCompileInputs.cache
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\GeoConvertLib\GeoConvertLib\obj\Release\GeoConvertLib.csproj.CopyComplete
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\GeoConvertLib\GeoConvertLib\obj\Release\GeoConvertLib.dll
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\GeoConvertLib\GeoConvertLib\obj\Release\GeoConvertLib.pdb
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\GeoConvertLib\GeoConvertLib.dll
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\GeoConvertLib\GeoConvertLib.pdb
