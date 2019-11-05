@@ -70,9 +70,9 @@ namespace GeoCoordsConverter
         static void FeatureTest3()
         {
             Console.WriteLine("File name? ");
-            string fileName = Console.ReadLine();
+            //string fileName = Console.ReadLine();
+            string fileName = @"C:\Users\Vincent Wong\Documents\GitHub\alt-routes\analysis\splitter_test.kml";
             var kmltest = new GoogleKMLReader(fileName);
-
         }
 
         static async void PrintResponse()

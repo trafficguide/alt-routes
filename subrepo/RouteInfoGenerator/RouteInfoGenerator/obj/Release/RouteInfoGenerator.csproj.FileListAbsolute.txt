@@ -1,0 +1,8 @@
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\RouteInfoGenerator\RouteInfoGenerator\obj\Release\RouteInfoGenerator.csproj.CoreCompileInputs.cache
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\RouteInfoGenerator\RouteInfoGenerator.exe.config
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\RouteInfoGenerator\RouteInfoGenerator\obj\Release\RouteInfoGenerator.exe
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\RouteInfoGenerator\RouteInfoGenerator\obj\Release\RouteInfoGenerator.pdb
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\RouteInfoGenerator\RouteInfoGenerator.exe
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\RouteInfoGenerator\RouteInfoGenerator.pdb
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\RouteInfoGenerator\RouteInfoGenerator\obj\Release\RouteInfoGenerator.csprojAssemblyReference.cache
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\RouteInfoGenerator\RouteInfoGenerator\obj\Release\RouteInfoGenerator.csproj.CopyComplete
