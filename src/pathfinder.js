@@ -8,7 +8,7 @@ var global_results = new Array();
  */
 function findPathsBetween(from, to) {
     var allResults = new Array();
-    // A flag to allow "display all options" fir the earliest order of solutions.
+    // A flag to allow "display all options" for the earliest order of solutions.
     var isVirgin = true;
     results_DirectCount = 0;
     results_InterchangeCount = 0;

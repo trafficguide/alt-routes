@@ -16,10 +16,13 @@ namespace GeoConvertLib
         List<ConverterDialer> dialers = new List<ConverterDialer>();
 
         private readonly int requestDelay;
+        private int cumulativeRequests = 0;
+        private int requestFrequency;
 
         public ConversionCoordinator(int requestsPerSecond)
         {
             requestDelay = (int) Math.Ceiling(1000d / requestsPerSecond);
+            requestFrequency = requestsPerSecond;
 
             // Max is 10 dialers.
             // Initialize dialers
@@ -44,7 +47,7 @@ namespace GeoConvertLib
             {
                 results.Add(null);
             }
-            Console.WriteLine("Generated result-list with count " + results.Count);
+            //Console.WriteLine("Generated result-list with count " + results.Count);
 
             // Then initialize mapper
             Dictionary<ConverterDialer, int> dialerMapping = new Dictionary<ConverterDialer, int>();
@@ -66,7 +69,7 @@ namespace GeoConvertLib
                     // Store the result properly
                     results[dialerMapping[currentDialer]] = result;
 
-                    Console.WriteLine("Copying result from dialer #" + loopingIndex + " back to request #" + dialerMapping[currentDialer]);
+                    //Console.WriteLine("Copying result from dialer #" + loopingIndex + " back to request #" + dialerMapping[currentDialer]);
 
                     // See if we can break
                     completedRequestsCount++;
@@ -88,7 +91,7 @@ namespace GeoConvertLib
                         // Write down the mapping
                         dialerMapping[currentDialer] = fromIndex;
 
-                        Console.WriteLine("Dialing dialer #" + loopingIndex + " with request #" + fromIndex);
+                        //Console.WriteLine("Dialing dialer #" + loopingIndex + " with request #" + fromIndex);
 
                         fromIndex++;
                     }
@@ -96,11 +99,18 @@ namespace GeoConvertLib
 
                 // Move to next index and wait a bit
                 loopingIndex = (loopingIndex + 1) % dialers.Count;
-                Console.WriteLine("Moving to dialer #" + loopingIndex);
+                cumulativeRequests++;
+                if (cumulativeRequests > requestFrequency)
+                {
+                    cumulativeRequests = 0;
+                    Console.WriteLine("Processing " + completedRequestsCount + " of " + original.Count + ".");
+                }
+                //Console.WriteLine("Moving to dialer #" + loopingIndex);
                 Thread.Sleep(requestDelay);
             }
 
             // Should be all done.
+            Console.WriteLine("Processed " + original.Count + " of " + original.Count + ".");
             return results;
         }
 
@@ -109,7 +119,7 @@ namespace GeoConvertLib
         /// <summary>
         /// Converts a list of HK1980 coordinates to WCS84 coordinates through the HK Geodetic online API.
         /// <para/>
-        /// Already handles the HTTP-level communication required for dialing the API.
+        /// This method is synchorous, and already handles the HTTP-level communication required for dialing the API.
         /// </summary>
         /// <param name="original"></param>
         /// <param name="requestFreq">Number of HTTP requests to make. Defaults to 10.</param>

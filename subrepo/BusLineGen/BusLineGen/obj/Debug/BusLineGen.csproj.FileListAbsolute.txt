@@ -1,0 +1,7 @@
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\BusLineGen\BusLineGen\obj\Debug\BusLineGen.csprojAssemblyReference.cache
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\BusLineGen\BusLineGen\obj\Debug\BusLineGen.csproj.CoreCompileInputs.cache
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\BusLineGen\BusLineGen\bin\Debug\BusLineGen.exe.config
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\BusLineGen\BusLineGen\bin\Debug\BusLineGen.exe
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\BusLineGen\BusLineGen\bin\Debug\BusLineGen.pdb
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\BusLineGen\BusLineGen\obj\Debug\BusLineGen.exe
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\BusLineGen\BusLineGen\obj\Debug\BusLineGen.pdb

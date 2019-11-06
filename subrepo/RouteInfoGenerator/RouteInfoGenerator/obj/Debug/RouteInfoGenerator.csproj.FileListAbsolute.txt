@@ -1,0 +1,12 @@
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\RouteInfoGenerator\RouteInfoGenerator\bin\Debug\RouteInfoGenerator.exe.config
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\RouteInfoGenerator\RouteInfoGenerator\bin\Debug\RouteInfoGenerator.exe
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\RouteInfoGenerator\RouteInfoGenerator\bin\Debug\RouteInfoGenerator.pdb
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\RouteInfoGenerator\RouteInfoGenerator\obj\Debug\RouteInfoGenerator.csprojAssemblyReference.cache
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\RouteInfoGenerator\RouteInfoGenerator\obj\Debug\RouteInfoGenerator.csproj.CoreCompileInputs.cache
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\RouteInfoGenerator\RouteInfoGenerator\obj\Debug\RouteInfoGenerator.exe
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\RouteInfoGenerator\RouteInfoGenerator\obj\Debug\RouteInfoGenerator.pdb
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\RouteInfoGenerator\RouteInfoGenerator\bin\Debug\GeoConvertLib.dll
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\RouteInfoGenerator\RouteInfoGenerator\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\RouteInfoGenerator\RouteInfoGenerator\bin\Debug\GeoConvertLib.pdb
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\RouteInfoGenerator\RouteInfoGenerator\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Vincent Wong\Documents\GitHub\alt-routes\subrepo\RouteInfoGenerator\RouteInfoGenerator\obj\Debug\RouteInfoGenerator.csproj.CopyComplete

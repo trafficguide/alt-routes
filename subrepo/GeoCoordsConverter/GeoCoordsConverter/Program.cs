@@ -1,5 +1,6 @@
 ﻿using GeoConvertLib;
 using GeoConvertLib.ConverterDialing;
+using GoogleKMLReading;
 using SectorMapper;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace GeoCoordsConverter
 
         static void Main(string[] args)
         {
-            FeatureTest2();
+            FeatureTest3();
 
             /*
             ConverterDialer dialer = new ConverterDialer(client);
@@ -64,6 +65,14 @@ namespace GeoCoordsConverter
             GeoSector sector = new GeoSector("test", new List<GCS_WCS84>() { new GCS_WCS84(0, 0), new GCS_WCS84(0, 1), new GCS_WCS84(1, 1), new GCS_WCS84(1, 0)});
             GCS_WCS84 test = new GCS_WCS84(1, 1);
             Console.WriteLine("test point withing sector? " + sector.PointIsInSector(test));
+        }
+
+        static void FeatureTest3()
+        {
+            Console.WriteLine("File name? ");
+            //string fileName = Console.ReadLine();
+            string fileName = @"C:\Users\Vincent Wong\Documents\GitHub\alt-routes\analysis\splitter_test.kml";
+            var kmltest = new GoogleKMLReader(fileName);
         }
 
         static async void PrintResponse()
