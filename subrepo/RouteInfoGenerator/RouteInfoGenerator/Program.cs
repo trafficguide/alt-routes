@@ -10,10 +10,13 @@ namespace RouteInfoGenerator
     {
         private static bool shouldContinue = true;
         private static GeneratorConfig config;
-        private static InfoGenerator generator;
+        internal static InfoGenerator generator;
 
         static void Main(string[] args)
         {
+            // This line is important: we may need to print Chinese characters.
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            // Beginning of program.
             Console.WriteLine("Launching Route Info Generator.");
             config = new GeneratorConfig();
             Console.WriteLine("-----------------------------------------------");
@@ -66,6 +69,8 @@ namespace RouteInfoGenerator
                     if (generator.IsValid)
                     {
                         Console.WriteLine("[RIG] All components ready.");
+                        Console.WriteLine("[RIG] Bus Route TS will be exported to: " + config.ExportLoc_BusRoutes);
+                        Console.WriteLine("[RIG] Waypoint TS will be exported to: " + config.ExportLoc_Waypoints);
                         Console.WriteLine("[RIG] Type in the command once more as confirmation.");
                         FlushInput();
                         if (Console.ReadLine() == "generate")

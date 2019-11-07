@@ -3,4 +3,10 @@
   <PolygonKmlFileLocation>C:\Users\Vincent Wong\Documents\GitHub\alt-routes\analysis\splitter_test.kml</PolygonKmlFileLocation>
   <BusStopXmlFileLocation>C:\Users\Vincent Wong\Desktop\ProcessingAnalysis\BUSSTOP.xml</BusStopXmlFileLocation>
   <RouteStopXmlFileLocation>C:\Users\Vincent Wong\Desktop\ProcessingAnalysis\ROUTESTOP.xml</RouteStopXmlFileLocation>
+  <BusRouteDetailsXmlFileLocation>C:\Users\Vincent Wong\Desktop\ProcessingAnalysis\ROUTE.xml</BusRouteDetailsXmlFileLocation>
+  <CrossHarbourLineSource>C:\Users\Vincent Wong\Desktop\ProcessingAnalysis\crossharbourroutes.txt</CrossHarbourLineSource>
+  <CommuterLineSource>C:\Users\Vincent Wong\Desktop\ProcessingAnalysis\commuterroutes.txt</CommuterLineSource>
+  <NightLineSource>C:\Users\Vincent Wong\Desktop\ProcessingAnalysis\nightroutes.txt</NightLineSource>
+  <BusRouteExportLocation>C:\Users\Vincent Wong\Desktop\ProcessingAnalysis\exportbusroute_test.ts</BusRouteExportLocation>
+  <WaypointsExportLocation>C:\Users\Vincent Wong\Desktop\ProcessingAnalysis\exportwaypoint_test.ts</WaypointsExportLocation>
 </Configuration>

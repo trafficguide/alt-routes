@@ -13,8 +13,9 @@ namespace RouteInfoGenerator.DataTypes
         public string VariableName { get; private set; }
         private List<GCS_WCS84> boundingPts = new List<GCS_WCS84>();
 
-        public GeoPolygon(string displayedName)
+        public GeoPolygon(string variableName, string displayedName)
         {
+            VariableName = variableName;
             DisplayedName = displayedName;
         }
 
@@ -92,6 +93,16 @@ namespace RouteInfoGenerator.DataTypes
              * (The case where the query point is exactly a boundary vertex is taken care of.)
              */
             return Math.Abs(Math.Sign(cross1) + Math.Sign(cross2) + Math.Sign(cross3)) > 1;
+        }
+
+        public string ExportAsTypeScriptWaypoint()
+        {
+            StringBuilder builder = new StringBuilder("const ");
+            builder.Append(VariableName);
+            builder.Append(" = new Waypoint(\"\", \"");
+            builder.Append(DisplayedName);
+            builder.Append("\");");
+            return builder.ToString();
         }
     }
 }
