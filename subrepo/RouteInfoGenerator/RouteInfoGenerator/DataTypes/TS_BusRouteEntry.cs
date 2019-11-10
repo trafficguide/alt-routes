@@ -8,34 +8,32 @@ namespace RouteInfoGenerator.DataTypes
 {
     public class TS_BusRouteEntry
     {
-        public BusRoute Route { get; private set; }
-        public int RouteSequence { get; private set; }
+        public XmlBusRoute BusRoute { get; private set; }
         public List<GeoPolygon> PassingPolygons { get; private set; }
 
-        public TS_BusRouteEntry(BusRoute route, int routeSeq)
+        public TS_BusRouteEntry(XmlBusRoute route)
         {
-            Route = route;
-            RouteSequence = routeSeq;
+            BusRoute = route;
             GeneratePassingPolygons();
         }
 
         private void GeneratePassingPolygons()
         {
-            PassingPolygons = Route.RouteSequences[RouteSequence].GeneratePassingSector();
+            PassingPolygons = BusRoute.Route.RouteSequences[BusRoute.RouteSeq].GeneratePassingSector();
         }
 
-        private string GenerateRouteIdentifier()
+        public string GenerateRouteIdentifier()
         {
             const string routePrefix = "Route";
-            string routeIDConverted = Route.RouteID.PadLeft(5, '0');
-            string routeSequence = RouteSequence.ToString();
-            string routeCompanyCode = Route.CompanyCode;
-            return routePrefix + routeIDConverted + "_" + routeSequence + "_" + routeCompanyCode + "_" + Route.RouteName; 
+            string routeIDConverted = BusRoute.Route.RouteID.PadLeft(5, '0');
+            string routeSequence = BusRoute.RouteSeq.ToString();
+            string routeCompanyCode = BusRoute.Route.CompanyCode;
+            return routePrefix + routeIDConverted + "_" + routeSequence + "_" + routeCompanyCode + "_" + BusRoute.Route.RouteName; 
         }
 
         private string GenerateLineType()
         {
-            return "lineType_" + Route.CompanyCode;
+            return "lineType_" + BusRoute.Route.CompanyCode;
         }
 
         private string GeneratePassingPolygonArray()
@@ -49,7 +47,7 @@ namespace RouteInfoGenerator.DataTypes
             foreach (GeoPolygon polygon in PassingPolygons)
             {
                 // Should swap to variable name later
-                polygonIDs.Add(polygon.DisplayedName);
+                polygonIDs.Add(polygon.VariableName);
             }
             builder.Append(string.Join(", ", polygonIDs.ToArray()));
             // End of array
@@ -60,6 +58,7 @@ namespace RouteInfoGenerator.DataTypes
 
         public string ExportAsTypeScript()
         {
+            BusRoute Route = BusRoute.Route;
             StringBuilder builder = new StringBuilder("const ");
             builder.Append(GenerateRouteIdentifier());
             builder.Append(" = new Line(");
@@ -71,7 +70,7 @@ namespace RouteInfoGenerator.DataTypes
             builder.Append(GenerateLineType());
             builder.Append(", ");
             // 3rd and 4th param: from and to name
-            if (RouteSequence == 1)
+            if (BusRoute.RouteSeq == 1)
             {
                 // Standard form
                 builder.Append("\"");

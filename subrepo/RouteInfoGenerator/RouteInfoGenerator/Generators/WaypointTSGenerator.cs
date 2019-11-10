@@ -16,7 +16,12 @@ namespace RouteInfoGenerator.Generators
             List<string> results = new List<string>();
             foreach (GeoPolygon polygon in polygons)
             {
-                results.Add(polygon.ExportAsTypeScriptWaypoint());
+                string polygonGenerated = polygon.ExportAsTypeScriptWaypoint();
+                if (!polygonGenerated.Contains("MTR"))
+                {
+                    // MTR ones are pretty much static, and so does not require further generation.
+                    results.Add(polygon.ExportAsTypeScriptWaypoint());
+                }
             }
             File.AppendAllLines(location, results);
             Console.WriteLine("Waypoint TypeScript file generated.");

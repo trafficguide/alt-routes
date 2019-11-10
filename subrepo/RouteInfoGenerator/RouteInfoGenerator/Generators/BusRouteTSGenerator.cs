@@ -1,4 +1,5 @@
 ﻿using RouteInfoGenerator.DataTypes;
+using RouteInfoGenerator.Extractors;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,16 +11,14 @@ namespace RouteInfoGenerator.Generators
 {
     class BusRouteTSGenerator
     {
-        public static List<TS_BusRouteEntry> GenerateTypeScriptBusRouteObjects(List<BusRoute> busRoutes)
+        public static List<TS_BusRouteEntry> GenerateTypeScriptBusRouteObjects()
         {
             Console.WriteLine("Generating TypeScript bus route objects in memory...");
+            List<XmlBusRoute> loadedBusRoutes = RouteStopExtractor.LoadedBusRoutes;
             List<TS_BusRouteEntry> tsEntries = new List<TS_BusRouteEntry>();
-            foreach (BusRoute route in busRoutes)
+            foreach (XmlBusRoute route in loadedBusRoutes)
             {
-                foreach (int sequenceKey in route.RouteSequences.Keys)
-                {
-                    tsEntries.Add(new TS_BusRouteEntry(route, sequenceKey));
-                }
+                tsEntries.Add(new TS_BusRouteEntry(route));
             }
             Console.WriteLine("A total of " + tsEntries.Count + " TypeScript bus route objects has been generated.");
             return tsEntries;
@@ -29,11 +28,25 @@ namespace RouteInfoGenerator.Generators
         {
             Console.WriteLine("Exporting TypeScript memory objects to " + location + " ...");
             List<string> typescriptLines = new List<string>();
+            List<string> listIdentifiers = new List<string>();
             foreach (TS_BusRouteEntry entry in entries)
             {
                 typescriptLines.Add(entry.ExportAsTypeScript());
+                listIdentifiers.Add(entry.GenerateRouteIdentifier());
             }
-            File.AppendAllLines(location, typescriptLines.AsEnumerable());
+            //File.AppendAllLines(location, typescriptLines.AsEnumerable());
+
+            // Prepare the array.
+            string arrayDefinitionHead = "const AllBusRoutes_test = [";
+            string arrayDefinitionTail = "];";
+            string arrayContent = string.Join(", ", listIdentifiers);
+            string arrayDef = arrayDefinitionHead + arrayContent + arrayDefinitionTail;
+
+            // Prepare to print to file.
+            string typeScriptFile = string.Join("\n", typescriptLines);
+            typeScriptFile += "\n" + arrayDef;
+            File.AppendAllText(location, typeScriptFile);
+
             Console.WriteLine("Export complete.");
         }
     }

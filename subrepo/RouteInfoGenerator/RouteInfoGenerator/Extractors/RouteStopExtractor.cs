@@ -13,6 +13,8 @@ namespace RouteInfoGenerator.Extractors
         private string sourcePath;
         private XmlDocument sourceXML;
 
+        public static List<XmlBusRoute> LoadedBusRoutes = new List<XmlBusRoute>();
+
         public RouteStopExtractor(GeneratorConfig config)
         {
             sourcePath = config.FileLoc_RouteStopXML;
@@ -31,11 +33,13 @@ namespace RouteInfoGenerator.Extractors
             }
         }
 
-        public Dictionary<string, BusRoute> LoadRouteStops()
+        public List<XmlBusRoute> LoadAllRouteStops()
         {
             // Begin read
             XmlNodeList routeStops = sourceXML.GetElementsByTagName("RSTOP");
             Console.WriteLine("Loaded " + routeStops.Count + " route-stop entries.");
+
+            // First load all BusRoutes.
 
             // Prepare lists
             Dictionary<string, BusRoute> loadedBusRoutes = new Dictionary<string, BusRoute>();
@@ -60,6 +64,20 @@ namespace RouteInfoGenerator.Extractors
 
             // All route-stop info loaded.
             Console.WriteLine("Identified " + loadedBusRoutes.Count + " bus routes.");
+
+            // Now generate XmlBusRoute objects
+            List<XmlBusRoute> listActualLoadedBusRoutes = new List<XmlBusRoute>();
+            foreach (BusRoute route in loadedBusRoutes.Values)
+            {
+                foreach (int sequence in route.RouteSequences.Keys)
+                {
+                    XmlBusRoute busRouteObj = new XmlBusRoute(route, sequence);
+                    listActualLoadedBusRoutes.Add(busRouteObj);
+                }
+            }
+
+            LoadedBusRoutes = listActualLoadedBusRoutes;
+            return LoadedBusRoutes;
 
             // We will call the simplifier on each of the bus routes.
 
@@ -141,8 +159,6 @@ namespace RouteInfoGenerator.Extractors
             string exportFileName = Path.GetDirectoryName(filename) + @"\" + Path.GetFileNameWithoutExtension(filename) + "_Processed.xml";
             exportDoc.Save(exportFileName);
             */
-
-            return loadedBusRoutes;
         }
 
         public Dictionary<int, string> PrepareStopNames()

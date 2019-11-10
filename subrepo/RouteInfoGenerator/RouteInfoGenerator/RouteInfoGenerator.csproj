@@ -49,8 +49,12 @@
     <Compile Include="DataTypes\BusRoute.cs" />
     <Compile Include="DataTypes\BusStop.cs" />
     <Compile Include="DataTypes\GeoPolygon.cs" />
+    <Compile Include="DataTypes\InterchangeType.cs" />
     <Compile Include="DataTypes\RouteSequence.cs" />
+    <Compile Include="DataTypes\TSInterchangeEffect.cs" />
     <Compile Include="DataTypes\TS_BusRouteEntry.cs" />
+    <Compile Include="DataTypes\XmlBusRoute.cs" />
+    <Compile Include="DataTypes\XmlInterchangeEffect.cs" />
     <Compile Include="GeneratorConfig.cs" />
     <Compile Include="Extractors\BusRouteDetailsExtractor.cs" />
     <Compile Include="Extractors\BusStopExtractor.cs" />

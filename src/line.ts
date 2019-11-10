@@ -56,6 +56,36 @@ class Line
         if (this.type != lineType_WALK)
         {                
             let freq = overallFreq;
+            if (freq < 5)
+            {
+                this.timeCostAdjustment = 0;
+            }
+            else if (freq < 10)
+            {
+                this.timeCostAdjustment = 1;
+            }
+            else if (freq < 15)
+            {
+                this.timeCostAdjustment = 2;
+            }
+            else if (freq < 25)
+            {
+                this.timeCostAdjustment = 3;
+            }
+            else if (freq < 35)
+            {
+                this.timeCostAdjustment = 4;
+            }
+            else if (freq < 50)
+            {
+                this.timeCostAdjustment = 5;
+            }
+            else
+            {
+                this.timeCostAdjustment = 6;
+            }
+
+            /*
             if (freq < 8)
             {
                 this.timeCostAdjustment = -3;
@@ -90,6 +120,7 @@ class Line
                 // Less than 1 per hour
                 this.timeCostAdjustment = 3;
             }
+            */
         }
         /*
         this.url = lineURL;

@@ -20,11 +20,13 @@ namespace RouteInfoGenerator
         internal RouteStopExtractor routeStopExtractor;
         BusRouteDetailsExtractor routeDetailsExtractor;
         public bool IsValid { get; private set; } = false;
+        public static InfoGenerator Instance { get; private set; }
 
         public InfoGenerator(GeneratorConfig config)
         {
             this.config = config;
             PreloadAndVerify();
+            Instance = this;
         }
 
         private void PreloadAndVerify()
@@ -108,7 +110,6 @@ namespace RouteInfoGenerator
             }
 
             // Prepare variables
-            Dictionary<string, BusRoute> loadedBusRoutes = new Dictionary<string, BusRoute>();
             List<GeoPolygon> loadedPolygons;
             List<BusStop> loadedBusStops;
 
@@ -124,17 +125,17 @@ namespace RouteInfoGenerator
             busStopExtractor.LoadBusStops();
             loadedBusStops = busStopExtractor.LoadedBusStops;
             Console.WriteLine(">>> Route-stop XML Extractor <<<");
-            loadedBusRoutes = routeStopExtractor.LoadRouteStops();
+            routeStopExtractor.LoadAllRouteStops();
             Console.WriteLine(">>> Bus Route Details XML Extractor <<<");
-            routeDetailsExtractor.LoadRouteDetails(ref loadedBusRoutes);
+            routeDetailsExtractor.LoadRouteDetails();
 
             // All extracted and loaded.
             Console.WriteLine("[Info] All data sources loaded.");
-            Console.WriteLine(loadedBusRoutes.Count);
+            //Console.WriteLine(loadedBusRoutes.Count);
 
             // First, exclude some bus lines
-            ExcludeBannedBusLines(loadedBusRoutes);
-            ExcludeBranchedBusRoutes(ref loadedBusRoutes);
+            ExcludeBannedBusLines();
+            ExcludeBranchedBusRoutes();
 
             // Now, we can manipulate the data programmatically.
             Console.WriteLine("[Info] Beginning to weave information...");
@@ -144,28 +145,24 @@ namespace RouteInfoGenerator
 
             // Generating the stuff!!!
             Console.WriteLine("[Info] Beginning to generate codes.");
-            List<TS_BusRouteEntry> typeScriptBusRoutes = BusRouteTSGenerator.GenerateTypeScriptBusRouteObjects(loadedBusRoutes.Values.ToList());
+            List<TS_BusRouteEntry> typeScriptBusRoutes = BusRouteTSGenerator.GenerateTypeScriptBusRouteObjects();
 
             // Generating waypoints
             WaypointTSGenerator.GenerateTypeScriptWaypoints(loadedPolygons, config.ExportLoc_Waypoints);
 
             // Checking the bus routes
             Console.WriteLine("[Info] Verifying results...");
-            List<BusRoute> listMessyCompanyCodeRoutes = new List<BusRoute>();
+            List<XmlBusRoute> listMessyCompanyCodeRoutes = new List<XmlBusRoute>();
             foreach (TS_BusRouteEntry entry in typeScriptBusRoutes)
             {
                 if (entry.ExportAsTypeScript().Contains("+"))
                 {
-                    if (!listMessyCompanyCodeRoutes.Contains(entry.Route))
-                    {
-                        //typeScriptBusRoutes.Remove(entry);
-                        listMessyCompanyCodeRoutes.Add(entry.Route);
-                    }
+                    listMessyCompanyCodeRoutes.Add(entry.BusRoute);
                 }
             }
             for (int i = typeScriptBusRoutes.Count - 1; i >= 0; i--)
             {
-                if (listMessyCompanyCodeRoutes.Contains(typeScriptBusRoutes[i].Route))
+                if (listMessyCompanyCodeRoutes.Contains(typeScriptBusRoutes[i].BusRoute))
                 {
                     typeScriptBusRoutes.RemoveAt(i);
                 }
@@ -173,53 +170,55 @@ namespace RouteInfoGenerator
             if (listMessyCompanyCodeRoutes.Count > 0)
             {
                 Console.WriteLine("[Warning] The following bus routes are problematic; right now, they are excluded.");
-                foreach (BusRoute route in listMessyCompanyCodeRoutes)
+                foreach (XmlBusRoute route in listMessyCompanyCodeRoutes)
                 {
-                    Console.WriteLine(route.RouteName + ": messy company code.");
+                    Console.WriteLine(route.Route.InternalUID + ": messy company code.");
                 }
             }
 
             BusRouteTSGenerator.ExportTSEntriesToFile(typeScriptBusRoutes, config.ExportLoc_BusRoutes);
         }
 
-        private void ExcludeBannedBusLines(Dictionary<string, BusRoute> loadedBusRoutes)
+        private void ExcludeBannedBusLines()
         {
             Console.WriteLine("[Info] Excluding cross-border and LRT-feeder bus routes since they are out of scope.");
             int excludedBusRoutes = 0;
-            List<string> listToBeRemoved = new List<string>();
-            foreach (string key in loadedBusRoutes.Keys)
+            List<XmlBusRoute> listAllRoutes = RouteStopExtractor.LoadedBusRoutes;
+            List<XmlBusRoute> listToBeRemoved = new List<XmlBusRoute>();
+            foreach (XmlBusRoute xmlRoute in listAllRoutes)
             {
-                BusRoute route = loadedBusRoutes[key];
+                BusRoute route = xmlRoute.Route;
                 if (route.CompanyCode == "XB" || route.CompanyCode == "LRTFeeder")
                 {
-                    listToBeRemoved.Add(key);
+                    listToBeRemoved.Add(xmlRoute);
                 }
             }
             excludedBusRoutes = listToBeRemoved.Count;
-            foreach (string key in listToBeRemoved)
+            foreach (XmlBusRoute xmlRoute in listToBeRemoved)
             {
-                loadedBusRoutes.Remove(key);
+                listAllRoutes.Remove(xmlRoute);
             }
             Console.WriteLine("[Info] Excluded " + excludedBusRoutes + " unfit bus routes.");
         }
 
-        private void ExcludeBranchedBusRoutes(ref Dictionary<string, BusRoute> loadedRoutes)
+        private void ExcludeBranchedBusRoutes()
         {
             Console.WriteLine("Eliminating branched bus routes...");
 
-            List<BusRoute> listAcceptedRoutes = new List<BusRoute>();
-            List<BusRoute> listLoadedRoutes = loadedRoutes.Values.ToList();
-            List<BusRoute> listWTF = new List<BusRoute>();
+            List<XmlBusRoute> listLoadedRoutes = RouteStopExtractor.LoadedBusRoutes;
+            List<XmlBusRoute> listAcceptedRoutes = new List<XmlBusRoute>();
+            List<XmlBusRoute> listWTF = new List<XmlBusRoute>();
+
             //Console.WriteLine(listLoadedRoutes.Count);
             for (int i = 0; i < listLoadedRoutes.Count; i++)
             {
                 // Check if contains
-                BusRoute route = listLoadedRoutes[i];
+                XmlBusRoute xmlRoute = listLoadedRoutes[i];
                 //Console.Write(route.RouteName);
                 bool routeIsAlreadyContained = false;
-                foreach (BusRoute acceptedRoute in listAcceptedRoutes)
+                foreach (XmlBusRoute acceptedRoute in listAcceptedRoutes)
                 {
-                    if (route.RouteName == acceptedRoute.RouteName && route.CompanyCode == acceptedRoute.CompanyCode)
+                    if (xmlRoute.Route.InternalUID == acceptedRoute.Route.InternalUID)
                     {
                         routeIsAlreadyContained = true;
                         break;
@@ -234,11 +233,11 @@ namespace RouteInfoGenerator
                 //Console.Write(" finding matches ");
 
                 // New route. Find all routes matching it.
-                List<BusRoute> matchingRoutes = new List<BusRoute>();
+                List<XmlBusRoute> matchingRoutes = new List<XmlBusRoute>();
                 for (int j = i; j < listLoadedRoutes.Count; j++)
                 {
-                    BusRoute tempRoute = listLoadedRoutes[j];
-                    if (tempRoute.RouteName == route.RouteName && tempRoute.CompanyCode == route.CompanyCode)
+                    XmlBusRoute tempRoute = listLoadedRoutes[j];
+                    if (tempRoute.Route.InternalUID == xmlRoute.Route.InternalUID)
                     {
                         //Console.Write(tempRoute.RouteName + " ");
                         matchingRoutes.Add(tempRoute);
@@ -255,10 +254,10 @@ namespace RouteInfoGenerator
                 else
                 {
                     // Multiple. I assume it is like 1 "R" leading several "T"
-                    BusRoute mainRoute = null;
-                    foreach (BusRoute potentialMain in matchingRoutes)
+                    XmlBusRoute mainRoute = null;
+                    foreach (XmlBusRoute potentialMain in matchingRoutes)
                     {
-                        if (potentialMain.ServiceMode == "R")
+                        if (potentialMain.Route.ServiceMode == "R")
                         {
                             mainRoute = potentialMain;
                             break;
@@ -280,22 +279,18 @@ namespace RouteInfoGenerator
             }
 
             // We now have a list of accepted routes.
-            // Re-generate the dictionary.
+            // Re-generate the list.
 
-            loadedRoutes = new Dictionary<string, BusRoute>();
-            foreach (BusRoute acceptedRoute in listAcceptedRoutes)
-            {
-                loadedRoutes[acceptedRoute.RouteID] = acceptedRoute;
-            }
+            RouteStopExtractor.LoadedBusRoutes = listAcceptedRoutes;
             //Console.WriteLine(loadedRoutes.Count);
-            Console.WriteLine("Trimmed number of bus routes to " + loadedRoutes.Count + ".");
+            Console.WriteLine("Trimmed number of bus routes to " + RouteStopExtractor.LoadedBusRoutes.Count + ".");
 
             if (listWTF.Count > 0)
             {
                 Console.WriteLine("[Warning] Elimination of branched bus routes has eliminated all routes for the following bus lines:");
-                foreach (BusRoute wtf in listWTF)
+                foreach (XmlBusRoute wtf in listWTF)
                 {
-                    Console.WriteLine(wtf.RouteName + " by " + wtf.CompanyCode);
+                    Console.WriteLine(wtf.Route.InternalUID);
                 }
             }
         }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace RouteInfoGenerator.DataTypes
 {
+    [Obsolete("Warning: this class may be obsolete.")]
     public class BusRoute
     {
         public string RouteID { get; private set; }
@@ -19,6 +20,9 @@ namespace RouteInfoGenerator.DataTypes
 
         public string CompanyCode { get; private set; }
         public bool IsCircular => NameOfLastStop.Contains("(循環線)");
+        /// <summary>
+        /// Route Name + "_" + Company Code
+        /// </summary>
         public string InternalUID => RouteName + "_" + CompanyCode;
         public bool IsCommuter { get; private set; }
         public bool IsNightOnly { get; private set; }

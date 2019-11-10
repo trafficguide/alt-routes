@@ -50,7 +50,7 @@ namespace RouteInfoGenerator.Extractors
             knownNightLines = File.ReadAllLines(configObj.FileLoc_NightList);
         }
 
-        public void LoadRouteDetails(ref Dictionary<string, BusRoute> loadedRoutes)
+        public void LoadRouteDetails()
         {
             // Begin read
             Console.WriteLine("Parameter: " + knownCrossHarbourLines.Length + " cross-harbour routes.");
@@ -62,12 +62,16 @@ namespace RouteInfoGenerator.Extractors
             }
             */
 
+            List<XmlBusRoute> listLoadedRoutes = RouteStopExtractor.LoadedBusRoutes;
+
             XmlNodeList routes = sourceXML.GetElementsByTagName("ROUTE");
             Console.WriteLine("Identified and loaded " + routes.Count + " bus routes.");
+            /*
             if (loadedRoutes.Values.Count != routes.Count)
             {
                 Console.WriteLine("[Warning] Number of bus routes as reflected in Bus Route Details Component and Route-Stop Component does not match.");
             }
+            */
             
             foreach (XmlNode routeDataNode in routes)
             {
@@ -80,6 +84,48 @@ namespace RouteInfoGenerator.Extractors
                 string serviceMode = routeDataNode["SERVICE_MODE"].InnerText;
 
                 // Associate to previously-loaded stops
+                // Find it
+                foreach (XmlBusRoute busRoute in listLoadedRoutes)
+                {
+                    BusRoute route = busRoute.Route;
+                    if (route.RouteID == routeID)
+                    {
+                        route.InputMoreDetails(routeName, fromName, toName);
+                        route.InputCompanyCode(companyCode);
+                        route.ServiceMode = serviceMode;
+
+                        // Check cross harbour
+                        foreach (string crossHarbourRoute in knownCrossHarbourLines)
+                        {
+                            if (crossHarbourRoute == routeName)
+                            {
+                                //Console.WriteLine(routeID + " is a known cross-harbour line.");
+                                route.MarkCrossHarbour();
+                                break;
+                            }
+                        }
+
+                        // Check commuter
+                        foreach (string commuterRoute in knownCommuterLines)
+                        {
+                            if (route.InternalUID == commuterRoute)
+                            {
+                                route.MarkCommuter();
+                            }
+                        }
+
+                        // Check night
+                        foreach (string nightRoute in knownNightLines)
+                        {
+                            if (route.InternalUID == nightRoute)
+                            {
+                                route.MarkNightOnly();
+                            }
+                        }
+                    }
+                }
+
+                /*
                 BusRoute route = loadedRoutes[routeID];
                 if (route != null)
                 {
@@ -87,39 +133,13 @@ namespace RouteInfoGenerator.Extractors
                     route.InputCompanyCode(companyCode);
                     route.ServiceMode = serviceMode;
 
-                    // Check cross harbour
-                    foreach (string crossHarbourRoute in knownCrossHarbourLines)
-                    {
-                        if (crossHarbourRoute == routeName)
-                        {
-                            //Console.WriteLine(routeID + " is a known cross-harbour line.");
-                            route.MarkCrossHarbour();
-                            break;
-                        }
-                    }
-
-                    // Check commuter
-                    foreach (string commuterRoute in knownCommuterLines)
-                    {
-                        if (route.InternalUID == commuterRoute)
-                        {
-                            route.MarkCommuter();
-                        }
-                    }
-
-                    // Check night
-                    foreach (string nightRoute in knownNightLines)
-                    {
-                        if (route.InternalUID == nightRoute)
-                        {
-                            route.MarkNightOnly();
-                        }
-                    }
+                    
                 }
                 else
                 {
                     Console.WriteLine("[Warning] Route ID not loaded during Route-Stop Extraction: #" + routeID);
                 }
+                */
             }
 
             // All route-stop info loaded.

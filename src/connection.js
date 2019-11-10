@@ -32,7 +32,14 @@ var Connection = /** @class */ (function () {
         // Instead of iterating every stop and check if the "interchange rule" applies,
         // we now stipulate that all interchanges with concessions will reduce total cost by 1.
         // Total path cost is, obviously, still bounded by the non-negative rule.
-        connectionCost = this.endIndex - this.startIndex;
+        connectionCost = 0;
+        for (var i = this.startIndex; i <= this.endIndex; i++) {
+            if (line.getStops()[i].isInterchange()) {
+                continue;
+            }
+            connectionCost++;
+        }
+        //connectionCost = this.endIndex - this.startIndex;
         // Minibuses are agile, and so gets a cost down-scaling
         if (line.isMinibus()) {
             if (line.isGreenMinibus()) {
