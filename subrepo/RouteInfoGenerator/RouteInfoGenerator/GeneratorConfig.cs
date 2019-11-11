@@ -14,6 +14,13 @@ namespace RouteInfoGenerator
         public string FileLoc_PolygonKML { get; private set; }
         public string FileLoc_BusStopXML { get; private set; }
         public string FileLoc_RouteStopXML { get; private set; }
+        public string FileLoc_RouteDetailsXML { get; private set; }
+        public string FileLoc_CrossHarbourList { get; private set; }
+        public string FileLoc_CommuterList { get; private set; }
+        public string FileLoc_NightList { get; private set; }
+
+        public string ExportLoc_BusRoutes { get; private set; }
+        public string ExportLoc_Waypoints { get; private set; }
 
         public GeneratorConfig()
         {
@@ -58,6 +65,22 @@ namespace RouteInfoGenerator
             }
 
             FileLoc_RouteStopXML = ConfigDoc.DocumentElement["RouteStopXmlFileLocation"].InnerText;
+
+            if (ConfigDoc.DocumentElement["BusRouteDetailsXmlFileLocation"] == null)
+            {
+                GenerateBusRouteDetailsXmlNode();
+                ConfigDoc.Save("config.xml");
+            }
+
+            FileLoc_RouteDetailsXML = ConfigDoc.DocumentElement["BusRouteDetailsXmlFileLocation"].InnerText;
+            FileLoc_CrossHarbourList = ReadAndGenerateConfigTextNode("CrossHarbourLineSource");
+            FileLoc_CommuterList = ReadAndGenerateConfigTextNode("CommuterLineSource");
+            FileLoc_NightList = ReadAndGenerateConfigTextNode("NightLineSource");
+
+            ExportLoc_BusRoutes = ReadAndGenerateConfigTextNode("BusRouteExportLocation");
+            ExportLoc_Waypoints = ReadAndGenerateConfigTextNode("WaypointsExportLocation");
+
+            ConfigDoc.Save("config.xml");
         }
 
         private void InitializeConfigFile()
@@ -85,6 +108,9 @@ namespace RouteInfoGenerator
             // The Route-Stop XML raw file
             GenerateRouteStopXmlNode();
 
+            // The bus route details XML raw file
+            GenerateBusRouteDetailsXmlNode();
+
             // Everything should be ready.
             // Save the config first.
             ConfigDoc.Save("config.xml");
@@ -96,6 +122,27 @@ namespace RouteInfoGenerator
             XmlText textField = ConfigDoc.CreateTextNode(string.Empty);
             routeStopXmlFileElement.AppendChild(textField);
             ConfigDoc.DocumentElement.AppendChild(routeStopXmlFileElement);
+        }
+
+        private void GenerateBusRouteDetailsXmlNode()
+        {
+            XmlElement xmlELement = ConfigDoc.CreateElement("BusRouteDetailsXmlFileLocation");
+            XmlText textField = ConfigDoc.CreateTextNode(string.Empty);
+            xmlELement.AppendChild(textField);
+            ConfigDoc.DocumentElement.AppendChild(xmlELement);
+        }
+
+        private string ReadAndGenerateConfigTextNode(string nodeName)
+        {
+            if (ConfigDoc.DocumentElement[nodeName] == null)
+            {
+                XmlElement xmlELement = ConfigDoc.CreateElement(nodeName);
+                XmlText textField = ConfigDoc.CreateTextNode(string.Empty);
+                xmlELement.AppendChild(textField);
+                ConfigDoc.DocumentElement.AppendChild(xmlELement);
+            }
+
+            return ConfigDoc.DocumentElement[nodeName].InnerText;
         }
     }
 }

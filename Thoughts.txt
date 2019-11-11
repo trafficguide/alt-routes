@@ -1,0 +1,22 @@
+Traditional method:
+Input by hand
+
+New method:
+Generate by program
+
+Trad-M Traits:
+- Labor intensive
+- Makes clear sense
+- Can add interchange rules easily
+- May be hard to calculate actual fare
+
+New-M Traits:
+- Inhomogeneous data source: minibus do not have unified database yet
+- Automated and effort-free
+- May be able to calculate actual fare (?)
+
+Proposed temporary plan:
+- Focus on minibuses; this seems lacking for the moment.
+
+*** Interchange scheme
+- Release interchange waypoint to merely a string, should help a bit.

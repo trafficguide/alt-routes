@@ -1,0 +1,25 @@
+Objectives
+
+- Centralize mapping of HK
+- Promotion of this is secondary, since we don't have much resources left to manage this in detail anyways
+
+Trial text, here goes
+
+香城online crowdsource劃分地理分區 + 【探路】党铁替代路線搜尋器
+
+新入連登please be gentle...
+
+是咁的
+自從地鐵開始變党铁之後，同埋831死人、紅磡出軌事件之後，感覺上係多咗人去罷铁嘅。當初九月頭嗰陣為咗去推廣罷铁，而自己整咗呢個【探路】搜尋器，雖然路線未齊，不過同其他已有嘅app比較之下係有啲唔同，就係呢個【探路】係以党铁站為搜尋目標，同埋啲路線資料可以offline使用嘅。
+
+有興趣玩吓呢個搜尋器嘅可以入嚟呢道：https://trafficguide.github.io/alt-routes/
+
+再次聲明，啲路線資料真係未齊！！！唔好信晒佢着！！！
+
+不過，當我整緊個【探路】嗰陣，我發覺依家好似冇一個可以將香港細分嘅地圖，變咗我係做唔到個「區域到區域乘車建議」嘅功能。所以我就自己開咗個Google My Maps，嘗試將香港地圖分細佢，等我自己可以有個根據之外，亦都希望各位香城NPC知道自己究竟身在何方，唔使次次同人講「我喺邊度」嗰陣都講餐死。
+
+不過，個分區地圖真係一個人做唔晒... 所以想請各位地圖大佬幫幫手，一齊整好個地圖，等大家日子好過啲。
+
+個Google My Maps係跟着個【探路】嘅，想幫手嘅可以去呢度睇一睇啲介紹：https://trafficguide.github.io/alt-routes/districtsplitterinfo.html
+
+同行助攻不割蓆！！！

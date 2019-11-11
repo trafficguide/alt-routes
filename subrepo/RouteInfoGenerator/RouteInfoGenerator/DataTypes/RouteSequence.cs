@@ -43,5 +43,32 @@ namespace RouteInfoGenerator.DataTypes
             List<int> sortedStops = FinalizeAndGenerateStopSequence();
             return string.Join(",", sortedStops.ToArray());
         }
+
+        public List<GeoPolygon> GeneratePassingSector()
+        {
+            List<int> sortedStops = FinalizeAndGenerateStopSequence();
+            List<GeoPolygon> passingSector = new List<GeoPolygon>();
+
+            foreach (int stopID in sortedStops)
+            {
+                BusStop stop = Program.generator.busStopExtractor.GetBusStopWithID(stopID);
+                GeoPolygon polygon = stop.PolygonOf;
+                if (polygon != null)
+                {
+                    passingSector.Add(polygon);
+                }
+            }
+
+            // Simplify and delete, we loop from the end
+            for (int i = passingSector.Count - 1; i > 0; i--)
+            {
+                if (passingSector[i] == passingSector[i - 1])
+                {
+                    passingSector.RemoveAt(i);
+                }
+            }
+
+            return passingSector;
+        }
     }
 }

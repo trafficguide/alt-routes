@@ -49,17 +49,28 @@
     <Compile Include="DataTypes\BusRoute.cs" />
     <Compile Include="DataTypes\BusStop.cs" />
     <Compile Include="DataTypes\GeoPolygon.cs" />
+    <Compile Include="DataTypes\InterchangeType.cs" />
     <Compile Include="DataTypes\RouteSequence.cs" />
+    <Compile Include="DataTypes\TSInterchangeEffect.cs" />
+    <Compile Include="DataTypes\TS_BusRouteEntry.cs" />
+    <Compile Include="DataTypes\XmlBusRoute.cs" />
+    <Compile Include="DataTypes\XmlInterchangeEffect.cs" />
     <Compile Include="GeneratorConfig.cs" />
-    <Compile Include="Generators\BusStopExtractor.cs" />
-    <Compile Include="Generators\KmlPolygonExtractor.cs" />
-    <Compile Include="Generators\RouteStopExtractor.cs" />
+    <Compile Include="Extractors\BusRouteDetailsExtractor.cs" />
+    <Compile Include="Extractors\BusStopExtractor.cs" />
+    <Compile Include="Extractors\KmlPolygonExtractor.cs" />
+    <Compile Include="Extractors\RouteStopExtractor.cs" />
+    <Compile Include="Generators\WaypointTSGenerator.cs" />
     <Compile Include="InfoGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Weavers\BusStopPolygonWeaver.cs" />
+    <Compile Include="Generators\BusRouteTSGenerator.cs" />
+    <Compile Include="Weavers\BusStopRouteStopWeaver.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
