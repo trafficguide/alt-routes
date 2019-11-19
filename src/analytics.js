@@ -7,7 +7,7 @@
 function prepareHitsShield(hitShieldElm) {
     // Constant strings for url formulation
     var shieldIO_Endpoint = "https://img.shields.io/badge/";
-    var shieldLabelWithHyphen = "瀏覽量-";
+    var shieldLabelWithHyphen = "累計瀏覽量-";
     var shieldMessage_Errored = "炒咗車...-";
     // Base URL
     var targetURL = "https://hitcounter.pythonanywhere.com/count";
