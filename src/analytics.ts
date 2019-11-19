@@ -8,7 +8,7 @@ function prepareHitsShield(hitShieldElm: HTMLImageElement)
 {
     // Constant strings for url formulation
     const shieldIO_Endpoint = "https://img.shields.io/badge/";
-    const shieldLabelWithHyphen = "瀏覽量-";
+    const shieldLabelWithHyphen = "累計瀏覽量-";
     const shieldMessage_Errored = "炒咗車...-"
 
     // Base URL

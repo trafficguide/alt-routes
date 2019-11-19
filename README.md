@@ -5,7 +5,7 @@
 ![HitCounter](https://img.shields.io/badge/Uses-Hit_Counter-blue)
 ![Hits](https://hitcounter.pythonanywhere.com/nocount/tag.svg?url=https%3A%2F%2Ftrafficguide.github.io%2Falt-routes%2F)
 
-This is the Repo of 【探路】.
+This is the Repo of 【探路】. **Development of this web-app has ended!!!**
 
 ### Motivation
 

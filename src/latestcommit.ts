@@ -2,6 +2,9 @@ const endpoint_LatestCommitInfo = "https://api.github.com/repos/trafficguide/alt
 
 function obtainLatestCommitTimestanp(printoutArea: HTMLDivElement)
 {
+    // As per the contract, we are archiving this repo, and wont be touching this for prolly a long time.
+    printoutArea.innerHTML = "本【探路】(搜尋器及資料庫) 版本為 2019年11月11日 (香港時間) <div style='color: red;'>本【探路】(搜尋器及資料庫) 已經停止更新。感謝大家一直以來嘅支持！</div>";
+    /*
     printoutArea.innerHTML = "正在獲取【探路】版本...";
     makeHttpRequest(endpoint_LatestCommitInfo)
     .then(response => {
@@ -20,4 +23,5 @@ function obtainLatestCommitTimestanp(printoutArea: HTMLDivElement)
         message += error;
         printoutArea.innerHTML = message;
     });
+    */
 }
